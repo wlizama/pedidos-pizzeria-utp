@@ -11,4 +11,8 @@ package pedidos.pizzeria.utp;
  */
 public class Jonas {
     
+    public Jonas(){
+        System.out.println("JJJJ");
+    }
+    
 }
