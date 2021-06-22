@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pedidos.pizzeria.utp;
+package pedidos.pizzeria.utp.controller;
 
 /**
  *
- * @author jonas
+ * @author wilderlizama
  */
-public class Jonas {
-    
-    public Jonas(){
-        System.out.println("JJJJ");
-        System.out.println("ppppp");
-    }
+public class PruebaController {
     
 }
