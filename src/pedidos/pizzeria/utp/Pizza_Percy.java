@@ -9,10 +9,10 @@ package pedidos.pizzeria.utp;
  *
  * @author Percy
  */
-public class Percy {
+public class Pizza_Percy {
     public static void main(String[] args) {
-        System.out.println("Hola Percy, primera Pizza");
+        System.out.println("Otra Pizza");
     }
-       
-            
+ 
+    
 }
