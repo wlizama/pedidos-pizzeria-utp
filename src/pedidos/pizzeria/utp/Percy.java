@@ -7,17 +7,12 @@ package pedidos.pizzeria.utp;
 
 /**
  *
- * @author wilderlizama
+ * @author Percy
  */
-public class PedidosPizzeriaUtp {
-
-    /**
-     * @param args the command line arguments
-     */
+public class Percy {
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Hola pizza");
         System.out.println("Hola Percy");
     }
-    
+       
+            
 }
