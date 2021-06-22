@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pedidos.pizzeria.utp;
+package pedidos.pizzeria.utp.model;
 
 /**
  *
- * @author Percy
+ * @author wilderlizama
  */
-public class Percy {
-    public static void main(String[] args) {
-        System.out.println("Hola Percy, primera Pizza");
-    }
-       
-            
+public class PruebaView {
+    
 }
