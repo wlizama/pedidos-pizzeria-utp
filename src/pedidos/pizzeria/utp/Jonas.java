@@ -13,6 +13,7 @@ public class Jonas {
     
     public Jonas(){
         System.out.println("JJJJ");
+        System.out.println("ppppp");
     }
     
 }
