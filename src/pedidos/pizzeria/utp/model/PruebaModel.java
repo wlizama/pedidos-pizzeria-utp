@@ -9,6 +9,6 @@ package pedidos.pizzeria.utp.model;
  *
  * @author wilderlizama
  */
-public class PruebaView {
-    
+public class PruebaModel {
+
 }
