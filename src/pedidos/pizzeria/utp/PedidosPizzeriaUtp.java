@@ -5,6 +5,8 @@
  */
 package pedidos.pizzeria.utp;
 
+import pedidos.pizzeria.utp.view.LoginView;
+
 /**
  *
  * @author wilderlizama
@@ -16,8 +18,11 @@ public class PedidosPizzeriaUtp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Hola pizza");
-        System.out.println("Hola Percy");
+        System.out.println("Iniciando app");
+        
+        LoginView loginView = new LoginView();
+        loginView.setLocationRelativeTo(null);
+        loginView.setVisible(true);
 
     }
     
