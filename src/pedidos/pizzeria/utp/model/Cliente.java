@@ -7,8 +7,10 @@ package pedidos.pizzeria.utp.model;
 
 /**
  *
- * @author wilderlizama
+ * @author jonas
  */
-public class PruebaView {
+public class Cliente extends Persona{
+    
+    private int idCliente;    
     
 }
