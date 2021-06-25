@@ -5,6 +5,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 select * from Persona;
-select * from Roles;
+select * from Usuario;
 
 SELECT SHA1('abc')
