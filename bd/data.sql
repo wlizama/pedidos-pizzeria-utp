@@ -94,4 +94,7 @@ insert into DocumentoIdentidad ( IdDocumentoIdentidad, numero, IdTipoDocIdentida
 value( 0, 'XXXXXXXXXXXXXXX', 6 );
 insert into Persona ( IdPersona, nombres, apellidos, telefono, IdTipoPersona, IdDocumentoIdentidad, IdEstado )
 value(0, 'Super Usuario de Sistema', null, null, 5, 1, 6);
+insert into Usuario ( IdUsuario, nombreUsuario, contrasenha, IdPersona, IdRol )
+value( 0, 'suuser' , SHA1('123456'), 1, 1 )
+
 
