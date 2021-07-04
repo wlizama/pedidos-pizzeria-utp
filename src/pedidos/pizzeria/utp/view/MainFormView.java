@@ -69,6 +69,11 @@ public class MainFormView extends javax.swing.JFrame {
         smEnvios.setMnemonic('e');
         smEnvios.setText("Envios");
         smEnvios.setToolTipText("");
+        smEnvios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smEnviosActionPerformed(evt);
+            }
+        });
         mDelivery.add(smEnvios);
 
         menuBar.add(mDelivery);
@@ -79,6 +84,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smClientes.setMnemonic('c');
         smClientes.setText("Clientes");
+        smClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smClientesActionPerformed(evt);
+            }
+        });
         mMantenimiento.add(smClientes);
 
         smPersonal.setMnemonic('p');
@@ -138,6 +148,14 @@ public class MainFormView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
+       
+    }//GEN-LAST:event_smClientesActionPerformed
+
+    private void smEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEnviosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smEnviosActionPerformed
 
     /**
      * @param args the command line arguments
