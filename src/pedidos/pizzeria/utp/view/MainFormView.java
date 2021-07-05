@@ -16,6 +16,7 @@ public class MainFormView extends javax.swing.JFrame {
      */
     public MainFormView() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -27,7 +28,7 @@ public class MainFormView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desktopPane = new javax.swing.JDesktopPane();
+        dpPrincipal = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         mPedidos = new javax.swing.JMenu();
         smLPedidos = new javax.swing.JMenuItem();
@@ -69,6 +70,11 @@ public class MainFormView extends javax.swing.JFrame {
         smEnvios.setMnemonic('e');
         smEnvios.setText("Envios");
         smEnvios.setToolTipText("");
+        smEnvios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smEnviosActionPerformed(evt);
+            }
+        });
         mDelivery.add(smEnvios);
 
         menuBar.add(mDelivery);
@@ -79,6 +85,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smClientes.setMnemonic('c');
         smClientes.setText("Clientes");
+        smClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smClientesActionPerformed(evt);
+            }
+        });
         mMantenimiento.add(smClientes);
 
         smPersonal.setMnemonic('p');
@@ -105,6 +116,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smRepPizzas.setMnemonic('p');
         smRepPizzas.setText("Reporte de Pizzas");
+        smRepPizzas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smRepPizzasActionPerformed(evt);
+            }
+        });
         mReportes.add(smRepPizzas);
 
         smRepCobertura.setMnemonic('c');
@@ -129,15 +145,31 @@ public class MainFormView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
+       
+    }//GEN-LAST:event_smClientesActionPerformed
+
+    private void smEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEnviosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smEnviosActionPerformed
+
+    private void smRepPizzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepPizzasActionPerformed
+        
+        ListaPizzasView pizzaView = new ListaPizzasView();
+        pizzaView.pack();
+        dpPrincipal.add(pizzaView);
+        pizzaView.setVisible(true);
+    }//GEN-LAST:event_smRepPizzasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,7 +207,7 @@ public class MainFormView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JDesktopPane dpPrincipal;
     private javax.swing.JMenu mDelivery;
     private javax.swing.JMenu mMantenimiento;
     private javax.swing.JMenu mPedidos;
