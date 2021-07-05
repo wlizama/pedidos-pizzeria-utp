@@ -36,7 +36,7 @@ public class ReportePizzasView extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtFechaFin = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPizzas = new javax.swing.JTable();
         btnGenerarReporte = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
@@ -63,7 +63,7 @@ public class ReportePizzasView extends javax.swing.JInternalFrame {
 
         txtFechaFin.setText("dd/mm/yy");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPizzas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -74,7 +74,7 @@ public class ReportePizzasView extends javax.swing.JInternalFrame {
                 "Tipo de Pizza", "Cantidad", "Precio Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblPizzas);
 
         btnGenerarReporte.setText("Generar");
 
@@ -142,16 +142,16 @@ public class ReportePizzasView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenerarReporte;
+    public javax.swing.JButton btnGenerarReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    public javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable tblPizzas;
     private javax.swing.JTextField txtFechaFin;
     private javax.swing.JTextField txtFechaInicio;
     // End of variables declaration//GEN-END:variables

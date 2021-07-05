@@ -158,9 +158,9 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JCheckBox chkMarqueCobert;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnGuardar;
+    public javax.swing.JCheckBox chkMarqueCobert;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

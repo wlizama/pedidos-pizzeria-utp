@@ -146,12 +146,12 @@ public class ListaEnviosView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnNuevoEnvio;
-    private javax.swing.JButton btn_verEnvio;
-    private javax.swing.JComboBox<String> cboEstado;
+    public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnNuevoEnvio;
+    public javax.swing.JButton btn_verEnvio;
+    public javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblListaEnvios;
+    public javax.swing.JTable tblListaEnvios;
     // End of variables declaration//GEN-END:variables
 }

@@ -167,6 +167,6 @@ public class ComprobanteView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblDocumento;
     private javax.swing.JLabel lblFechaComprobante;
     private javax.swing.JLabel lblNombreCliente;
-    private javax.swing.JTable tblDetallePedido;
+    public javax.swing.JTable tblDetallePedido;
     // End of variables declaration//GEN-END:variables
 }

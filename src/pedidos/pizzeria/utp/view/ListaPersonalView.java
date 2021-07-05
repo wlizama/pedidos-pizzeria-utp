@@ -584,19 +584,19 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEditarListaRoles;
     private javax.swing.JButton btnEditarTipo;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarRol;
     private javax.swing.JButton btnGuardarTipoPersona;
-    private javax.swing.JButton btnNuevo;
+    public javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnNuevoListaRoles;
     private javax.swing.JButton btnNuevoTipo;
-    private javax.swing.JComboBox<String> cboDocumento;
-    private javax.swing.JComboBox<String> cboPersonal;
-    private javax.swing.JComboBox<String> cbx_tipo;
+    public javax.swing.JComboBox<String> cboDocumento;
+    public javax.swing.JComboBox<String> cboPersonal;
+    public javax.swing.JComboBox<String> cbx_tipo;
     private javax.swing.JCheckBox chkPedidos;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
@@ -618,7 +618,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    public javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -627,7 +627,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable tblListaPersonal;
+    public javax.swing.JTable tblListaPersonal;
     private javax.swing.JTable tblListaRoles;
     private javax.swing.JTable tblTipoPersonal;
     private javax.swing.JTextField txtApePersona;

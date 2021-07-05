@@ -133,7 +133,7 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblListaComprobante;
+    public javax.swing.JTable tblListaComprobante;
     public javax.swing.JTextField txtComprobante;
     // End of variables declaration//GEN-END:variables
 }

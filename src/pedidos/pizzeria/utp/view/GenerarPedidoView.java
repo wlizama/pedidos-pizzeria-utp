@@ -404,7 +404,7 @@ public class GenerarPedidoView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblDetallePedido;
+    public javax.swing.JTable tblDetallePedido;
     private javax.swing.JTextArea txaObservacion;
     private javax.swing.JTextField txtCantidadPizza;
     public javax.swing.JTextField txtDocumento;

@@ -270,14 +270,14 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarCliente;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEditarCliente;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnNuevo;
+    public javax.swing.JButton btnAgregarCliente;
+    public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnEditarCliente;
+    public javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cbxCliente;
-    private javax.swing.JComboBox<String> cbxDoc;
+    public javax.swing.JComboBox<String> cbxDoc;
     private javax.swing.JTextField cbxResuldocumen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -289,7 +289,7 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlListaClientes;
     private javax.swing.JTable tblClientes;
-    private javax.swing.JTable tblClientesb;
+    public javax.swing.JTable tblClientesb;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtNombres;
