@@ -110,11 +110,11 @@ public class BusquedaPedidoView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCancelar;
+    public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cboBusqueCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblBusqueda;
+    public javax.swing.JTable tblBusqueda;
     // End of variables declaration//GEN-END:variables
 }

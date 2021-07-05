@@ -179,20 +179,20 @@ public class VerEnviosView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnEnvdatos;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cboEstadoenvio;
-    private javax.swing.JComboBox<String> cboRepartidor;
+    public javax.swing.JButton btnAgregar;
+    public javax.swing.JButton btnCancelar;
+    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnEnvdatos;
+    public javax.swing.JButton btnGuardar;
+    public javax.swing.JComboBox<String> cboEstadoenvio;
+    public javax.swing.JComboBox<String> cboRepartidor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblVerenvios;
+    public javax.swing.JTable tblVerenvios;
     private javax.swing.JTextField txtHorafin;
     private javax.swing.JTextField txtHoraini;
     // End of variables declaration//GEN-END:variables

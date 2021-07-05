@@ -134,7 +134,7 @@ public class BuscarPizza extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblListaPizza;
+    public javax.swing.JTable tblListaPizza;
     private javax.swing.JTextField txtNombrePizza;
     // End of variables declaration//GEN-END:variables
 }
