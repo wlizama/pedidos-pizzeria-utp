@@ -40,6 +40,9 @@ public class ReportePizzasView extends javax.swing.JInternalFrame {
         btnGenerarReporte = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel4.setText("Total");
 

@@ -35,9 +35,7 @@ public class BusquedaPedidoView extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Busqueda de Pedido");
 
         jLabel1.setText("Cliente");

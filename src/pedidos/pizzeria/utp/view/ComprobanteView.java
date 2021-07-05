@@ -41,6 +41,9 @@ public class ComprobanteView extends javax.swing.JInternalFrame {
         lblDireccion = new javax.swing.JLabel();
         lblFechaComprobante = new javax.swing.JLabel();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel14.setText("Total ");
 

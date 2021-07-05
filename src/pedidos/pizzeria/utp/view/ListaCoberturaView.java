@@ -38,6 +38,9 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
         chkMarqueCobert = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Cobertura"));
 
         tblListaCobertura.setModel(new javax.swing.table.DefaultTableModel(
@@ -146,7 +149,7 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 26, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, Short.MAX_VALUE))
                 .addContainerGap())
         );
 

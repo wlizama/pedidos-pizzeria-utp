@@ -45,9 +45,7 @@ public class VerEnviosView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Envios");
 
         btnEliminar.setText("Eliminar");

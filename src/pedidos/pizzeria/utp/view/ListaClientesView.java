@@ -53,9 +53,7 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
 
         pnlListaClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Clientes"));
 

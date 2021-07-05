@@ -84,6 +84,9 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
         jCheckBox5 = new javax.swing.JCheckBox();
         btnGuardarRol = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jTabbedPane1.setName(""); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Personal"));
@@ -256,7 +259,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar)
