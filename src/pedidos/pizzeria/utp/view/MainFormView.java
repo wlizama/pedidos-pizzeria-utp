@@ -16,6 +16,7 @@ public class MainFormView extends javax.swing.JFrame {
      */
     public MainFormView() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
