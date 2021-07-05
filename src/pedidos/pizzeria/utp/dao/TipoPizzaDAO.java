@@ -26,10 +26,16 @@ public class TipoPizzaDAO {
         
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_TipoPizzaLista ()}");
+        /* ejemplo SP con parametros
+        cs = con.prepareCall("{call SP_PlanoInclinadoInserta ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+        cs.setString("nombre", plano_inclinado.getNombre());
+        cs.setDouble("masa", plano_inclinado.getObjeto().getMasa());
+        */
 
         cs.execute();
 
         ResultSet rs = cs.getResultSet();
+        System.out.println("hereee 022");
 
         while(rs.next()) {
             lstResult.add(new TipoPizza(

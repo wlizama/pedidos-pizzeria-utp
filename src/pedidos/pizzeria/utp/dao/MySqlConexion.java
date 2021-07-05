@@ -15,10 +15,15 @@ import java.sql.SQLException;
  */
 public class MySqlConexion {
     
-    private static final String SERVER = "b0qqwgziwlcqrz7trku7-mysql.services.clever-cloud.com";
-    private static final String DBNAME = "b0qqwgziwlcqrz7trku7";
-    private static final String USER = "uxqzl7sxtwqglx1p";
-    private static final String PWD = "i80EWvoraMIjSQNPGKZ2";
+//    private static final String SERVER = "b0qqwgziwlcqrz7trku7-mysql.services.clever-cloud.com";
+//    private static final String DBNAME = "b0qqwgziwlcqrz7trku7";
+//    private static final String USER = "uxqzl7sxtwqglx1p";
+//    private static final String PWD = "i80EWvoraMIjSQNPGKZ2";
+    
+    private static final String SERVER = "localhost";
+    private static final String DBNAME = "pedidos-pizzeria";
+    private static final String USER = "root";
+    private static final String PWD = "root123";
  
     public static Connection getConexion() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");

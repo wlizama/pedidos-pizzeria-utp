@@ -5,7 +5,11 @@
  */
 package pedidos.pizzeria.utp.controller;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utp.dao.TipoPizzaDAO;
+import pedidos.pizzeria.utp.model.TipoPizza;
+import pedidos.pizzeria.utp.view.ListaPizzasView;
 
 /**
  *
@@ -13,18 +17,33 @@ import pedidos.pizzeria.utp.dao.TipoPizzaDAO;
  */
 public class TipoPizzaController {
     
-    public void initTipoPizza() {
+    ListaPizzasView pizzasView = new ListaPizzasView();
+    
+    public void TipoPizzaController() {
         buscarTipoPizzaLista();
     }
     
     public void buscarTipoPizzaLista() {
         try {
             TipoPizzaDAO tpDAO = new TipoPizzaDAO();
-            System.out.println("Lista de Tipo Pizzas:" + tpDAO.getListaTipoPizza().size());
+            List<TipoPizza> lstTipoPizza = tpDAO.getListaTipoPizza();
+            
+            DefaultTableModel pizzasViewTblModel = (DefaultTableModel) pizzasView.tblListaTipo.getModel();
+            // limpiar tabla antes de agregar
+//            pizzasViewTblModel.
+            System.out.println("hereee 01");
+            if (lstTipoPizza.size() > 0) {
+                System.out.println("hereee");
+                for (TipoPizza tipoPizza : lstTipoPizza) {
+                    pizzasViewTblModel.addRow(new Object[] {
+                        tipoPizza.getIdTipoPizza(),
+                        tipoPizza.getNombre()
+                    });
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
     }
     
 }

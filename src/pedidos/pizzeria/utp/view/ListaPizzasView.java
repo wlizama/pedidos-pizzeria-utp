@@ -19,6 +19,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
      */
     public ListaPizzasView() {
         initComponents();
+        new TipoPizzaController();
     }
 
     /**
@@ -76,6 +77,9 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txaDescripcion = new javax.swing.JTextArea();
         btnGuardarTipoPizza = new javax.swing.JButton();
+
+        setClosable(true);
+        setMaximizable(true);
 
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -503,14 +507,14 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
 
-        JTabbedPane tabbedPane = (JTabbedPane) evt.getSource();
-        int selectedIndex = tabbedPane.getSelectedIndex();
-        if (selectedIndex == 0) 
-            System.out.println("Panel de Pizzas");
-        else if (selectedIndex == 1) 
-            System.out.println("Panel de Tipo Pizzas");
-        else if (selectedIndex == 2);
-            new TipoPizzaController().initTipoPizza();
+//        JTabbedPane tabbedPane = (JTabbedPane) evt.getSource();
+//        int selectedIndex = tabbedPane.getSelectedIndex();
+//        if (selectedIndex == 0) 
+//            System.out.println("Panel de Pizzas");
+//        else if (selectedIndex == 1) 
+//            System.out.println("Panel de Tipo Pizzas");
+//        else if (selectedIndex == 2);
+//            new TipoPizzaController().initTipoPizza();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
 
@@ -554,7 +558,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblListaPizzas;
     private javax.swing.JTable tblListaTamanos;
-    private javax.swing.JTable tblListaTipo;
+    public javax.swing.JTable tblListaTipo;
     private javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtCanPorciones;
     private javax.swing.JTextField txtNombre;
