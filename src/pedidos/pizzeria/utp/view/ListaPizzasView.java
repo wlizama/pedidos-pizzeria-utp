@@ -5,6 +5,9 @@
  */
 package pedidos.pizzeria.utp.view;
 
+import javax.swing.JTabbedPane;
+import pedidos.pizzeria.utp.controller.TipoPizzaController;
+
 /**
  *
  * @author DAVID_ROBLES B50
@@ -16,6 +19,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
      */
     public ListaPizzasView() {
         initComponents();
+        new TipoPizzaController();
     }
 
     /**
@@ -76,6 +80,12 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Pizzas"));
 
@@ -186,7 +196,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                             .addComponent(cbxTipo, 0, 159, Short.MAX_VALUE)
                             .addComponent(cboTamano, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,7 +352,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,7 +446,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombresTipoPizza)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,6 +505,18 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+
+//        JTabbedPane tabbedPane = (JTabbedPane) evt.getSource();
+//        int selectedIndex = tabbedPane.getSelectedIndex();
+//        if (selectedIndex == 0) 
+//            System.out.println("Panel de Pizzas");
+//        else if (selectedIndex == 1) 
+//            System.out.println("Panel de Tipo Pizzas");
+//        else if (selectedIndex == 2);
+//            new TipoPizzaController().initTipoPizza();
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -536,7 +558,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblListaPizzas;
     private javax.swing.JTable tblListaTamanos;
-    private javax.swing.JTable tblListaTipo;
+    public javax.swing.JTable tblListaTipo;
     private javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtCanPorciones;
     private javax.swing.JTextField txtNombre;
