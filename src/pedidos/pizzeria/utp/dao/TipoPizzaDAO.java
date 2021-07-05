@@ -35,7 +35,6 @@ public class TipoPizzaDAO {
         cs.execute();
 
         ResultSet rs = cs.getResultSet();
-        System.out.println("hereee 022");
 
         while(rs.next()) {
             lstResult.add(new TipoPizza(
@@ -48,6 +47,66 @@ public class TipoPizzaDAO {
         MySqlConexion.close(con);
         
         return lstResult;
+    }
+    
+    
+    public int insertarTipoPizza(TipoPizza tipopizza) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_TipoPizzaInserta ( ?, ?, ?)}");
+        cs.setString("nombre", tipopizza.getNombre());
+        cs.setString("descripcion", tipopizza.getDescripcion());
+        
+        cs.execute();
+
+        int IdTipoPizza = cs.getInt("IdTipoPizza");
+        
+        MySqlConexion.close(con);
+        
+        return IdTipoPizza;
+    }
+    
+    public void modificarTipoPizza(TipoPizza tipopizza) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_TipoPizzaModifica ( ?, ?, ?)}");
+        cs.setInt("IdTipoPizza", tipopizza.getIdTipoPizza());
+        cs.setString("nombre", tipopizza.getNombre());
+        cs.setString("descripcion", tipopizza.getDescripcion());
+        
+        cs.execute();
+        
+        MySqlConexion.close(con);
+    }
+    
+    public TipoPizza getTipoPizza(int IdTipoPizza) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_TipoPizza (?)}");
+        cs.setInt("IdTipoPizza", IdTipoPizza);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        TipoPizza tipopizza = null;
+        if (rs.next()) {
+            tipopizza = new TipoPizza(
+                rs.getInt("IdTipoPizza"),
+                rs.getString("nombre"),
+                rs.getNString("descripcion")
+            );
+        }
+        
+        MySqlConexion.close(con);
+        
+        return tipopizza;
     }
     
 }

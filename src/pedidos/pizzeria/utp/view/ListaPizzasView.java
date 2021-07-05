@@ -5,21 +5,22 @@
  */
 package pedidos.pizzeria.utp.view;
 
-import javax.swing.JTabbedPane;
 import pedidos.pizzeria.utp.controller.TipoPizzaController;
+
 
 /**
  *
  * @author DAVID_ROBLES B50
  */
 public class ListaPizzasView extends javax.swing.JInternalFrame {
-
+    
+    TipoPizzaController tipoPizzaController;
     /**
      * Creates new form listaDePizzas_View
      */
     public ListaPizzasView() {
         initComponents();
-        new TipoPizzaController();
+        tipoPizzaController = new TipoPizzaController(this);
     }
 
     /**
@@ -77,6 +78,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txaDescripcion = new javax.swing.JTextArea();
         btnGuardarTipoPizza = new javax.swing.JButton();
+        lblOperacion = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -430,6 +432,8 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
 
         btnGuardarTipoPizza.setText("Guardar");
 
+        lblOperacion.setText("OP");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -447,11 +451,16 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                             .addComponent(txtNombresTipoPizza)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))
                 .addContainerGap(79, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblOperacion)
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addComponent(lblOperacion)
+                .addGap(8, 8, 8)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtNombresTipoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -482,7 +491,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tipo", jPanel3);
@@ -521,13 +530,13 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEditarTamano;
-    private javax.swing.JButton btnEditarTipo;
+    public javax.swing.JButton btnEditarTipo;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarTamPizza;
-    private javax.swing.JButton btnGuardarTipoPizza;
+    public javax.swing.JButton btnGuardarTipoPizza;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnNuevoTamano;
-    private javax.swing.JButton btnNuevoTipo;
+    public javax.swing.JButton btnNuevoTipo;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JComboBox<String> cboTamano;
     private javax.swing.JComboBox<String> cboTipoPizza;
@@ -556,14 +565,15 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JLabel lblOperacion;
     private javax.swing.JTable tblListaPizzas;
     private javax.swing.JTable tblListaTamanos;
     public javax.swing.JTable tblListaTipo;
-    private javax.swing.JTextArea txaDescripcion;
+    public javax.swing.JTextArea txaDescripcion;
     private javax.swing.JTextField txtCanPorciones;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombresTamPizza;
-    private javax.swing.JTextField txtNombresTipoPizza;
+    public javax.swing.JTextField txtNombresTipoPizza;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
