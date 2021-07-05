@@ -42,6 +42,9 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

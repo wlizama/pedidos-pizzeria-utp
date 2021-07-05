@@ -39,9 +39,7 @@ public class DireccionClienteView extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Cambiar Direccion de Cliente");
 
         jLabel1.setText("Cliente");

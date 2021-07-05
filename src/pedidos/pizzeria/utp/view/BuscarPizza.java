@@ -36,6 +36,9 @@ public class BuscarPizza extends javax.swing.JInternalFrame {
         btnSeleccionar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Pizza"));
 
         jLabel8.setText("Nombre");

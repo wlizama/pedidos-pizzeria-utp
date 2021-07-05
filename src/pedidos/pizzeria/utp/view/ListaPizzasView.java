@@ -74,6 +74,9 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         txaDescripcion = new javax.swing.JTextArea();
         btnGuardarTipoPizza = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Pizzas"));
 
         jLabel1.setText("Tipo");

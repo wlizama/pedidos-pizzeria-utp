@@ -37,6 +37,9 @@ public class ListaPedidoView extends javax.swing.JInternalFrame {
         btnVerPedido = new javax.swing.JButton();
         btnNuevoPedido = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Pedidos"));
 
         jLabel1.setText("Cliente");
