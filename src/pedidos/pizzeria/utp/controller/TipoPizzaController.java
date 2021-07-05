@@ -8,6 +8,7 @@ package pedidos.pizzeria.utp.controller;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pedidos.pizzeria.utils.Constants;
 import pedidos.pizzeria.utp.dao.TipoPizzaDAO;
 import pedidos.pizzeria.utp.model.TipoPizza;
 import pedidos.pizzeria.utp.view.ListaPizzasView;
@@ -16,50 +17,48 @@ import pedidos.pizzeria.utp.view.ListaPizzasView;
  *
  * @author wilderlizama
  */
-public class TipoPizzaController {
+public class TipoPizzaController implements BaseControllerInterface {
     
     String op;
     int IdTipoPizza_edit;
     
     ListaPizzasView pizzasView;
-    TipoPizzaDAO tpDAO = new TipoPizzaDAO();
+    TipoPizzaDAO tipopizzasDAO;
     
-
     public TipoPizzaController(ListaPizzasView pizzasView) {
         this.pizzasView = pizzasView;
+        this.tipopizzasDAO = new TipoPizzaDAO();
         
         // eventos de form
         pizzasView.btnEditarTipo.addActionListener((ae) -> {
-            // obtener modelo
-            getTipoTipizza();
+            obtener();
         });
         
         pizzasView.btnNuevoTipo.addActionListener((ae) -> {
-            // obtener modelo
-            nuevoTipoPizza();
+            nuevo();
         });
         
         pizzasView.btnGuardarTipoPizza.addActionListener((ae) -> {
-            guardarTipoPizza();
-            buscarTipoPizzaLista();
+            guardar();
         });
         
-        
         limpiarForm();
-        buscarTipoPizzaLista();
-        this.op = "new";
-        pizzasView.lblOperacion.setText("( Nuevo )");
+        buscar();
+        this.op = Constants.OP_NEW;
+        pizzasView.lblOperacion.setText("( NUEVO )");
     }
-    
+
+    @Override
     public void limpiarForm() {
         pizzasView.txtNombresTipoPizza.setText("");
         pizzasView.txaDescripcion.setText("");
     }
-    
-    public void buscarTipoPizzaLista() {
+
+    @Override
+    public void buscar() {
         try {
             
-            List<TipoPizza> lstTipoPizza = tpDAO.getListaTipoPizza();
+            List<TipoPizza> lstTipoPizza = tipopizzasDAO.getListaTipoPizza();
             
             DefaultTableModel pizzasViewTblModel = (DefaultTableModel) pizzasView.tblListaTipo.getModel();
             // limpiar tabla antes de agregar
@@ -69,7 +68,6 @@ public class TipoPizzaController {
             }
 
             if (lstTipoPizza.size() > 0) {
-                System.out.println("llenado tabla");
                 for (TipoPizza tipoPizza : lstTipoPizza) {
                     pizzasViewTblModel.addRow(new Object[] {
                         tipoPizza.getIdTipoPizza(),
@@ -80,101 +78,26 @@ public class TipoPizzaController {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
                 null,
-                "Error buscarTipoPizzaLista: " + e.getMessage(),
+                "Error buscar: " + e.getMessage(),
                 "Excepción",
                 JOptionPane.ERROR_MESSAGE
             );
         }
     }
-    
-    public void nuevoTipoPizza() {
-        
-        try {
-            this.op = "new";
-            limpiarForm();
-            pizzasView.lblOperacion.setText("( NUEVO )");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                null,
-                "Error insertarTipoPizza: " + e.getMessage(),
-                "Excepción",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-    
-    public void insertarTipoPizza() {
-        
-        try {
-            TipoPizza tipopizza = new TipoPizza(
-                0,
-                pizzasView.txtNombresTipoPizza.getText(),
-                pizzasView.txaDescripcion.getText()
-            );
-            
-            int IdTipoPizza = tpDAO.insertarTipoPizza(tipopizza);
-            tipopizza.setIdTipoPizza(IdTipoPizza);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                null,
-                "Error insertarTipoPizza: " + e.getMessage(),
-                "Excepción",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-    
-    public void modificarTipoPizza() {
-        
-        try {
-            TipoPizza tipopizza = new TipoPizza(
-                IdTipoPizza_edit,
-                pizzasView.txtNombresTipoPizza.getText(),
-                pizzasView.txaDescripcion.getText()
-            );
-            
-            tpDAO.modificarTipoPizza(tipopizza);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                null,
-                "Error modificarTipoPizza: " + e.getMessage(),
-                "Excepción",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
-    
-    public void guardarTipoPizza() {
-        
-        // validaciones
-        
-        if (this.op.equals("new"))
-            insertarTipoPizza();
-        else if (this.op.equals("edit"))
-            modificarTipoPizza();
-        
-        limpiarForm();
-        this.op = "new";
-        pizzasView.lblOperacion.setText("( NUEVO )");
-    }
-    
-    
-    public void getTipoTipizza() {
+
+    @Override
+    public void obtener() {
         try {
             int selectedRow = pizzasView.tblListaTipo.getSelectedRow();
             if (selectedRow != -1) {
                 int IdTipoPizza = (int) pizzasView.tblListaTipo.getValueAt(selectedRow, 0);
-                TipoPizza tipopizza = tpDAO.getTipoPizza(IdTipoPizza);
+                TipoPizza tipopizza = tipopizzasDAO.getTipoPizza(IdTipoPizza);
                 
                 IdTipoPizza_edit = tipopizza.getIdTipoPizza();
                 pizzasView.txtNombresTipoPizza.setText(tipopizza.getNombre());
                 pizzasView.txaDescripcion.setText(tipopizza.getDescripcion());
-                this.op = "edit";
+                
+                this.op = Constants.OP_EDIT;
                 pizzasView.lblOperacion.setText("( EDITAR )");
             }
             else {
@@ -189,11 +112,104 @@ public class TipoPizzaController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(
                 null,
-                "Error getTipoTipizza: " + e.getMessage(),
+                "Error obtener: " + e.getMessage(),
                 "Excepción",
                 JOptionPane.ERROR_MESSAGE
             );
         }
+    }
 
+    @Override
+    public void nuevo() {
+        try {
+            limpiarForm();
+            this.op = Constants.OP_NEW;
+            pizzasView.lblOperacion.setText("( NUEVO )");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error nuevo: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    @Override
+    public void insertar() {
+        try {
+            TipoPizza tipopizza = new TipoPizza(
+                0,
+                pizzasView.txtNombresTipoPizza.getText(),
+                pizzasView.txaDescripcion.getText()
+            );
+            
+            int IdTipoPizza = tipopizzasDAO.insertarTipoPizza(tipopizza);
+            tipopizza.setIdTipoPizza(IdTipoPizza);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error insertar: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    @Override
+    public void modificar() {
+        try {
+            TipoPizza tipopizza = new TipoPizza(
+                IdTipoPizza_edit,
+                pizzasView.txtNombresTipoPizza.getText(),
+                pizzasView.txaDescripcion.getText()
+            );
+            
+            tipopizzasDAO.modificarTipoPizza(tipopizza);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error modificar: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+    @Override
+    public void guardar() {
+         
+        // validaciones
+        String msgValidacion = "";
+        if (pizzasView.txtNombresTipoPizza.getText().trim().equals(""))
+            msgValidacion += "- Ingresar nombre de Tipo Pizza.\n";
+        if (pizzasView.txaDescripcion.getText().trim().equals(""))
+            msgValidacion += "- Ingresar descripción de Tipo Pizza.\n";
+        
+        if (!msgValidacion.equals("")) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Corregir los siguiente:\n" + msgValidacion,
+                "Mensaje",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        if (this.op.equals(Constants.OP_NEW))
+            insertar();
+        else if (this.op.equals(Constants.OP_EDIT))
+            modificar();
+        
+        limpiarForm();
+        this.op = Constants.OP_NEW;
+        pizzasView.lblOperacion.setText("( NUEVO )");
+        
+        buscar();
     }
 }
