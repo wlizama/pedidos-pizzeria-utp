@@ -39,6 +39,9 @@ public class ReporteVentasView extends javax.swing.JInternalFrame {
         btnGenerarReporte = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setMaximizable(true);
+
         jLabel1.setFont(new java.awt.Font("Georgia", 3, 18)); // NOI18N
         jLabel1.setText("Reporte de Ventas");
 

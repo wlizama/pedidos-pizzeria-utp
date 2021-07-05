@@ -36,9 +36,7 @@ public class ListaEnviosView extends javax.swing.JInternalFrame {
         btnNuevoEnvio = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Lista de Envios");
         setToolTipText("");
 
