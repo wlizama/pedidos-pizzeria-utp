@@ -145,7 +145,7 @@ public class ListaPedidoView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblListaPedido;
+    public javax.swing.JTable tblListaPedido;
     public javax.swing.JTextField txtDocumento;
     // End of variables declaration//GEN-END:variables
 }
