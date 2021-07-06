@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utils.Constants;
+import pedidos.pizzeria.utils.Helpers;
 import pedidos.pizzeria.utp.dao.TipoPizzaDAO;
 import pedidos.pizzeria.utp.model.TipoPizza;
 import pedidos.pizzeria.utp.view.ListaPizzasView;
@@ -62,10 +63,8 @@ public class TipoPizzaController implements BaseControllerInterface {
             
             DefaultTableModel pizzasViewTblModel = (DefaultTableModel) pizzasView.tblListaTipo.getModel();
             // limpiar tabla antes de agregar
-            for (int i = 0; i < pizzasViewTblModel.getRowCount(); i++) {
-                pizzasViewTblModel.removeRow(i);
-                i = i - 1;
-            }
+            Helpers.clearTable(pizzasViewTblModel);
+            
 
             if (lstTipoPizza.size() > 0) {
                 for (TipoPizza tipoPizza : lstTipoPizza) {
