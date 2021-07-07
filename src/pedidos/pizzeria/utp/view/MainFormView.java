@@ -84,6 +84,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smPersonal.setMnemonic('p');
         smPersonal.setText("Personal");
+        smPersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smPersonalActionPerformed(evt);
+            }
+        });
         mMantenimiento.add(smPersonal);
 
         smCobertura.setMnemonic('b');
@@ -152,6 +157,14 @@ public class MainFormView extends javax.swing.JFrame {
         dpPrincipal.add(pizzaView);
         pizzaView.setVisible(true);
     }//GEN-LAST:event_smPizzasActionPerformed
+
+    private void smPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smPersonalActionPerformed
+        // TODO add your handling code here:
+        ListaPersonalView personalView = new ListaPersonalView();
+        personalView.pack();
+        dpPrincipal.add(personalView);
+        personalView.setVisible(true);
+    }//GEN-LAST:event_smPersonalActionPerformed
 
     /**
      * @param args the command line arguments
