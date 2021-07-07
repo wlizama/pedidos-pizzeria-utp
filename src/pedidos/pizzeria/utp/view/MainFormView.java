@@ -5,6 +5,8 @@
  */
 package pedidos.pizzeria.utp.view;
 
+import pedidos.pizzeria.utils.Helpers;
+
 /**
  *
  * @author wilderlizama
@@ -155,6 +157,7 @@ public class MainFormView extends javax.swing.JFrame {
         ListaPizzasView pizzaView = new ListaPizzasView();
         pizzaView.pack();
         dpPrincipal.add(pizzaView);
+        Helpers.centerForm(dpPrincipal, pizzaView);
         pizzaView.setVisible(true);
     }//GEN-LAST:event_smPizzasActionPerformed
 
@@ -163,6 +166,7 @@ public class MainFormView extends javax.swing.JFrame {
         ListaPersonalView personalView = new ListaPersonalView();
         personalView.pack();
         dpPrincipal.add(personalView);
+        Helpers.centerForm(dpPrincipal, personalView);
         personalView.setVisible(true);
     }//GEN-LAST:event_smPersonalActionPerformed
 
