@@ -100,7 +100,7 @@ public class TipoPizzaDAO {
             tipopizza = new TipoPizza(
                 rs.getInt("IdTipoPizza"),
                 rs.getString("nombre"),
-                rs.getNString("descripcion")
+                rs.getString("descripcion")
             );
         }
         
