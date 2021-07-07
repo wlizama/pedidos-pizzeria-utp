@@ -1,42 +1,47 @@
+USE `pedidos-pizzeria`;
+DELIMITER $$
+
+DROP procedure IF EXISTS `SP_Usuario`;
 CREATE PROCEDURE `SP_Usuario`(
-	nombreUsuario varchar(50),
-	contrasenha varchar(50)
+    nombreUsuario varchar(50),
+    contrasenha varchar(50)
 )
 BEGIN
-	select 
-		IdUsuario
+    select 
+        IdUsuario
     from usuario u
     join persona p
     on u.IdPersona = p.IdPersona
     where u.nombreUsuario = nombreUsuario
     and u.contrasenha = contrasenha
     and p.IdEstado = 6; -- activo
-END
+END;
 
---------------
+DROP procedure IF EXISTS `SP_AccesoUsuario`;
 CREATE PROCEDURE `SP_AccesoUsuario`(
-	IdUsuario int
+    IdUsuario int
 )
 BEGIN
-	select 
-		f.IdFormulario,
-		f.nombre
+    select 
+        f.IdFormulario,
+        f.nombre
     from formulario f 
     join acceso a on f.IdFormulario = a.IdFormulario
     join roles r on a.IdRol = r.IdRol 
     join usuario u on r.IdRol = u.IdRol
     where u.IdUsuario = IdUsuario;
-END
-------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoDocumentoLista`;
 CREATE PROCEDURE `SP_TipoDocumentoLista`()
 BEGIN
-	select
-		tdi.IdTipoDocIdentidad,
+    select
+        tdi.IdTipoDocIdentidad,
         tdi.nombre,
         tdi.cantidadCaracteres
     from tipodocumentoidentidad tdi;
-END
-----------------
+END;
+
 CREATE  PROCEDURE `SP_Comprobante`(
     IdComprobante int
 )
@@ -56,8 +61,9 @@ BEGIN
     join tipocomprobante tc on c.IdTipoComprobante = tc.IdTipoComprobante
     join estado e on c.IdEstado = e.IdEstado
     where c.IdComprobante = IdComprobante;
-END
----------------
+END;
+
+DROP procedure IF EXISTS `SP_ComprobanteLista`;
 CREATE PROCEDURE `SP_ComprobanteLista`(
     numero int
 )
@@ -84,8 +90,9 @@ BEGIN
     join tipocomprobante tc on c.IdTipoComprobante = tc.IdTipoComprobante
     join estado e on c.IdEstado = e.IdEstado
     where c.numero between numero_ini and numero_fin;
-END
--------------
+END;
+
+DROP procedure IF EXISTS `SP_EstadoLista`;
 CREATE PROCEDURE `SP_EstadoLista`(
     IdTipoEstado int
 )
@@ -96,16 +103,18 @@ BEGIN
         e.IdTipoEstado
     from estado e
     where e.IdTipoEstado = IdTipoEstado;
-END
--------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPersonaLista`;
 CREATE PROCEDURE `SP_TipoPersonaLista`()
 BEGIN
     select
         tp.IdTipoPersona,
         tp.nombre
     from tipopersona tp;
-END
-----------------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPersona`;
 CREATE PROCEDURE `SP_TipoPersona`(
     IdTipoPersona int
 )
@@ -115,8 +124,9 @@ BEGIN
         tp.nombre
     from tipopersona tp
     where tp.IdTipoPersona = IdTipoPersona;
-END
-----------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPersonaInserta`;
 CREATE PROCEDURE `SP_TipoPersonaInserta`(
     IdTipoPersona int,
     nombre varchar(50)
@@ -130,8 +140,9 @@ BEGIN
         IdTipoPersona,
         nombre
     );
-END
------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPersonaModifica`;
 CREATE PROCEDURE `SP_TipoPersonaModifica`(
     IdTipoPersona int,
     nombre varchar(50)
@@ -140,8 +151,9 @@ BEGIN
     update tipopersona tp
     set tp.nombre = nombre
     where tp.IdTipoPersona = IdTipoPersona;
-END
----------------
+END;
+
+DROP procedure IF EXISTS `SP_DistritoLista`;
 CREATE PROCEDURE `SP_DistritoLista`()
 BEGIN
     select 
@@ -149,8 +161,9 @@ BEGIN
         nombre,
         cobertura
     from distrito d;
-END
-------------
+END;
+
+DROP procedure IF EXISTS `SP_Distrito`;
 CREATE PROCEDURE `SP_Distrito`(
     IdDistrito int
 )
@@ -161,8 +174,9 @@ BEGIN
         d.cobertura
     from distrito d
     where d.IdDistrito = IdDistrito;
-END
------------
+END;
+
+DROP procedure IF EXISTS `SP_DistritoInserta`;
 CREATE PROCEDURE `SP_DistritoInserta`(
     out IdDistrito int,
     nombre varchar(50),
@@ -179,8 +193,9 @@ BEGIN
     );
     
     SET IdDistrito = LAST_INSERT_ID();
-END
------------
+END;
+
+DROP procedure IF EXISTS `SP_DistritoModifica`;
 CREATE PROCEDURE `SP_DistritoModifica`(
     IdDistrito int,
     nombre varchar(50),
@@ -191,8 +206,9 @@ BEGIN
         set d.nombre = nombre,
         d.cobertura = cobertura
     where d.IdDistrito = IdDistrito;
-END
----------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPizzaLista`;
 CREATE PROCEDURE `SP_TipoPizzaLista`()
 BEGIN
     select 
@@ -200,8 +216,9 @@ BEGIN
         t.nombre,
         t.descripcion
     from tipopizza t;
-END
----------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPizza`;
 CREATE PROCEDURE `SP_TipoPizza`(
     IdTipoPizza int
 )
@@ -212,8 +229,9 @@ BEGIN
         t.descripcion
     from tipopizza t
     where t.IdTipoPizza = IdTipoPizza;
-END
---------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPizzaInserta`;
 CREATE PROCEDURE `SP_TipoPizzaInserta`(
     out IdTipoPizza int,
     nombre varchar(50),
@@ -229,8 +247,9 @@ BEGIN
         descripcion
     );
     SET IdTipoPizza = LAST_INSERT_ID();
-END
--------------------
+END;
+
+DROP procedure IF EXISTS `SP_TipoPizzaModifica`;
 CREATE PROCEDURE `SP_TipoPizzaModifica`(
     IdTipoPizza int,
     nombre varchar(50),
@@ -241,8 +260,9 @@ BEGIN
         set t.nombre = nombre,
         t.descripcion = descripcion
     where t.IdTipoPizza = IdTipoPizza;
-END
-------------------
+END;
+
+DROP procedure IF EXISTS `SP_TamanhoPizzaLista`;
 CREATE PROCEDURE `SP_TamanhoPizzaLista`()
 BEGIN
     select 
@@ -250,8 +270,9 @@ BEGIN
         t.nombre,
         t.cantidadPorciones
     from tamanho t;
-END
-------------------
+END;
+
+DROP procedure IF EXISTS `SP_TamanhoPizza`;
 CREATE PROCEDURE `SP_TamanhoPizza`(
     IdTamanho int
 )
@@ -262,8 +283,9 @@ BEGIN
         t.cantidadPorciones
     from tamanho t
     where t.IdTamanho = IdTamanho;
-END
-----------------
+END;
+
+DROP procedure IF EXISTS `SP_TamanhoPizzaInserta`;
 CREATE PROCEDURE `SP_TamanhoPizzaInserta`(
     out IdTamanho int,
     nombre varchar(30),
@@ -279,8 +301,9 @@ BEGIN
         cantidadPorciones
     );
     SET IdTamanho = LAST_INSERT_ID();
-END
---------------
+END;
+
+DROP procedure IF EXISTS `SP_TamanhoPizzaModifica`;
 CREATE PROCEDURE `SP_TamanhoPizzaModifica`(
     IdTamanho int,
     nombre varchar(30),
@@ -291,8 +314,9 @@ BEGIN
         set t.nombre = nombre,
         t.cantidadPorciones = cantidadPorciones
     where t.IdTamanho = IdTamanho;
-END
------------------
+END;
+
+DROP procedure IF EXISTS `SP_PizzaLista`;
 CREATE PROCEDURE `SP_PizzaLista`(
     IdTipoPizza int
 )
@@ -319,8 +343,9 @@ BEGIN
     join tamanho t on p.IdTamanho = t.IdTamanho
     join estado e on p.IdEstado = e.nombre
     where p.IdTipoPizza between IdTipoPizza_ini and IdTipoPizza_fin;
-END
----------------
+END;
+
+DROP procedure IF EXISTS `SP_Pizza`;
 CREATE PROCEDURE `SP_Pizza`(
     IdPizza int
 )
@@ -340,8 +365,9 @@ BEGIN
     join tamanho t on p.IdTamanho = t.IdTamanho
     join estado e on p.IdEstado = e.nombre
     where p.IdPizza = IdPizza;
-END
-------------
+END;
+
+DROP procedure IF EXISTS `SP_PizzaInserta`;
 CREATE PROCEDURE `SP_PizzaInserta`(
     out IdPizza int,
     nombre varchar(50),
@@ -366,8 +392,9 @@ BEGIN
         IdEstado
     );
     SET IdPizza = LAST_INSERT_ID();
-END
-----------------
+END;
+
+DROP procedure IF EXISTS `SP_PizzaModifica`;
 CREATE PROCEDURE `SP_PizzaModifica`(
     IdPizza int,
     nombre varchar(50),
@@ -384,16 +411,18 @@ BEGIN
         p.IdTamanho = IdTamanho,
         p.IdEstado = IdEstado
     where p.IdPizza = IdPizza;
-END
----------------
+END;
+
+DROP procedure IF EXISTS `SP_RolLista`;
 CREATE PROCEDURE `SP_RolLista`()
 BEGIN
     select 
         r.IdRol,
         r.nombre
     from roles r;
-END 
---------------
+END;
+
+DROP procedure IF EXISTS `SP_Rol`;
 CREATE PROCEDURE `SP_Rol`(
     IdRol int
 )
@@ -403,8 +432,9 @@ BEGIN
         r.nombre
     from roles r
     where r.IdRol = IdRol;
-END
------------
+END;
+
+DROP procedure IF EXISTS `SP_RolInserta`;
 CREATE PROCEDURE `SP_RolInserta`(
     out IdRol int,
     nombre varchar(50)
@@ -417,8 +447,9 @@ BEGIN
         nombre
     );
     SET IdRol = LAST_INSERT_ID();
-END
---------------
+END;
+
+DROP procedure IF EXISTS `SP_RolModifca`;
 CREATE PROCEDURE `SP_RolModifca`(
     IdRol int,
     nombre varchar(50)
@@ -427,8 +458,9 @@ BEGIN
     update roles r
         set r.nombre = nombre
     where r.IdRol = IdRol;
-END
--------------
+END;
+
+DROP procedure IF EXISTS `SP_RolAccesoLista`;
 CREATE PROCEDURE `SP_RolAccesoLista`(
     IdRol int
 )
@@ -441,8 +473,9 @@ BEGIN
     join formulario f on a.IdFormulario = f.IdFormulario
     join roles r on a.IdRol = r.IdRol
     where a.IdRol = IdRol;
-END
-------------
+END;
+
+DROP procedure IF EXISTS `SP_RolAccesoEliminaInserta`;
 CREATE PROCEDURE `SP_RolAccesoEliminaInserta`(
     IdRol int,
     idsformulario varchar(50)
@@ -468,8 +501,9 @@ BEGIN
     set v_id := substr(idsformulario, prev_idx);
     insert into acceso (IdRol,IdFormulario) values (IdRol,v_id);
     
-END
------------------
+END;
+
+DROP procedure IF EXISTS `SP_VentasRpt`;
 CREATE PROCEDURE `SP_VentasRpt`(
     fechaEmision_inicio date,
     fechaEmision_fin date
@@ -489,8 +523,9 @@ BEGIN
     join tipocomprobante t on c.IdTipoComprobante = t.IdTipoComprobante
     join estado e on c.IdEstado = e.IdEstado
     where c.fechaEmision between fechaEmision_inicio and fechaEmision_fin;
-END
-----------------------
+END;
+
+DROP procedure IF EXISTS `SP_PizzasRpt`;
 CREATE PROCEDURE `SP_PizzasRpt`(
     fechaCreacion_inicio date,
     fechaCreacion_fin date
@@ -506,8 +541,9 @@ BEGIN
     join tipopizza tpz on pz.IdTipoPizza = tpz.IdTipoPizza
     where p.fechacreacion between fechaCreacion_inicio and fechaCreacion_fin
     group by tpz.IdTipoPizza, dp.cantidad;
-END
-------------------------
+END;
+
+DROP procedure IF EXISTS `SP_CoberturaRpt`;
 CREATE PROCEDURE `SP_CoberturaRpt`(
     fechaCreacion_inicio date,
     fechaCreacion_fin date

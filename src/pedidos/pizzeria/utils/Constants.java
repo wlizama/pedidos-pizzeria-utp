@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pedidos.pizzeria.utp;
+package pedidos.pizzeria.utils;
 
 /**
  *
- * @author DAVID ROBLES
+ * @author wilderlizama
  */
-public class classtipopizza {
+public class Constants {
     
+    public static final String OP_NEW = "new";
+    public static final String OP_EDIT = "edit";
 }
