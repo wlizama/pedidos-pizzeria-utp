@@ -1159,18 +1159,18 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_TipoPersonaInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_TipoPersonaInserta`(
-    IdTipoPersona int,
+    out IdTipoPersona int,
     nombre varchar(50)
 )
 BEGIN
     insert into tipopersona(
-        IdTipoPersona,
         nombre
     )
     value (
-        IdTipoPersona,
         nombre
     );
+    SET IdTipoPersona = LAST_INSERT_ID();
+END
 END ;;
 DELIMITER ;
 
