@@ -313,8 +313,8 @@
                           <Component id="jScrollPane3" min="-2" pref="319" max="-2" attributes="0"/>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnEditarListaRoles" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnNuevoListaRoles" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEditarRol" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNuevoRol" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -330,9 +330,9 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                                  <Component id="btnEditarListaRoles" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnEditarRol" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnNuevoListaRoles" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnNuevoRol" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="100" max="32767" attributes="0"/>
@@ -380,7 +380,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="btnEditarListaRoles">
+                <Component class="javax.swing.JButton" name="btnEditarRol">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Editar"/>
                   </Properties>
@@ -388,7 +388,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnNuevoListaRoles">
+                <Component class="javax.swing.JButton" name="btnNuevoRol">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Nuevo"/>
                   </Properties>
@@ -421,12 +421,12 @@
                                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtNombresRol" min="-2" pref="174" max="-2" attributes="0"/>
+                                          <Component id="txtNombreRol" min="-2" pref="174" max="-2" attributes="0"/>
                                           <Component id="chkPedidos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCheckBox2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCheckBox3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCheckBox4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jCheckBox5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkDelivery" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkMantenimiento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkReportes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkMiSesion" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -442,20 +442,20 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtNombresRol" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombreRol" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="chkPedidos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkDelivery" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkMantenimiento" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkReportes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jCheckBox5" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkMiSesion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnGuardarRol" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -468,13 +468,16 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Nombres"/>
                   </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombre"/>
+                  </AccessibilityProperties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Formularios"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtNombresRol">
+                <Component class="javax.swing.JTextField" name="txtNombreRol">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
@@ -487,7 +490,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+                <Component class="javax.swing.JCheckBox" name="chkDelivery">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Delivery"/>
                   </Properties>
@@ -495,7 +498,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+                <Component class="javax.swing.JCheckBox" name="chkMantenimiento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Mantenimiento"/>
                   </Properties>
@@ -503,7 +506,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+                <Component class="javax.swing.JCheckBox" name="chkReportes">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                   </Properties>
@@ -511,7 +514,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+                <Component class="javax.swing.JCheckBox" name="chkMiSesion">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Mi Sesion"/>
                   </Properties>
