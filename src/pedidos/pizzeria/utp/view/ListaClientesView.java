@@ -51,12 +51,13 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
         txtTelefono = new javax.swing.JTextField();
         cbxTDocCliente = new javax.swing.JComboBox();
         txtDocumento = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        lblOpCliente = new javax.swing.JLabel();
+        pnlClientesDirecciones = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblClientesDirecciones = new javax.swing.JTable();
         btnEditarDireccion = new javax.swing.JButton();
         btnAgregarDireccion = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        lblOpCliente = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -104,7 +105,7 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                         .addComponent(txtDocumentoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar)
@@ -140,6 +141,12 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Documento");
 
+        btnGuardar.setText("Guardar");
+
+        lblOpCliente.setText("OP");
+
+        pnlClientesDirecciones.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Direcciones", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
         tblClientesDirecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -162,9 +169,31 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
         btnAgregarDireccion.setText("Agregar");
 
-        btnGuardar.setText("Guardar");
-
-        lblOpCliente.setText("OP");
+        javax.swing.GroupLayout pnlClientesDireccionesLayout = new javax.swing.GroupLayout(pnlClientesDirecciones);
+        pnlClientesDirecciones.setLayout(pnlClientesDireccionesLayout);
+        pnlClientesDireccionesLayout.setHorizontalGroup(
+            pnlClientesDireccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesDireccionesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlClientesDireccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlClientesDireccionesLayout.createSequentialGroup()
+                        .addComponent(btnEditarDireccion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarDireccion))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        pnlClientesDireccionesLayout.setVerticalGroup(
+            pnlClientesDireccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesDireccionesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlClientesDireccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarDireccion)
+                    .addComponent(btnEditarDireccion))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pnlClientesLayout = new javax.swing.GroupLayout(pnlClientes);
         pnlClientes.setLayout(pnlClientesLayout);
@@ -173,9 +202,9 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
             .addGroup(pnlClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
                     .addGroup(pnlClientesLayout.createSequentialGroup()
                         .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar)
                             .addGroup(pnlClientesLayout.createSequentialGroup()
                                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -188,17 +217,13 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                                     .addComponent(cbxTDocCliente, 0, 170, Short.MAX_VALUE)
                                     .addComponent(txtNombres)
                                     .addComponent(txtApellidos)
-                                    .addComponent(txtTelefono)))
-                            .addComponent(btnGuardar))
+                                    .addComponent(txtTelefono))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblOpCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
-                                .addComponent(btnEditarDireccion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAgregarDireccion))))))
+                    .addGroup(pnlClientesLayout.createSequentialGroup()
+                        .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblOpCliente)
+                            .addComponent(pnlClientesDirecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 17, Short.MAX_VALUE))))
         );
         pnlClientesLayout.setVerticalGroup(
             pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,16 +247,15 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                     .addComponent(cbxTDocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditarDireccion)
-                    .addComponent(btnAgregarDireccion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pnlClientesDirecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGuardar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnlClientesDirecciones.getAccessibleContext().setAccessibleName("Direcciones");
+        pnlClientesDirecciones.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -240,7 +264,7 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -273,9 +297,10 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblOpCliente;
     private javax.swing.JPanel pnlClientes;
+    public javax.swing.JPanel pnlClientesDirecciones;
     private javax.swing.JPanel pnlListaClientes;
     public javax.swing.JTable tblClientes;
     public javax.swing.JTable tblClientesDirecciones;

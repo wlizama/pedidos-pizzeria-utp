@@ -100,6 +100,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smCobertura.setMnemonic('b');
         smCobertura.setText("Cobertura");
+        smCobertura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smCoberturaActionPerformed(evt);
+            }
+        });
         mMantenimiento.add(smCobertura);
 
         smPizzas.setMnemonic('z');
@@ -182,6 +187,14 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, clientesView);
         clientesView.setVisible(true);
     }//GEN-LAST:event_smClientesActionPerformed
+
+    private void smCoberturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCoberturaActionPerformed
+        ListaCoberturaView coberturaView = new ListaCoberturaView();
+        coberturaView.pack();
+        dpPrincipal.add(coberturaView);
+        Helpers.centerForm(dpPrincipal, coberturaView);
+        coberturaView.setVisible(true);
+    }//GEN-LAST:event_smCoberturaActionPerformed
 
     /**
      * @param args the command line arguments

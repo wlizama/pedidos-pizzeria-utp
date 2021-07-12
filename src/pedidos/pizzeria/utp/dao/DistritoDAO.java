@@ -42,4 +42,45 @@ public class DistritoDAO {
         
         return lstResult;
     }
+    
+    public Distrito getDistrito(int idDistrito) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_Distrito (?)}");
+        cs.setInt("IdDistrito", idDistrito);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        Distrito distrito = null;
+        if (rs.next()) {
+            distrito = new Distrito(
+                rs.getInt("IdDistrito"),
+                rs.getString("nombre"),
+                rs.getInt("cobertura") == 1
+            );
+        }
+        
+        MySqlConexion.close(con);
+        
+        return distrito;
+    }
+    
+    public void modificarDistrito(Distrito distrito) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_DistritoModifica ( ?, ?, ? )}");
+        cs.setInt("IdDistrito", distrito.getIdDistrito());
+        cs.setString("nombre", distrito.getNombre());
+        cs.setInt("cobertura", distrito.getCobertura() ? 1 : 0);
+        
+        cs.execute();
+        
+        MySqlConexion.close(con);
+    }
 }
