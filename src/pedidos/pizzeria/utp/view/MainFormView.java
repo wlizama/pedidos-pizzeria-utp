@@ -82,6 +82,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smClientes.setMnemonic('c');
         smClientes.setText("Clientes");
+        smClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smClientesActionPerformed(evt);
+            }
+        });
         mMantenimiento.add(smClientes);
 
         smPersonal.setMnemonic('p');
@@ -169,6 +174,14 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, personalView);
         personalView.setVisible(true);
     }//GEN-LAST:event_smPersonalActionPerformed
+
+    private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
+        ListaClientesView clientesView = new ListaClientesView();
+        clientesView.pack();
+        dpPrincipal.add(clientesView);
+        Helpers.centerForm(dpPrincipal, clientesView);
+        clientesView.setVisible(true);
+    }//GEN-LAST:event_smClientesActionPerformed
 
     /**
      * @param args the command line arguments

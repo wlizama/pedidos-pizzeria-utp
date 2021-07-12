@@ -5,17 +5,22 @@
  */
 package pedidos.pizzeria.utp.view;
 
+import pedidos.pizzeria.utp.controller.ClienteController;
+
 /**
  *
  * @author DAVID ROBLES
  */
 public class ListaClientesView extends javax.swing.JInternalFrame {
+    
+    ClienteController clienteController;
 
     /**
      * Creates new form ListaClientesView
      */
     public ListaClientesView() {
         initComponents();
+        clienteController = new ClienteController(this);
     }
 
     /**
@@ -29,8 +34,8 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
         pnlListaClientes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cbxCliente = new javax.swing.JComboBox<>();
-        txtDocumento = new javax.swing.JTextField();
+        cbxTDocClienteFiltro = new javax.swing.JComboBox();
+        txtDocumentoFiltro = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
@@ -44,13 +49,14 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
         txtNombres = new javax.swing.JTextField();
         txtApellidos = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        cbxDoc = new javax.swing.JComboBox<>();
-        cbxResuldocumen = new javax.swing.JTextField();
+        cbxTDocCliente = new javax.swing.JComboBox();
+        txtDocumento = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblClientesb = new javax.swing.JTable();
-        btnEditarCliente = new javax.swing.JButton();
-        btnAgregarCliente = new javax.swing.JButton();
+        tblClientesDirecciones = new javax.swing.JTable();
+        btnEditarDireccion = new javax.swing.JButton();
+        btnAgregarDireccion = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        lblOpCliente = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -59,24 +65,18 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Cliente");
 
-        cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnBuscar.setText("Buscar");
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nro Doc", "Cliente", "Direccion", "Estado", "Telefono"
+                "#", "Tipo Doc.", "Nro Doc.", "Cliente", "Teléfono", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -99,18 +99,17 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                     .addGroup(pnlListaClientesLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTDocClienteFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(txtDocumentoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlListaClientesLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEditar)
-                            .addComponent(btnNuevo))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditar)
+                    .addComponent(btnNuevo))
+                .addContainerGap())
         );
         pnlListaClientesLayout.setVerticalGroup(
             pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,18 +117,17 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16)
                 .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxTDocClienteFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDocumentoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlListaClientesLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnNuevo)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
@@ -138,79 +136,74 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Apellidos");
 
-        jLabel4.setText("Telefono");
+        jLabel4.setText("Teléfono");
 
         jLabel5.setText("Documento");
 
-        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidosActionPerformed(evt);
-            }
-        });
-
-        cbxDoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        tblClientesb.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientesDirecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nro", "Direccion", "Referencia", "Por defecto"
+                "#", "Dirección", "Distrito", "Referencia", "Por defecto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblClientesb);
+        jScrollPane2.setViewportView(tblClientesDirecciones);
 
-        btnEditarCliente.setText("Editar");
+        btnEditarDireccion.setText("Editar");
 
-        btnAgregarCliente.setText("Agregar");
+        btnAgregarDireccion.setText("Agregar");
 
         btnGuardar.setText("Guardar");
+
+        lblOpCliente.setText("OP");
 
         javax.swing.GroupLayout pnlClientesLayout = new javax.swing.GroupLayout(pnlClientes);
         pnlClientes.setLayout(pnlClientesLayout);
         pnlClientesLayout.setHorizontalGroup(
             pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditarCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAgregarCliente)
-                .addGap(32, 32, 32))
             .addGroup(pnlClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(pnlClientesLayout.createSequentialGroup()
                         .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(49, 49, 49)
-                        .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxResuldocumen)
-                            .addComponent(cbxDoc, 0, 170, Short.MAX_VALUE)
-                            .addComponent(txtNombres)
-                            .addComponent(txtApellidos)
-                            .addComponent(txtTelefono)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar))
-                .addGap(28, 28, 28))
+                            .addGroup(pnlClientesLayout.createSequentialGroup()
+                                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(49, 49, 49)
+                                .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDocumento)
+                                    .addComponent(cbxTDocCliente, 0, 170, Short.MAX_VALUE)
+                                    .addComponent(txtNombres)
+                                    .addComponent(txtApellidos)
+                                    .addComponent(txtTelefono)))
+                            .addComponent(btnGuardar))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblOpCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClientesLayout.createSequentialGroup()
+                                .addComponent(btnEditarDireccion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregarDireccion))))))
         );
         pnlClientesLayout.setVerticalGroup(
             pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlClientesLayout.createSequentialGroup()
+                .addComponent(lblOpCliente)
                 .addGap(18, 18, 18)
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -226,18 +219,18 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cbxDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxTDocCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(cbxResuldocumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(pnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditarCliente)
-                    .addComponent(btnAgregarCliente))
+                    .addComponent(btnEditarDireccion)
+                    .addComponent(btnAgregarDireccion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
-                .addGap(288, 288, 288))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,53 +239,50 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlListaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnlClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlListaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlListaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidosActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnAgregarCliente;
+    public javax.swing.JButton btnAgregarDireccion;
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnEditar;
-    public javax.swing.JButton btnEditarCliente;
+    public javax.swing.JButton btnEditarDireccion;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnNuevo;
-    private javax.swing.JComboBox<String> cbxCliente;
-    public javax.swing.JComboBox<String> cbxDoc;
-    private javax.swing.JTextField cbxResuldocumen;
+    public javax.swing.JComboBox cbxTDocCliente;
+    public javax.swing.JComboBox cbxTDocClienteFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JLabel lblOpCliente;
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlListaClientes;
-    private javax.swing.JTable tblClientes;
-    public javax.swing.JTable tblClientesb;
-    private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtDocumento;
-    private javax.swing.JTextField txtNombres;
-    private javax.swing.JTextField txtTelefono;
+    public javax.swing.JTable tblClientes;
+    public javax.swing.JTable tblClientesDirecciones;
+    public javax.swing.JTextField txtApellidos;
+    public javax.swing.JTextField txtDocumento;
+    public javax.swing.JTextField txtDocumentoFiltro;
+    public javax.swing.JTextField txtNombres;
+    public javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

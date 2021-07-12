@@ -43,4 +43,30 @@ public class TipoDocumentoIdentidadDAO {
         
         return lstResult;
     }
+    
+    public TipoDocumentoIdentidad getTipoDocumentoIdentidad(int IdTipoDocIdentidad) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_TipoDocumento (?)}");
+        cs.setInt("IdTipoDocIdentidad", IdTipoDocIdentidad);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        TipoDocumentoIdentidad tipodocident = null;
+        if (rs.next()) {
+            tipodocident = new TipoDocumentoIdentidad(
+                rs.getInt("IdTipoDocIdentidad"),
+                rs.getString("nombre"),
+                rs.getInt("cantidadCaracteres")    
+            );
+        }
+        
+        MySqlConexion.close(con);
+        
+        return tipodocident;
+    }
 }

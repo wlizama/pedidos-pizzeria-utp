@@ -47,6 +47,11 @@ public class Distrito {
     public void setCobertura(Boolean cobertura) {
         this.cobertura = cobertura;
     }
+
+    @Override
+    public String toString() {
+        return this.getNombre();
+    }
     
     
     

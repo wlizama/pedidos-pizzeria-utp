@@ -11,7 +11,10 @@ package pedidos.pizzeria.utp.model;
  */
 public class Cliente extends Persona{
     
-    private int idCliente;    
+    private int idCliente;
+
+    public Cliente() {
+    }    
 
     public Cliente(int idCliente) {
         this.idCliente = idCliente;
