@@ -7,6 +7,7 @@ package pedidos.pizzeria.utils;
 
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +29,9 @@ public class Helpers {
         Dimension dimension = dp.getSize();
         Dimension fcalculo = jif.getSize();
         jif.setLocation((dimension.width -fcalculo.width)/2,(dimension.height -fcalculo.height)/2);
-//        jif.show();
+    }
+    
+    public static void centerForm(JInternalFrame jif, JDialog jd) {
+        jd.setLocation(jif.getLocation().x*2, jif.getLocation().y*2);
     }
 }
