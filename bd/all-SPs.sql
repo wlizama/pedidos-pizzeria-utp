@@ -1302,3 +1302,17 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_Formulario`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_Formulario`(
+    IdFormulario int
+)
+BEGIN
+    select 
+        r.IdFormulario,
+        r.nombre
+    from Formulario r
+    where r.IdFormulario = IdFormulario;
+END ;;
+DELIMITER ;
+

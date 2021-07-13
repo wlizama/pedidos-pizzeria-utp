@@ -26,6 +26,12 @@ public class Acceso {
         this.formulario = formulario;
     }
 
+    public Acceso(int IdAcceso, Roles rol, Formulario formulario) {
+        this.IdAcceso = IdAcceso;
+        this.rol = rol;
+        this.formulario = formulario;
+    }       
+
     public int getIdAcceso() {
         return IdAcceso;
     }
