@@ -6,6 +6,7 @@
 package pedidos.pizzeria.utp.view;
 
 import pedidos.pizzeria.utp.controller.TipoPizzaController;
+import pedidos.pizzeria.utp.controller.TamanhoPizzaController;
 
 
 /**
@@ -15,14 +16,18 @@ import pedidos.pizzeria.utp.controller.TipoPizzaController;
 public class ListaPizzasView extends javax.swing.JInternalFrame {
     
     TipoPizzaController tipoPizzaController;
+    TamanhoPizzaController tamanhoPizzaController;
     /**
      * Creates new form listaDePizzas_View
      */
     public ListaPizzasView() {
         initComponents();
         tipoPizzaController = new TipoPizzaController(this);
+        tamanhoPizzaController = new TamanhoPizzaController(this);
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,6 +70,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         txtNombresTamPizza = new javax.swing.JTextField();
         txtCanPorciones = new javax.swing.JTextField();
         btnGuardarTamPizza = new javax.swing.JButton();
+        lblOpTamanoPizza = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -304,6 +310,13 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         jLabel8.setText("Cant. Porciones");
 
         btnGuardarTamPizza.setText("Guardar");
+        btnGuardarTamPizza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarTamPizzaActionPerformed(evt);
+            }
+        });
+
+        lblOpTamanoPizza.setText("OP");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -313,20 +326,23 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardarTamPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7))
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombresTamPizza)
-                            .addComponent(txtCanPorciones, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblOpTamanoPizza)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel7))
+                            .addGap(46, 46, 46)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombresTamPizza)
+                                .addComponent(txtCanPorciones, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(lblOpTamanoPizza)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtNombresTamPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -508,16 +524,20 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarTamPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarTamPizzaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarTamPizzaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEditarTamano;
+    public javax.swing.JButton btnEditarTamano;
     public javax.swing.JButton btnEditarTipo;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardarTamPizza;
+    public javax.swing.JButton btnGuardarTamPizza;
     public javax.swing.JButton btnGuardarTipoPizza;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnNuevoTamano;
+    public javax.swing.JButton btnNuevoTamano;
     public javax.swing.JButton btnNuevoTipo;
     private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JComboBox<String> cboTamano;
@@ -539,7 +559,7 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
+    public javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
@@ -547,14 +567,15 @@ public class ListaPizzasView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JLabel lblOpTamanoPizza;
     public javax.swing.JLabel lblOpTipoPizza;
     private javax.swing.JTable tblListaPizzas;
-    private javax.swing.JTable tblListaTamanos;
+    public javax.swing.JTable tblListaTamanos;
     public javax.swing.JTable tblListaTipo;
     public javax.swing.JTextArea txaDescripcion;
-    private javax.swing.JTextField txtCanPorciones;
+    public javax.swing.JTextField txtCanPorciones;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombresTamPizza;
+    public javax.swing.JTextField txtNombresTamPizza;
     public javax.swing.JTextField txtNombresTipoPizza;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables

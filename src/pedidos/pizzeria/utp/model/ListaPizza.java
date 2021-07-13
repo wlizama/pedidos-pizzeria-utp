@@ -9,19 +9,20 @@ package pedidos.pizzeria.utp.model;
  *
  * @author Percy
  */
-public class Pizza {
+public class ListaPizza {
+    
     private int IdPizza;
     private String nombre;
     private Double precio;
     private TamanhoPizza tamanhoPizza;
     private TipoPizza tipoPizza;
-    private Estado estado;
-
-    public Pizza(){
+    private String estado;
+        
+    public ListaPizza() {
         
     }
 
-    public Pizza(int IdPizza, String nombre, Double precio, TamanhoPizza tamanhoPizza, TipoPizza tipoPizza, Estado estado) {
+    public ListaPizza(int IdPizza, String nombre, Double precio, TamanhoPizza tamanhoPizza, TipoPizza tipoPizza, String estado) {
         this.IdPizza = IdPizza;
         this.nombre = nombre;
         this.precio = precio;
@@ -70,15 +71,14 @@ public class Pizza {
         this.tipoPizza = tipoPizza;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-
-   
+    
     
     
 }
