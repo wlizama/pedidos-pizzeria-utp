@@ -23,13 +23,26 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_Cliente`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Cliente`(
-In idcliente int)
+    In IdCliente int
+)
 BEGIN
-    select p.Nombres, p.Apellidos, p.Telefono, di.numero as Documento, 
-    di.IdTipoDocIdentidad as TipoDocumentoIdentidad
+    select
+        c.IdCliente,
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.telefono,
+        p.IdTipoPersona,
+        tp.nombre as tipoPersona,
+        p.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        di.IdTipoDocIdentidad,
+        p.IdEstado,
+        e.nombre as estado
     from cliente c inner join persona p on c.IdPersona = p.IdPersona
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona
     inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-    inner join direccion dir on c.IdCliente = dir.IdCliente
+    inner join estado e on p.IdEstado = e.IdEstado
     where c.IdCliente = idcliente;
 
 END ;;
@@ -38,12 +51,21 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClienteDireccion`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteDireccion`(
-In iddireccioncliente int)
+    In idDireccion int
+)
 BEGIN
-    select per.nombres + " " + per.apellidos as Cliente, dir.direccion, dir.principal, dir.referencia
-    from direccion dir inner join cliente cli on dir.IdCliente = cli.IdCliente
-    inner join persona per on cli.IdPersona = per.IdPersona
-    where dir.IdDireccion = iddireccion;
+    select
+        d.idDireccion,
+        d.direccion,
+        d.referencia,
+        d.principal,
+        d.IdDistrito,
+        dt.nombre as distrito,
+        dt.cobertura,
+        d.IdCliente
+    from direccion d
+    join distrito dt on d.IdDistrito = dt.IdDistrito
+    where d.idDireccion = idDireccion;
 
 END ;;
 DELIMITER ;
@@ -51,20 +73,22 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClienteDireccionInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteDireccionInserta`(
-In direccion varchar(100),
-In referencia varchar(150),
-In idcliente int,
-In iddistrito int,
-In principal tinyint,
-Out codigo int
+    Out IdDireccion int,
+    In direccion varchar(100),
+    In referencia varchar(150),
+    In idcliente int,
+    In iddistrito int,
+    In principal tinyint
 )
 BEGIN
-    DECLARE last_insert_id INT;
+    if principal = 1 then
+        update direccion d set d.principal = 0 where d.IdCliente = idcliente;
+    end if;
     
     insert into direccion (direccion, referencia, IdCliente, IdDistrito, principal, IdEstado)
     values (direccion, referencia, idcliente, iddistrito, principal, 1); -- 1 = activo
     
-    SET codigo = LAST_INSERT_ID();
+    SET IdDireccion = LAST_INSERT_ID();
     
 END ;;
 DELIMITER ;
@@ -74,9 +98,17 @@ DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteDireccionLista`(
 In idcliente int)
 BEGIN
-    select idDireccion, direccion, referencia, principal
-    from direccion
-    where IdCliente = idcliente;
+    select
+		d.idDireccion,
+        d.direccion,
+        d.referencia,
+        d.principal,
+        d.IdDistrito,
+        dt.nombre as distrito,
+        dt.cobertura
+    from direccion d
+    join distrito dt on d.IdDistrito = dt.IdDistrito
+    where d.IdCliente = idcliente;
 
 END ;;
 DELIMITER ;
@@ -84,14 +116,23 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClienteDireccionModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteDireccionModifica`(
-In iddireccion int,
-In direccion varchar(100),
-In referencia varchar(150),
-In iddistrito int,
-In principal tinyint)
+    In IdDireccion int,
+    In direccion varchar(100),
+    In referencia varchar(150),
+    In idcliente int,
+    In iddistrito int,
+    In principal tinyint)
 BEGIN
-    update direccion set direccion = direccion, referencia = referencia, IdDistrito = iddistrito, principal = principal
-    where IdDireccion = iddireccion;
+    if principal = 1 then
+        update direccion d set d.principal = 0 where d.IdCliente = idcliente;
+    end if;
+
+    update direccion d
+        set d.direccion = direccion,
+        d.referencia = referencia,
+        d.IdDistrito = iddistrito,
+        d.principal = principal
+    where d.IdDireccion = IdDireccion;
 
 END ;;
 DELIMITER ;
@@ -99,51 +140,79 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClienteInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteInserta`(
-In nombres varchar(100),
-In apellidos varchar(100),
-In IdTipoPersona int,
-In IdDocumentoIdentidad int,
-In IdEstado int,
-In telefono varchar(10),
-OUT idcliente int
+    OUT IdCliente int,
+    In nombres varchar(100),
+    In apellidos varchar(100),
+    In telefono varchar(10),
+    In IdTipoDocIdentidad int,
+    In numero varchar(15)
 )
 BEGIN
 
     DECLARE last_insert_id INT;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    declare IdTipoPersona int;
+    declare estado int;
+    declare IdDocumentoIdentidad int;
     
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
+    set IdTipoPersona = 4; -- tipo persona cliente
+    set estado = 6; -- estado activo de tipo cliente
+    
+    insert into documentoIdentidad (numero, IdTipoDocIdentidad)
+    value (numero, IdTipoDocIdentidad);
 
-    START TRANSACTION;
-        insert into persona (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono)
-        values (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono);
-        
-        SET last_insert_id = LAST_INSERT_ID(); -- assignment
-        
-        insert into cliente(IdPersona) values (last_insert_id);   
-        
-        SET idcliente = LAST_INSERT_ID();
-        
-    COMMIT;
+    SET IdDocumentoIdentidad = LAST_INSERT_ID();
+
+    insert into persona (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono)
+    values (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, estado, telefono);
+    
+    SET last_insert_id = LAST_INSERT_ID(); -- assignment
+    
+    insert into cliente(IdPersona) values (last_insert_id);   
+    
+    SET IdCliente = LAST_INSERT_ID();
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_ClienteLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteLista`(
-In idtipoDocIdentidad int,
-In numero varchar(15))
+    In idtipoDocIdentidad int,
+    In numero varchar(15)
 BEGIN
-    select di.numero as NumeroDocumento, p.Nombres + " " + p.Apellidos as Cliente, 
-    dir.direccion, p.IdEstado, p.Telefono
+    declare idtipoDocIdentidad_ini int default 0;
+    declare idtipoDocIdentidad_fin int default 999999;
+    declare numero_ini varchar(15) default '';
+    declare numero_fin varchar(15) default 'ZZZZZZZZZZ';
+    
+    if idtipoDocIdentidad <> 0 then
+        set idtipoDocIdentidad_ini = idtipoDocIdentidad;
+        set idtipoDocIdentidad_fin = idtipoDocIdentidad;
+    end if;
+
+    if numero <> '' then
+        set numero_ini = numero;
+        set numero_fin = numero;
+    end if;
+
+    select
+        c.IdCliente,
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.telefono,
+        p.IdTipoPersona,
+        tp.nombre as tipoPersona,
+        p.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        di.IdTipoDocIdentidad,
+        p.IdEstado,
+        e.nombre as estado
     from cliente c inner join persona p on c.IdPersona = p.IdPersona
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona
     inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-    inner join direccion dir on c.IdCliente = dir.IdCliente
-    where di.IdTipoDocIdentidad = idtipoDocIdentidad and
-    di.numero = numero;
+    inner join estado e on p.IdEstado = e.IdEstado
+    and di.IdTipoDocIdentidad between idtipoDocIdentidad_ini and idtipoDocIdentidad_fin
+    and di.numero between numero_ini and numero_fin;
 
 END ;;
 DELIMITER ;
@@ -151,18 +220,21 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClienteModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteModifica`(
-In nombres varchar(100),
-In apellidos varchar(100),
-In iddocumentoidentidad int,
-In telefono varchar(10),
-In numero varchar(15),
-In idcliente int)
+    In IdCliente int,
+    In nombres varchar(100),
+    In apellidos varchar(100),
+    In telefono varchar(10),
+    In IdTipoDocIdentidad int,
+    In numero varchar(15)
 BEGIN
     update cliente cli
         inner join persona per on cli.IdPersona = per.IdPersona
         inner join documentoidentidad di on per.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-        set per.nombres = nombres, per.apellidos = apellidos, per.telefono = telefono,
-        per.IdDocumentoIdentidad = iddocumentoidentidad, di.numero = numero
+        set per.nombres = nombres,
+            per.apellidos = apellidos,
+            per.telefono = telefono,
+            di.IdTipoDocIdentidad = IdTipoDocIdentidad,
+            di.numero = numero
     where cli.idCliente = idcliente;
 END ;;
 DELIMITER ;
@@ -980,35 +1052,6 @@ BEGIN
 END ;;
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `SP_RolAccesoEliminaInserta`;
-DELIMITER ;;
-CREATE PROCEDURE `SP_RolAccesoEliminaInserta`(
-    IdRol int,
-    idsformulario varchar(50)
-)
-BEGIN
-    
-    declare idx,prev_idx int;
-    declare v_id varchar(10);
-
-    delete from acceso a 
-    where a.IdRol = IdRol;
-
-    set idx := locate(',', idsformulario,1);
-    set prev_idx := 1;
-
-    WHILE idx > 0 DO
-        set v_id := substr(idsformulario, prev_idx, idx - prev_idx);
-        insert into acceso (IdRol,IdFormulario) values (IdRol,v_id);
-        set prev_idx := idx+1;
-        set idx := locate(',', idsformulario, prev_idx);
-    END WHILE;
-
-    set v_id := substr(idsformulario, prev_idx);
-    insert into acceso (IdRol,IdFormulario) values (IdRol,v_id);
-    
-END ;;
-DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_RolAccesoLista`;
 DELIMITER ;;
@@ -1171,7 +1214,7 @@ BEGIN
     );
     SET IdTipoPersona = LAST_INSERT_ID();
 END
-END ;;
+END ;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_TipoPersonaLista`;

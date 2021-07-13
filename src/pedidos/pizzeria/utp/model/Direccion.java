@@ -12,6 +12,7 @@ package pedidos.pizzeria.utp.model;
 public class Direccion {
     
     private int idDireccion;
+    private String direccion;
     private String referencia;
     private Boolean principal;
     private Distrito distrito;
@@ -20,8 +21,9 @@ public class Direccion {
     public Direccion() {
     }
 
-    public Direccion(int idDireccion, String referencia, Boolean principal, Distrito distrito, Cliente cliente) {
+    public Direccion(int idDireccion, String direccion, String referencia, Boolean principal, Distrito distrito, Cliente cliente) {
         this.idDireccion = idDireccion;
+        this.direccion = direccion;
         this.referencia = referencia;
         this.principal = principal;
         this.distrito = distrito;
@@ -34,6 +36,14 @@ public class Direccion {
 
     public void setIdDireccion(int idDireccion) {
         this.idDireccion = idDireccion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getReferencia() {
@@ -67,7 +77,6 @@ public class Direccion {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
     
     
 }
