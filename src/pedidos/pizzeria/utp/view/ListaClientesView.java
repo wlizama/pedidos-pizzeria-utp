@@ -254,7 +254,6 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlClientesDirecciones.getAccessibleContext().setAccessibleName("Direcciones");
         pnlClientesDirecciones.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,7 +296,7 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JLabel lblOpCliente;
     private javax.swing.JPanel pnlClientes;
     public javax.swing.JPanel pnlClientesDirecciones;
