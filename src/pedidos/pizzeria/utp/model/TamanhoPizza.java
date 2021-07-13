@@ -15,7 +15,7 @@ public class TamanhoPizza {
     private int cantidadPorciones;
 
     public TamanhoPizza(){
-        
+
     }
 
     public TamanhoPizza(int IdTamanhoPizza, String nombre, int cantidadPorciones) {
