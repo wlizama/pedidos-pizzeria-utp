@@ -374,15 +374,15 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         tblListaPersonal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombres", "Direccion", "Estado", "Telefono"
+                "Id", "Nombres", "Estado", "Telefono"
             }
         ));
         jScrollPane1.setViewportView(tblListaPersonal);

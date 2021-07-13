@@ -25,6 +25,7 @@ public class RolesController implements BaseControllerInterface{
     
     ListaPersonalView personalView;
     RolesDAO rolesDAO;
+    AccesoDAO accesoDAO;
 
     public RolesController(ListaPersonalView personalView) {
         this.personalView = personalView;
@@ -96,10 +97,11 @@ public class RolesController implements BaseControllerInterface{
             int selectedRow = personalView.tblListaRoles.getSelectedRow();            
             if (selectedRow != -1) {
                 int IdRol = (int) personalView.tblListaRoles.getValueAt(selectedRow, 0);
-                Roles roles = rolesDAO.getRol(IdRol);
-                
+                Roles roles = rolesDAO.getRol(IdRol);                
+                Acceso acceso = accesoDAO.getAccesoRol(IdRol);
+                System.out.println(acceso.getIdAcceso());
                 IdRol_edit = roles.getIdRol();
-                personalView.txtNombreRol.setText(roles.getNombre());
+                personalView.txtNombreRol.setText(roles.getNombre());                
                 
                 this.op = Constants.OP_EDIT;
                 personalView.lblOpRolPersona.setText("( EDITAR )");

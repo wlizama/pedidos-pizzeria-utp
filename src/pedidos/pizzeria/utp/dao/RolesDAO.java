@@ -67,34 +67,7 @@ public class RolesDAO {
         
         return roles;
     }
-    
-//    public List<Acceso> getAccesoRol(int IdRol) throws Exception {
-//        Connection con = null;
-//        CallableStatement cs = null;
-//        
-//        List<Acceso> lstResult = new ArrayList<>();
-//        
-//        con = MySqlConexion.getConexion();
-//        cs = con.prepareCall("{call SP_RolAccesoLista (?)}");
-//        cs.setInt("IdRol", IdRol);
-//        
-//        cs.execute();
-//
-//        ResultSet rs = cs.getResultSet();
-//
-//        while(rs.next()) {
-//            lstResult.add(new Acceso(
-//                rs.getInt("IdAcceso"),
-//                rs.getInt("IdFormulario"),
-//                rs.getString("Formulario")
-//            ));
-//        }
-//        
-//        MySqlConexion.close(con);
-//        
-//        return lstResult;
-//    }
-    
+        
     public int insertarRoles(Roles roles) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
