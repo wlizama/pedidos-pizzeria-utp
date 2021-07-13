@@ -46,7 +46,9 @@ public class TipoDocumentoIdentidad {
     public void setCantidadCaracteres(int cantidadCaracteres) {
         this.cantidadCaracteres = cantidadCaracteres;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return this.getNombre();
+    }
 }

@@ -95,6 +95,52 @@ value( 0, 'XXXXXXXXXXXXXXX', 6 );
 insert into Persona ( IdPersona, nombres, apellidos, telefono, IdTipoPersona, IdDocumentoIdentidad, IdEstado )
 value(0, 'Super Usuario de Sistema', null, null, 5, 1, 6);
 insert into Usuario ( IdUsuario, nombreUsuario, contrasenha, IdPersona, IdRol )
-value( 0, 'suuser' , SHA1('123456'), 1, 1 )
+value( 0, 'suuser' , SHA1('123456'), 1, 1 );
+
+insert into distrito (nombre, cobertura)
+values 
+('Ancón', 0),
+('Ate Vitarte', 0),
+('Barranco', 0),
+('Breña', 0),
+('Carabayllo', 0),
+('Chaclacayo', 0),
+('Chorrillos', 0),
+('Cieneguilla', 0),
+('Comas', 0),
+('El Agustino', 0),
+('Independencia', 0),
+('Jesús María', 0),
+('La Molina', 0),
+('La Victoria', 0),
+('Lima', 0),
+('Lince', 0),
+('Los Olivos', 0),
+('Lurigancho', 0),
+('Lurín', 0),
+('Magdalena del Mar', 0),
+('Miraflores', 0),
+('Pachacamac', 0),
+('Pucusana', 0),
+('Pueblo Libre', 0),
+('Puente Piedra', 0),
+('Punta Hermosa', 0),
+('Punta Negra', 0),
+('Rímac', 0),
+('San Bartolo', 0),
+('San Borja', 0),
+('San Isidro', 0),
+('San Juan de Lurigancho', 0),
+('San Juan de Miraflores', 0),
+('San Luis', 0),
+('San Martín de Porres', 0),
+('San Miguel', 0),
+('Santa Anita', 0),
+('Santa María del Mar', 0),
+('Santa Rosa', 0),
+('Santiago de Surco', 0),
+('Surquillo', 0),
+('Villa El Salvador', 0),
+('Villa María del Triunfo', 0);
 
 
