@@ -8,12 +8,19 @@ select * from estado;
 select * from tipoestado;
 select * from tipopersona;
 select * from roles;
-select * from tipodocumentoidentidad;
-
+select * from cliente;
+select * from persona;
+select * from pedido;
+select * from comprobante;
+select ifnull(max(numero), 0) +1 from pedido;
+/*
+delete from comprobante;
+delete from pedido;
+*/
 call SP_RolAccesoLista(1);
 call SP_VentasRpt('2021-06-15', '2021-06-30'); # yyyy-mm-dd
 call SP_CoberturaRpt('2021-06-15', '2021-06-30');
 call SP_ClienteLista(0, '');
-call SP_DistritoLista();
+call SP_PedidoLista(0, '');
 update persona set idEstado = 6 where idPersona = 1;
 SELECT SHA1('abc')

@@ -143,4 +143,9 @@ values
 ('Villa El Salvador', 0),
 ('Villa María del Triunfo', 0);
 
+insert into tipocomprobante (nombre, IdEstado)
+values ('Boleta', 6);
+
+-- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO
+
 

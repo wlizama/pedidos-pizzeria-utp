@@ -57,6 +57,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smLPedidos.setMnemonic('l');
         smLPedidos.setText("Lista Pedidos");
+        smLPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smLPedidosActionPerformed(evt);
+            }
+        });
         mPedidos.add(smLPedidos);
 
         smComprobantes.setMnemonic('c');
@@ -195,6 +200,14 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, coberturaView);
         coberturaView.setVisible(true);
     }//GEN-LAST:event_smCoberturaActionPerformed
+
+    private void smLPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLPedidosActionPerformed
+        PedidoListaView pedidolistaView = new PedidoListaView();
+        pedidolistaView.pack();
+        dpPrincipal.add(pedidolistaView);
+        Helpers.centerForm(dpPrincipal, pedidolistaView);
+        pedidolistaView.setVisible(true);
+    }//GEN-LAST:event_smLPedidosActionPerformed
 
     /**
      * @param args the command line arguments

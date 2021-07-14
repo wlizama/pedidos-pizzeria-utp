@@ -5,6 +5,7 @@
  */
 package pedidos.pizzeria.utp.model;
 
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -15,21 +16,27 @@ public class Pedido {
     
     private int idPedido;
     private int numero;
+    private int numeroComprobante; // pertenece a comprobante
     private Date fechaCreacion;
-    private int direccionEnvio;
+    private Time horacreacion;
+    private Direccion direccionEnvio;
     private String observaciones;
     private Cliente cliente;
-
+    private Estado estado;
+    
     public Pedido() {
     }
 
-    public Pedido(int idPedido, int numero, Date fechaCreacion, int direccionEnvio, String observaciones, Cliente cliente) {
+    public Pedido(int idPedido, int numero, int numeroComprobante, Date fechaCreacion, Time horacreacion, Direccion direccionEnvio, String observaciones, Cliente cliente, Estado estado) {
         this.idPedido = idPedido;
         this.numero = numero;
+        this.numeroComprobante = numeroComprobante;
         this.fechaCreacion = fechaCreacion;
+        this.horacreacion = horacreacion;
         this.direccionEnvio = direccionEnvio;
         this.observaciones = observaciones;
         this.cliente = cliente;
+        this.estado = estado;
     }
 
     public int getIdPedido() {
@@ -48,6 +55,14 @@ public class Pedido {
         this.numero = numero;
     }
 
+    public int getNumeroComprobante() {
+        return numeroComprobante;
+    }
+
+    public void setNumeroComprobante(int numeroComprobante) {
+        this.numeroComprobante = numeroComprobante;
+    }
+
     public Date getFechaCreacion() {
         return fechaCreacion;
     }
@@ -56,11 +71,19 @@ public class Pedido {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public int getDireccionEnvio() {
+    public Time getHoracreacion() {
+        return horacreacion;
+    }
+
+    public void setHoracreacion(Time horacreacion) {
+        this.horacreacion = horacreacion;
+    }
+
+    public Direccion getDireccionEnvio() {
         return direccionEnvio;
     }
 
-    public void setDireccionEnvio(int direccionEnvio) {
+    public void setDireccionEnvio(Direccion direccionEnvio) {
         this.direccionEnvio = direccionEnvio;
     }
 
@@ -80,6 +103,13 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
     
 }

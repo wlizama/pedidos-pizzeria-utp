@@ -9,12 +9,12 @@ package pedidos.pizzeria.utp.view;
  *
  * @author jonas
  */
-public class BuscarPizza extends javax.swing.JInternalFrame {
+public class PedidoBusquedaPizzaView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form BuscarPizza
      */
-    public BuscarPizza() {
+    public PedidoBusquedaPizzaView() {
         initComponents();
     }
 
