@@ -239,7 +239,7 @@ public class PedidoView extends javax.swing.JInternalFrame {
         }
 
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel14.setText("Total ");
+        jLabel14.setText("Total S/");
 
         lblTotalDetallePedido.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblTotalDetallePedido.setText("S/. 0.00");

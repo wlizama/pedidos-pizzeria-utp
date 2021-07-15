@@ -388,20 +388,44 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_comprobanteActualizaMonto`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_comprobanteActualizaMonto`(
-    In idpedido int,
-    out total decimal(19,4)
+    In idpedido int
 )
 BEGIN
     -- actualiza monto de comprobante
     update comprobante c
-    join pedido p on c.IdPedido = p.IdPedido
-    join detallepedido dp on p.IdPedido = dp.IdPedido
-    join pizza pz on dp.IdPizza = pz.IdPizza
-        set c.monto = sum(cantidad * p.precio)
-    where dp.IdPedido = idpedido;
+    inner join (
+        select dp.IdPedido, sum(dp.cantidad * pz.precio) as 'sumt'
+        from detallepedido dp 
+        join pizza pz on dp.IdPizza = pz.IdPizza
+        GROUP by dp.IdPedido
+    ) x on c.IdPedido = x.IdPedido
+    set c.monto = x.sumt;
     
-    select monto into total from comprobante c where c.IdPedido = idpedido;
+END ;;
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_ComprobanteXPedido`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_ComprobanteXPedido`(
+    IN IdPedido int
+)
+BEGIN
+    select 
+        c.IdComprobante,
+        c.numero,
+        c.fechaEmision,
+        c.horaEmision,
+        c.IdTipoComprobante,
+        tc.nombre as tipoComprobante,
+        c.monto,
+        c.IdPedido,
+        c.IdEstado,
+        e.nombre as estado
+    from comprobante c
+    join tipocomprobante tc on c.IdTipoComprobante = tc.IdTipoComprobante
+    join estado e on c.IdEstado = e.IdEstado
+    where c.IdPedido = IdPedido;
+    
 END ;;
 DELIMITER ;
 
@@ -677,10 +701,10 @@ CREATE PROCEDURE `SP_PedidoDetalleElimina`(
     out total decimal(19,4)
 )
 BEGIN
-    delete from detallepedido where IdDetallePedido = iddetallepedido;
+    delete from detallepedido dp where dp.IdDetallePedido = iddetallepedido;
     
     -- actualiza monto de comprobante
-    call SP_comprobanteActualizaMonto(idpedido, total);
+    call SP_comprobanteActualizaMonto(idpedido);
 END ;;
 DELIMITER ;
 
@@ -690,17 +714,16 @@ CREATE PROCEDURE `SP_PedidoDetalleInserta`(
     Out iddetallepedido int,
     In cantidad int,
     In idpedido int,
-    In idpizza int,
-    out total decimal(19,4)
+    In idpizza int
 )
 BEGIN
     insert into detallepedido (cantidad, IdPizza, IdPedido)
-    values (cantidad, idpedido, idpizza);
+    values (cantidad, idpizza, idpedido );
     
     SET iddetallepedido = LAST_INSERT_ID();
     
     -- actualiza monto de comprobante
-    call SP_comprobanteActualizaMonto(idpedido, total);
+    call SP_comprobanteActualizaMonto(idpedido);
     
 END ;;
 DELIMITER ;
@@ -748,7 +771,7 @@ BEGIN
     where dp.IdDetallePedido = iddetallepedido; 
     
     -- actualiza monto de comprobante
-    call SP_comprobanteActualizaMonto(idpedido, total);
+    call SP_comprobanteActualizaMonto(idpedido);
 
 END ;;
 DELIMITER ;

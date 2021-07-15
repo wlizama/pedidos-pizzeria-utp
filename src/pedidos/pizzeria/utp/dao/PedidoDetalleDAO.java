@@ -115,61 +115,53 @@ public class PedidoDetalleDAO {
         return detallepedido;
     }
     
-    public Object[] insertarDetallePedido(DetallePedido detallepedido) throws Exception {
+    public int insertarDetallePedido(DetallePedido detallepedido) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
-        DetallePedido detallepedido_out = detallepedido;
-        
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_PedidoDetalleInserta ( ?, ?, ?, ?, ? )}");
+        cs = con.prepareCall("{call SP_PedidoDetalleInserta ( ?, ?, ?, ? )}");
         cs.setInt("cantidad", detallepedido.getCantidad());
         cs.setInt("idpedido", detallepedido.getPedido().getIdPedido());
         cs.setInt("idpizza", detallepedido.getPizza().getIdPizza());
         
         cs.execute();
 
-        detallepedido_out.setIdDetallePedido(cs.getInt("iddetallepedido"));
-        Double total = cs.getDouble("total");
+        int iddetallepedido = cs.getInt("iddetallepedido");
         
         MySqlConexion.close(con);
         
-        return new Object[]{ detallepedido_out, total };
+        return iddetallepedido;
     }
     
-    public Double modificarDetallePedido(DetallePedido pedido) throws Exception {
+    public void modificarDetallePedido(DetallePedido pedido) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_PedidoDetalleModifica ( ?, ?, ?, ?, ?)}");
+        cs = con.prepareCall("{call SP_PedidoDetalleModifica ( ?, ?, ?, ?)}");
         cs.setInt("iddetallepedido", pedido.getIdDetallePedido());
         cs.setInt("cantidad", pedido.getCantidad());
         cs.setInt("idpedido", pedido.getPedido().getIdPedido());
         cs.setInt("idpizza", pedido.getPizza().getIdPizza());
         cs.execute();
         
-        Double total = cs.getDouble("total");
         
         MySqlConexion.close(con);
-        
-        return total;
+
     }
     
-    public Double eliminarDetallePedido(DetallePedido pedido) throws Exception {
+    public void eliminarDetallePedido(DetallePedido pedido) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_PedidoDetalleElimina ( ?, ?, ? )}");
+        cs = con.prepareCall("{call SP_PedidoDetalleElimina ( ?, ? )}");
         cs.setInt("iddetallepedido", pedido.getIdDetallePedido());
         cs.setInt("idpedido", pedido.getPedido().getIdPedido());
         cs.execute();
         
-        Double total = cs.getDouble("total");
-        
         MySqlConexion.close(con);
-        
-        return total;
+
     }
 }
