@@ -24,8 +24,10 @@ import pedidos.pizzeria.utp.model.Cliente;
 import pedidos.pizzeria.utp.model.Direccion;
 import pedidos.pizzeria.utp.model.Estado;
 import pedidos.pizzeria.utp.model.Pedido;
+import pedidos.pizzeria.utp.model.Pizza;
 import pedidos.pizzeria.utp.model.TipoComprobante;
 import pedidos.pizzeria.utp.model.TipoDocumentoIdentidad;
+import pedidos.pizzeria.utp.view.PedidoBusquedaPizzaView;
 import pedidos.pizzeria.utp.view.PedidoListaView;
 import pedidos.pizzeria.utp.view.PedidoView;
 
@@ -36,12 +38,15 @@ import pedidos.pizzeria.utp.view.PedidoView;
 public class PedidoController implements BaseControllerInterface {
     
     String op;
+    String op_detalle;
     int IdPedido_edit;
-    int IdCliente;
+    int IdDetallePedido_edit;
+    Pizza pizzaDetalle;
+    int IdCliente = 0;
 
     PedidoView pedidoView;
 
-    PedidoController pedidoController;
+    
     PedidoListaController pedidoListaController;
     
     PedidoDAO pedidoDAO;
@@ -68,6 +73,15 @@ public class PedidoController implements BaseControllerInterface {
         
         pedidoView.btnRegresar.addActionListener((ae) -> {
             regresar();
+        });
+        
+        // detalle
+        pedidoView.btnAgregarDetalle.addActionListener((ae) -> {
+            nuevoDetalle();
+        });
+        
+        pedidoView.btnBuscarPizza.addActionListener((ae) -> {
+            mostrarBuscarPizza();
         });
         
 
@@ -123,10 +137,54 @@ public class PedidoController implements BaseControllerInterface {
         this.IdPedido_edit = IdPedido_edit;
     }
 
+    public void setPizzaDetalle(Pizza pizzaDetalle) {
+        this.pizzaDetalle = pizzaDetalle;
+    }
+    
+    public void mostrarBuscarPizza() {
+        try {
+            
+            PedidoBusquedaPizzaView pedidobusqView = new PedidoBusquedaPizzaView(null, true);
+            PedidoBusquedaController pedidobusqController = new PedidoBusquedaController(
+                pedidobusqView,
+                this
+            );
+            Helpers.centerForm(pedidoView, pedidobusqView);
+            pedidobusqController.mostrar();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error nuevo detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+
     @Override
     public void limpiarForm() {
-        // estado
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        pedidoView.txtNroPedido.setText("");
+        pedidoView.txtNroComprobante.setText("");
+//        pedidoView.cboTipoDocumento.setSelectedIndex(0);
+        pedidoView.txtDocumento.setText("");
+        pedidoView.txtNombre.setText("");
+//        pedidoView.cboDireccion.setSelectedIndex(0);
+        pedidoView.txtTelefonoContacto.setText("");
+//        pedidoView.cboTipoComprobante.setSelectedIndex(0);
+//        pedidoView.cboEstado.setSelectedIndex(0);
+        pedidoView.txaObservacion.setText("");
+    }
+    
+    public void limpiarFormDetalle() {
+        pedidoView.txtNombrePizza.setText("");
+        pedidoView.txtTipoPizza.setText("");
+        pedidoView.txtTamanhoPizza.setText("");
+        pedidoView.txtPorcionesPizza.setText("");
+        pedidoView.txtPrecioPizza.setText("");
+        pedidoView.txtCantidadPizza.setText("");
     }
 
     @Override
@@ -204,8 +262,8 @@ public class PedidoController implements BaseControllerInterface {
             pedidoView.btnModificarDetalle.setEnabled(true);
             pedidoView.btnAgregarDetalle.setEnabled(true);
             pedidoView.btnEliminarDetalle.setEnabled(true);
-            pedidoView.btnBuscarPizza.setEnabled(true);
-            pedidoView.btnGuardarDetalle.setEnabled(true);
+            pedidoView.btnBuscarPizza.setEnabled(false);
+            pedidoView.btnGuardarDetalle.setEnabled(false);
             pedidoView.cboEstado.setEnabled(true);
             pedidoView.lblOpPedido.setText("( EDITAR )");
             
@@ -218,6 +276,24 @@ public class PedidoController implements BaseControllerInterface {
             JOptionPane.showMessageDialog(
                 null,
                 "Error obtener: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void obtenerPizzaDetalle() {
+        try {
+            pedidoView.txtNombrePizza.setText(pizzaDetalle.getNombre());
+            pedidoView.txtTipoPizza.setText(pizzaDetalle.getTipoPizza().getNombre());
+            pedidoView.txtTamanhoPizza.setText(pizzaDetalle.getTamanhoPizza().getNombre());
+            pedidoView.txtPorcionesPizza.setText(String.valueOf(pizzaDetalle.getTamanhoPizza().getCantidadPorciones()));
+            pedidoView.txtPrecioPizza.setText(String.valueOf(pizzaDetalle.getPrecio()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error obtener Pizza Detalle: " + e.getMessage(),
                 "Excepción",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -256,6 +332,27 @@ public class PedidoController implements BaseControllerInterface {
         }
     }
 
+    public void nuevoDetalle() {
+        try {
+            
+            limpiarFormDetalle();
+            IdDetallePedido_edit = 0;
+            this.op_detalle = Constants.OP_NEW;
+            pedidoView.lblOpPedidoDetalle.setText("( NUEVO )");
+            pedidoView.btnBuscarPizza.setEnabled(true);
+            pedidoView.btnGuardarDetalle.setEnabled(true);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error nuevo detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     @Override
     public void insertar() {
         try {
@@ -318,26 +415,19 @@ public class PedidoController implements BaseControllerInterface {
     public void guardar() {
         
         // validaciones
-        //IdCliente
-//        String msgValidacion = "";
-//        if (clienteView.txtNombres.getText().trim().equals(""))
-//            msgValidacion += "- Ingresar nombre de cliente.\n";
-//        if (clienteView.txtApellidos.getText().trim().equals(""))
-//            msgValidacion += "- Ingresar apellidos de cliente.\n";
-//        if (clienteView.txtTelefono.getText().trim().equals(""))
-//            msgValidacion += "- Ingresar teléfono de cliente.\n";
-//        if (clienteView.txtDocumento.getText().trim().equals(""))
-//            msgValidacion += "- Ingresar Nro. documento de cliente.\n";
-//        
-//        if (!msgValidacion.equals("")) {
-//            JOptionPane.showMessageDialog(
-//                null,
-//                "Corregir los siguiente:\n" + msgValidacion,
-//                "Mensaje",
-//                JOptionPane.WARNING_MESSAGE
-//            );
-//            return;
-//        }
+        String msgValidacion = "";
+        if (IdCliente == 0)
+            msgValidacion += "- Ingresar cliente.\n";
+
+        if (!msgValidacion.equals("")) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Corregir los siguiente:\n" + msgValidacion,
+                "Mensaje",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
         
         if (this.op.equals(Constants.OP_NEW))
             insertar();

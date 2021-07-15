@@ -95,6 +95,8 @@ public class PedidoListaController implements BaseControllerInterface {
                 for (Pedido pedido : lstPedido) {
                     pedidoviewTblModel.addRow(new Object[] {
                         pedido.getIdPedido(),
+                        pedido.getNumero(),
+                        pedido.getNumeroComprobante(),
                         pedido.getCliente().getNombres(),
                         pedido.getFechaCreacion() + " " + pedido.getHoracreacion(),
                         pedido.getDireccionEnvio(),

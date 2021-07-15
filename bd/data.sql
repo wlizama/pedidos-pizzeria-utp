@@ -147,5 +147,31 @@ insert into tipocomprobante (nombre, IdEstado)
 values ('Boleta', 6);
 
 -- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO
-
-
+-- valores para prueba busqueda pizza
+insert into tamanho (nombre, cantidadPorciones)
+values
+('Pequeña', 8),
+('Mediana', 12),
+('Grande', 14),
+('Extra Grande', 16);
+select * from tamanho;
+select * from tipopizza;
+select * from pizza;
+insert into pizza (nombre, precio, IdTipoPizza, IdTamanho, IdEstado)
+values
+('Americana', 15.90, 9, 1, 11),
+('Americana', 31.90, 9, 3, 11),
+('Americana', 42.90, 9, 4, 11),
+('Pepperoni', 21.50, 2, 2, 11),
+('Pepperoni', 30.50, 2, 3, 11),
+('Pepperoni', 40.50, 2, 4, 11),
+('Súper Margarita 6 Quesos', 15.90, 1, 1, 11),
+('Súper Margarita 6 Quesos', 25.90, 1, 2, 11),
+('Súper Margarita 6 Quesos', 35.90, 1, 3, 11),
+('Súper Margarita 6 Quesos', 45.90, 1, 4, 11),
+('La Rocoto Relleno', 22.80, 7, 2, 11),
+('La Rocoto Relleno', 32.80, 7, 3, 11),
+('La Rocoto Relleno', 45.80, 7, 4, 11),
+('All The Meats', 15.60, 5, 1, 11),
+('All The Meats', 28.80, 5, 2, 11),
+('All The Meats', 36.80, 5, 4, 11);

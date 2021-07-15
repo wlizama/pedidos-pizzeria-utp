@@ -27,6 +27,10 @@ public class Pedido {
     public Pedido() {
     }
 
+    public Pedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
+
     public Pedido(int idPedido, int numero, int numeroComprobante, Date fechaCreacion, Time horacreacion, Direccion direccionEnvio, String observaciones, Cliente cliente, Estado estado) {
         this.idPedido = idPedido;
         this.numero = numero;

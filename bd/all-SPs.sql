@@ -385,6 +385,26 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_comprobanteActualizaMonto`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_comprobanteActualizaMonto`(
+    In idpedido int,
+    out total decimal(19,4)
+)
+BEGIN
+    -- actualiza monto de comprobante
+    update comprobante c
+    join pedido p on c.IdPedido = p.IdPedido
+    join detallepedido dp on p.IdPedido = dp.IdPedido
+    join pizza pz on dp.IdPizza = pz.IdPizza
+        set c.monto = sum(cantidad * p.precio)
+    where dp.IdPedido = idpedido;
+    
+    select monto into total from comprobante c where c.IdPedido = idpedido;
+
+END ;;
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `SP_Distrito`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Distrito`(
@@ -625,11 +645,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalle`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalle`(
-In iddetallepedido int
+    In iddetallepedido int
 )
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, dp.cantidad, piz.precio
-    from detallepedido dp inner join pizza piz on dp.IdPizza = piz.IdPizza
+    select 
+        dp.IdDetallePedido,
+        dp.IdPedido,
+        piz.IdPizza,
+        piz.nombre,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        dp.cantidad,
+        piz.precio
+    from detallepedido dp 
+    inner join pizza piz on dp.IdPizza = piz.IdPizza
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
     inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
     where dp.IdDetallePedido = iddetallepedido;
 
@@ -639,24 +672,35 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleElimina`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleElimina`(
-In iddetallepedido int)
+    In iddetallepedido int,
+    In idpedido int,
+    out total decimal(19,4)
+)
 BEGIN
     delete from detallepedido where IdDetallePedido = iddetallepedido;
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido, total);
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleInserta`(
-In cantidad int,
-In idpedido int,
-In idpizza int ,
-Out iddetallepedido int)
+    Out iddetallepedido int,
+    In cantidad int,
+    In idpedido int,
+    In idpizza int,
+    out total decimal(19,4)
+)
 BEGIN
     insert into detallepedido (cantidad, IdPizza, IdPedido)
     values (cantidad, idpedido, idpizza);
     
     SET iddetallepedido = LAST_INSERT_ID();
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido, total);
     
 END ;;
 DELIMITER ;
@@ -664,10 +708,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleLista`(
-In idpedido int)
+    In idpedido int
+)
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, dp.cantidad, piz.precio
-    from detallepedido dp inner join pizza piz on dp.IdPizza = piz.IdPizza
+    select 
+        dp.IdDetallePedido,
+        dp.IdPedido,
+        piz.IdPizza,
+        piz.nombre,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        dp.cantidad,
+        piz.precio
+    from detallepedido dp 
+    inner join pizza piz on dp.IdPizza = piz.IdPizza
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
     inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
     where dp.IdPedido = idpedido;
 
@@ -677,11 +735,20 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleModifica`(
-In cantidad int,
-In iddetallepedido int)
+    In iddetallepedido int,
+    In cantidad int,
+    In idpedido int,
+    In idpizza int,
+    out total decimal(19,4)
+)
 BEGIN
-    update detallepedido set cantidad = cantidad 
-    where IdDetallePedido = iddetallepedido; 
+    update detallepedido dp
+        set dp.cantidad = cantidad,
+        dp.IdPizza = idpizza
+    where dp.IdDetallePedido = iddetallepedido; 
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido, total);
 
 END ;;
 DELIMITER ;
@@ -1054,12 +1121,22 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PizzaListaxNombre`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PizzaListaxNombre`(
-In nombrepizza varchar(50)
+    In nombrepizza varchar(50)
 )
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, tam.cantidadPorciones as porciones, piz.precio
-    from pizza piz inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
-    where piz.nombre = nombrepizza;
+    select 
+        piz.IdPizza,
+        piz.nombre,
+        piz.precio,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones
+    from pizza piz
+    inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
+    where piz.nombre like concat('%', nombrepizza, '%');
 
 END ;;
 DELIMITER ;
