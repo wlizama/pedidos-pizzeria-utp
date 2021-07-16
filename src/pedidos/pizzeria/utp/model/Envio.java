@@ -17,17 +17,19 @@ public class Envio {
     private Time horaInicio;
     private Time horaFin;
     private Repartidor repartidor;
+    private Estado estado;
     
     public Envio(){
         
     }
 
-    public Envio(int IdEnvio, int numero, Time horaInicio, Time horaFin, Repartidor repartidor) {
+    public Envio(int IdEnvio, int numero, Time horaInicio, Time horaFin, Repartidor repartidor, Estado estado) {
         this.IdEnvio = IdEnvio;
         this.numero = numero;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.repartidor = repartidor;
+        this.estado = estado;
     }
 
     public int getIdEnvio() {
@@ -70,7 +72,13 @@ public class Envio {
         this.repartidor = repartidor;
     }
 
-    
-    
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
     
 }
