@@ -23,7 +23,7 @@ public class MySqlConexion {
     private static final String SERVER = "localhost";
     private static final String DBNAME = "pedidos-pizzeria";
     private static final String USER = "root";
-    private static final String PWD = "";
+    private static final String PWD = "root123";
  
     public static Connection getConexion() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");

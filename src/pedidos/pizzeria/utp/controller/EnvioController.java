@@ -6,6 +6,7 @@
 package pedidos.pizzeria.utp.controller;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
@@ -19,6 +20,7 @@ import pedidos.pizzeria.utp.model.Envio;
 import pedidos.pizzeria.utp.model.Estado;
 import pedidos.pizzeria.utp.model.Persona;
 import pedidos.pizzeria.utp.model.Repartidor;
+import pedidos.pizzeria.utp.view.EnvioListaView;
 import pedidos.pizzeria.utp.view.EnvioView;
 
 /**
@@ -53,11 +55,21 @@ public class EnvioController implements BaseControllerInterface {
         envioView = new EnvioView();
         
         // eventos
+        envioView.btnGuardar.addActionListener((ae) -> {
+            guardar();
+        });
+        
+        envioView.btnCancelar.addActionListener((ae) -> {
+            regresar();
+        });
         
         
         initCombos();
     }
-    
+
+    public void setIdEnvio_edit(int IdEnvio_edit) {
+        this.IdEnvio_edit = IdEnvio_edit;
+    }
     
     private void initCombos() {
         try {
@@ -84,6 +96,19 @@ public class EnvioController implements BaseControllerInterface {
         }
     }
     
+    public void regresar() {
+        
+        JDesktopPane mainContainer = (JDesktopPane) envioView.getParent();
+        mainContainer.remove(envioView);
+        
+        mainContainer.updateUI();
+        
+        EnvioListaView pedidoListaView = new EnvioListaView();
+        pedidoListaView.pack();
+        mainContainer.add(pedidoListaView);
+        Helpers.centerForm(mainContainer, pedidoListaView);
+        pedidoListaView.setVisible(true);
+    }
 
     @Override
     public void limpiarForm() {
@@ -98,7 +123,41 @@ public class EnvioController implements BaseControllerInterface {
 
     @Override
     public void obtener() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            
+            limpiarForm();
+            this.op = Constants.OP_EDIT;
+            
+            Envio envio = envioDAO.getEnvio(IdEnvio_edit);
+            envioView.txtNroEnvio.setText(String.valueOf(envio.getNumero()));
+            envioView.dtHoraInicio.setDate(envio.getHoraInicio());
+            envioView.dtHoraFin.setDate(envio.getHoraFin());
+            envioView.cboRepartidor.setSelectedItem(envio.getRepartidor());
+            envioView.cboEstadoenvio.setSelectedItem(envio.getEstado());
+            
+            envioView.btnModificarDetalle.setEnabled(true);
+            envioView.btnAgregarDetalle.setEnabled(true);
+            envioView.btnEliminarDetalle.setEnabled(true);
+            envioView.btnBuscarPedido.setEnabled(false);
+            envioView.btnGuardarDetalle.setEnabled(false);
+            envioView.cboEstadoenvio.setEnabled(true);
+            envioView.lblOpEnvio.setText("( EDITAR )");
+            
+//            buscarDetalle();
+            
+            envioView.pack();
+            mainContainer.add(envioView);
+            Helpers.centerForm(mainContainer, envioView);
+            envioView.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error obtener: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
@@ -114,6 +173,7 @@ public class EnvioController implements BaseControllerInterface {
             envioView.btnEliminarDetalle.setEnabled(false);
             envioView.btnBuscarPedido.setEnabled(false);
             envioView.btnGuardarDetalle.setEnabled(false);
+            envioView.cboEstadoenvio.setEnabled(false);
             envioView.lblOpEnvio.setText("( NUEVO )");
             envioView.lblOpEnvioDetalle.setText("");
             
@@ -137,9 +197,11 @@ public class EnvioController implements BaseControllerInterface {
         try {
             
             Envio envio = new Envio();
-            envio.setHoraInicio(new Time(envioView.dtHoraInicio.getDate().getTime()));
-            envio.setHoraFin(new Time(envioView.dtHoraFin.getDate().getTime()));
-            envio.setRepartidor(new Repartidor(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona()));
+            envio.setHoraInicio(new Timestamp(envioView.dtHoraInicio.getDate().getTime()));
+            envio.setHoraFin(new Timestamp(envioView.dtHoraFin.getDate().getTime()));
+            Repartidor repartidor = new Repartidor();
+            repartidor.setIdPersona(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
+            envio.setRepartidor(repartidor);
             
             Envio envio_inserted = envioDAO.insertarEnvio(envio);
             IdEnvio_edit = envio_inserted.getIdEnvio();
@@ -161,10 +223,12 @@ public class EnvioController implements BaseControllerInterface {
         try {
             Envio envio = new Envio();
             envio.setIdEnvio(IdEnvio_edit);
-            envio.setHoraInicio(new Time(envioView.dtHoraInicio.getDate().getTime()));
-            envio.setHoraFin(new Time(envioView.dtHoraFin.getDate().getTime()));
-            envio.setRepartidor(new Repartidor(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona()));
-            
+            envio.setHoraInicio(new Timestamp(envioView.dtHoraInicio.getDate().getTime()));
+            envio.setHoraFin(new Timestamp(envioView.dtHoraFin.getDate().getTime()));
+            Repartidor repartidor = new Repartidor();
+            repartidor.setIdPersona(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
+            envio.setRepartidor(repartidor);
+            envio.setEstado((Estado) envioView.cboEstadoenvio.getModel().getSelectedItem());
             envioDAO.modificarEnvio(envio);
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,6 +270,7 @@ public class EnvioController implements BaseControllerInterface {
         envioView.btnEliminarDetalle.setEnabled(true);
         envioView.btnBuscarPedido.setEnabled(false);
         envioView.btnGuardarDetalle.setEnabled(false);
+        envioView.cboEstadoenvio.setEnabled(true);
         
         envioView.lblOpEnvio.setText("( EDITAR )");
 //        limpiarFormDetalle();

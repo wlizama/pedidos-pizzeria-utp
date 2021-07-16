@@ -39,6 +39,10 @@ public class EnvioListaController implements BaseControllerInterface {
             buscar();
         });
         
+        envioListaView.btnVerEnvio.addActionListener((ae) -> {
+            obtener();
+        });
+        
         envioListaView.btnNuevoEnvio.addActionListener((ae) -> {
             nuevo();
         });
@@ -112,7 +116,35 @@ public class EnvioListaController implements BaseControllerInterface {
 
     @Override
     public void obtener() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            int selectedRow = envioListaView.tblListaEnvios.getSelectedRow();
+            if (selectedRow != -1) {
+                int IdEenvio = (int) envioListaView.tblListaEnvios.getValueAt(selectedRow, 0);
+                
+                JDesktopPane mainContainer = (JDesktopPane) envioListaView.getParent();
+                envioController = new EnvioController(this, mainContainer);
+                mainContainer.remove(envioListaView);
+                mainContainer.updateUI();
+                envioController.setIdEnvio_edit(IdEenvio);
+                envioController.obtener();
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Debe seleccionar un item",
+                    "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error obtener: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override

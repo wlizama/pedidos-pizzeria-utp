@@ -37,7 +37,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
         cboEstado = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListaEnvios = new javax.swing.JTable();
-        btn_verEnvio = new javax.swing.JButton();
+        btnVerEnvio = new javax.swing.JButton();
         btnNuevoEnvio = new javax.swing.JButton();
 
         setClosable(true);
@@ -55,7 +55,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "#", "Nro", "Hora Inicio", "Hora Fin", "Estado"
+                "#", "Nro Envio", "Hora Inicio", "Hora Fin", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -68,7 +68,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblListaEnvios);
 
-        btn_verEnvio.setText("Ver Envio");
+        btnVerEnvio.setText("Ver Envio");
 
         btnNuevoEnvio.setText("Nuevo Envio");
 
@@ -83,7 +83,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_verEnvio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVerEnvio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnNuevoEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -106,7 +106,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
                         .addGap(12, 12, 12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(btn_verEnvio)
+                        .addComponent(btnVerEnvio)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoEnvio)
                         .addContainerGap(208, Short.MAX_VALUE))))
@@ -135,7 +135,7 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnNuevoEnvio;
-    public javax.swing.JButton btn_verEnvio;
+    public javax.swing.JButton btnVerEnvio;
     public javax.swing.JComboBox cboEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

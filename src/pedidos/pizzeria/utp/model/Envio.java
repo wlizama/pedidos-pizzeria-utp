@@ -5,7 +5,7 @@
  */
 package pedidos.pizzeria.utp.model;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  *
@@ -14,8 +14,8 @@ import java.sql.Time;
 public class Envio {
     private int IdEnvio;
     private int numero;
-    private Time horaInicio;
-    private Time horaFin;
+    private Timestamp horaInicio;
+    private Timestamp horaFin;
     private Repartidor repartidor;
     private Estado estado;
     
@@ -23,7 +23,7 @@ public class Envio {
         
     }
 
-    public Envio(int IdEnvio, int numero, Time horaInicio, Time horaFin, Repartidor repartidor, Estado estado) {
+    public Envio(int IdEnvio, int numero, Timestamp horaInicio, Timestamp horaFin, Repartidor repartidor, Estado estado) {
         this.IdEnvio = IdEnvio;
         this.numero = numero;
         this.horaInicio = horaInicio;
@@ -48,19 +48,19 @@ public class Envio {
         this.numero = numero;
     }
 
-    public Time getHoraInicio() {
+    public Timestamp getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Time horaInicio) {
+    public void setHoraInicio(Timestamp horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Time getHoraFin() {
+    public Timestamp getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Time horaFin) {
+    public void setHoraFin(Timestamp horaFin) {
         this.horaFin = horaFin;
     }
 

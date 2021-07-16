@@ -146,7 +146,8 @@ values
 insert into tipocomprobante (nombre, IdEstado)
 values ('Boleta', 6);
 
--- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO
+-- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO y envio
+-- cambiar tipo de dato de time a datetime a envio
 -- valores para prueba busqueda pizza
 insert into tamanho (nombre, cantidadPorciones)
 values

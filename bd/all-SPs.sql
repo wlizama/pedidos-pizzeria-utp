@@ -581,8 +581,8 @@ DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioInsertar`(
     OUT IdEnvio int,
     Out numeroenvio int,
-    In horainicio time, 
-    In horafin time, 
+    In horainicio datetime, 
+    In horafin datetime, 
     In IdPersona int
 )
 BEGIN
@@ -592,8 +592,8 @@ BEGIN
     
     select ifnull(max(numero), 0) +1 into numeroenvio from envio;    
 
-    insert into envio (hora_inicio, hora_fin, IdPersona, IdEstado)
-    values (horainicio, horafin, IdPersona, IdEstadoenvio);
+    insert into envio (numero, hora_inicio, hora_fin, IdPersona, IdEstado)
+    values (numeroenvio, horainicio, horafin, IdPersona, IdEstadoenvio);
     
     set IdEnvio = LAST_INSERT_ID();
 END ;;
@@ -635,8 +635,8 @@ DROP PROCEDURE IF EXISTS `SP_EnvioModificar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioModificar`(
     In idenvio int,
-    In horainicio time, 
-    In horafin time, 
+    In horainicio datetime, 
+    In horafin datetime, 
     In IdPersona int,
     In IdEstado int
     )

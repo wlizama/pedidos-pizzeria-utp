@@ -8,10 +8,14 @@ select * from estado;
 select * from tipoestado;
 select * from tipopersona;
 select * from roles;
-select * from comprobante;
+select * from documentoIdentidad;
 select * from detallepedido;
+select * from tamanho;
+select * from tipopizza;
 select * from pizza;
 select * from pedido;
+select * from envio;
+select * from persona;
 select ifnull(max(numero), 0) +1 from pedido;
 /*
 delete from comprobante;
@@ -23,7 +27,7 @@ delete from pedido;
 call SP_RolAccesoLista(1);
 call SP_VentasRpt('2021-06-15', '2021-06-30'); # yyyy-mm-dd
 call SP_CoberturaRpt('2021-06-15', '2021-06-30');
-call SP_PizzaListaxNombre('pepp');
+call SP_PizzaLista(0);
 --
 set @iddetallepedido = 0;
 set @total = 0;
@@ -32,3 +36,7 @@ select @iddetallepedido, @total;
 --
 update persona set idEstado = 6 where idPersona = 1;
 SELECT SHA1('abc')
+
+delete from tamanho where IdTamanho > 4;
+SELECT * from pizza;
+
