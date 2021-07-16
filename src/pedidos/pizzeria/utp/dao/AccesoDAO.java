@@ -16,34 +16,33 @@ import pedidos.pizzeria.utp.model.*;
  *
  * @author jonas
  */
-public class PersonaDAO {
+public class AccesoDAO {
     
-    public List<Persona> getListaPersona(int idtipoDocIdentidad, String Numero) throws Exception {
+        public Acceso getAccesoRol(int IdRol) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
-        List<Persona> lstResult = new ArrayList<>(); 
+        List<Acceso> lstResult = new ArrayList<>();
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_PersonaLista (?,?)}");
-        cs.setInt("idtipoDocIdentidad", idtipoDocIdentidad);
-        cs.setString("Numero", Numero);
+        cs = con.prepareCall("{call SP_RolAccesoLista (?)}");
+        cs.setInt("IdRol", IdRol);
+        
         cs.execute();
 
         ResultSet rs = cs.getResultSet();
-        Persona persona = null;
+        Acceso acceso = null;
         while(rs.next()) {
-            lstResult.add(new Persona(
-                rs.getInt("IdPersona"),
-                rs.getString("nombres"),"",
-                rs.getString("telefono"),null,null,
-                new Estado(0, rs.getString("estado"))
-            ));
-        }
-        
+            acceso = new Acceso(
+                rs.getInt("IdAcceso"),
+                new RolesDAO().getRol(rs.getInt("IdFormulario")),
+                new Formulario(0,rs.getString("Formulario"))
+            );
+            
+        }        
+            
         MySqlConexion.close(con);
         
-        return lstResult;
+        return acceso;
     }
-    
 }

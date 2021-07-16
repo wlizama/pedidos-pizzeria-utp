@@ -1151,7 +1151,7 @@ BEGIN
     from pizza p
     join tipopizza tp on p.IdTipoPizza = tp.IdTipoPizza
     join tamanho t on p.IdTamanho = t.IdTamanho
-    join estado e on p.IdEstado = e.nombre
+    join estado e on p.IdEstado = e.IdEstado
     where p.IdPizza = IdPizza;
 END ;;
 DELIMITER ;
@@ -1211,7 +1211,7 @@ BEGIN
     from pizza p
     join tipopizza tp on p.IdTipoPizza = tp.IdTipoPizza
     join tamanho t on p.IdTamanho = t.IdTamanho
-    join estado e on p.IdEstado = e.nombre
+    join estado e on p.IdEstado = e.IdEstado
     where p.IdTipoPizza between IdTipoPizza_ini and IdTipoPizza_fin;
 END ;;
 DELIMITER ;
@@ -1230,10 +1230,13 @@ BEGIN
         tp.nombre as tipoPizza,
         piz.IdTamanho,
         tam.nombre as tamanho,
-        tam.cantidadPorciones
+        tam.cantidadPorciones,
+        piz.IdEstado,
+        e.nombre as estado
     from pizza piz
     inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
     inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
+    inner join estado e on piz.IdEstado = e.IdEstado
     where piz.nombre like concat('%', nombrepizza, '%');
 
 END ;;
@@ -1600,6 +1603,19 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_Formulario`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_Formulario`(
+    IdFormulario int
+)
+BEGIN
+    select 
+        r.IdFormulario,
+        r.nombre
+    from Formulario r
+    where r.IdFormulario = IdFormulario;
+END ;;
+DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_TipoComprobanteLista`;
 CREATE PROCEDURE `SP_TipoComprobanteLista`()
