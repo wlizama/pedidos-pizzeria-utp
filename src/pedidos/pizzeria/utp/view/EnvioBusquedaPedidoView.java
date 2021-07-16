@@ -30,12 +30,12 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        cboTipoDocumento = new javax.swing.JComboBox<>();
+        cboTipoDocumento = new javax.swing.JComboBox();
         txtNroDocumento = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEnvioBusqPedido = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnSeleccionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,7 +43,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
 
         btnCancelar.setText("Cancelar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEnvioBusqPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -51,11 +51,11 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
                 "#", "Nro. Pedido", "Nro. Comprobante", "Cliente", "Destino"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblEnvioBusqPedido);
 
         btnBuscar.setText("Buscar");
 
-        jButton1.setText("Seleccionar");
+        btnSeleccionar.setText("Seleccionar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +75,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
                         .addComponent(btnBuscar)
                         .addGap(0, 141, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnSeleccionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -94,7 +94,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(btnSeleccionar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(btnCancelar)))
@@ -108,11 +108,11 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cboTipoDocumento;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton btnSeleccionar;
+    public javax.swing.JComboBox cboTipoDocumento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtNroDocumento;
+    public javax.swing.JTable tblEnvioBusqPedido;
+    public javax.swing.JTextField txtNroDocumento;
     // End of variables declaration//GEN-END:variables
 }

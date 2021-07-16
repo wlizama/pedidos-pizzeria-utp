@@ -523,13 +523,23 @@ CREATE PROCEDURE `SP_EnvioDetalle`(
 In iddetalleenvio int
 )
 BEGIN
-    select de.IdEnvio, de.IdPedido, per.nombres + " " + per.apellidos as Cliente, dir.direccion, p.IdEstado,
-    p.FechaCreacion, p.HoraCreacion
-    from detalleenvio de inner join pedido p on de.IdPedido = p.IdPedido
+    select 
+        de.IdDetalleEnvio,
+        de.IdEnvio,
+        de.IdPedido,
+        p.numero,
+        cli.IdCliente,
+        per.nombres as cliente,
+        p.IdDireccionEnvio,
+        dir.direccion,
+        de.hora_fin,
+        de.observaciones
+    from detalleenvio de 
+    inner join pedido p on de.IdPedido = p.IdPedido
     inner join cliente cli on p.IdCliente = cli.IdCliente
     inner join persona per on cli.IdPersona = per.Idpersona
-    inner join direccion dir on cli.IdCliente = dir.IdCliente
-    where IdDetalleEnvio = iddetalleenvio;
+    inner join direccion dir on p.IdDireccionEnvio = dir.IdDireccion
+    where de.IdDetalleEnvio = iddetalleenvio;
 END ;;
 DELIMITER ;
 
@@ -538,7 +548,7 @@ DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioDetalleEliminar`(
 In iddetalleenvio int)
 BEGIN
-    delete from detalleenvio where IdDetalleEnvio = iddetalleenvio;
+    delete from detalleenvio de where de.IdDetalleEnvio = iddetalleenvio;
 
 END ;;
 DELIMITER ;
@@ -546,17 +556,36 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_EnvioDetalleInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioDetalleInserta`(
-In hora_fin time, 
+out IdDetalleEnvio int,
+In hora_fin datetime, 
 In observaciones varchar(100) , 
 In idenvio int, 
 In idpedido int
 )
 BEGIN
     
-    insert into detalleenvio (hora_Fin, observaciones, IdEnvio, IdPedido)
+    insert into detalleenvio (hora_fin, observaciones, IdEnvio, IdPedido)
     values (hora_fin, observaciones, idenvio, idpedido);
     
-    SELECT LAST_INSERT_ID();
+    set IdDetalleEnvio = LAST_INSERT_ID();
+END ;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SP_EnvioDetalleModifica`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_EnvioDetalleModifica`(
+    in IdDetalleEnvio int,
+    In hora_fin datetime, 
+    In observaciones varchar(100),  
+    In idpedido int
+)
+BEGIN
+    
+    update detalleenvio de
+        set de.hora_fin = hora_fin,
+        de.observaciones = observaciones,
+        de.IdPedido = idpedido
+    where de.IdDetalleEnvio = IdDetalleEnvio;
 END ;;
 DELIMITER ;
 
@@ -566,13 +595,23 @@ CREATE PROCEDURE `SP_EnvioDetalleLista`(
 In idenvio int
 )
 BEGIN
-    select de.IdEnvio, de.IdPedido, per.nombres + " " + per.apellidos as Cliente, dir.direccion, p.IdEstado,
-    p.FechaCreacion, p.HoraCreacion
-    from detalleenvio de inner join pedido p on de.IdPedido = p.IdPedido
+    select 
+        de.IdDetalleEnvio,
+        de.IdEnvio,
+        de.IdPedido,
+        p.numero,
+        cli.IdCliente,
+        per.nombres as cliente,
+        p.IdDireccionEnvio,
+        dir.direccion,
+        de.hora_fin,
+        de.observaciones
+    from detalleenvio de 
+    inner join pedido p on de.IdPedido = p.IdPedido
     inner join cliente cli on p.IdCliente = cli.IdCliente
     inner join persona per on cli.IdPersona = per.Idpersona
-    inner join direccion dir on cli.IdCliente = dir.IdCliente
-    where IdEnvio = idenvio;
+    inner join direccion dir on p.IdDireccionEnvio = dir.IdDireccion
+    where de.IdEnvio = idenvio;
 END ;;
 DELIMITER ;
 
@@ -908,15 +947,53 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoListaXClienteListoEntrega`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoListaXClienteListoEntrega`(
-IN IdCliente int
+    In idtipoDocIdentidad int,
+    In numero varchar(15)
 )
 BEGIN
-select p.idpedido, p.numero, pi.nombre, p.fechacreacion, p.horacreacion, d.Direccion, e.estadopedido, p.observaciones
-FROM pedido p inner join detallepedido dp on p.IdPedido = dp.IdPedido
-inner join pizza pi on dp.idpizza = pi.idpizza
-inner join direccion d on p.IdDireccionEnvio = d.IdDireccion
-inner join estado e on p.IdEstado = e.IdEstado
-where p.IdCliente = IdCliente and p.IdEstado = 1; -- asignar el codigo del item "listo"
+    declare idtipoDocIdentidad_ini int default 0;
+    declare idtipoDocIdentidad_fin int default 999999;
+    declare numero_ini varchar(15) default '';
+    declare numero_fin varchar(15) default 'ZZZZZZZZZZ';
+    
+    if idtipoDocIdentidad <> 0 then
+        set idtipoDocIdentidad_ini = idtipoDocIdentidad;
+        set idtipoDocIdentidad_fin = idtipoDocIdentidad;
+    end if;
+
+    if numero <> '' then
+        set numero_ini = numero;
+        set numero_fin = numero;
+    end if;
+
+    select 
+        p.IdPedido,
+        p.numero,
+        comp.numero as numerocomprobante,
+        p.fechacreacion,
+        p.horacreacion,
+        p.IdDireccionEnvio,
+        d.direccion as direccionEnvio,
+        dis.IdDistrito as IdDistritoEnvio,
+        dis.nombre as distritoEnvio,
+        dis.cobertura as coberturaEnvio,
+        p.IdCliente,
+        per.nombres as cliente,
+        p.observaciones,
+        p.IdEstado,
+        e.nombre as estado
+    FROM pedido p 
+    inner join cliente c on p.IdCliente = c.IdCliente
+    inner join persona per on c.IdPersona = per.IdPersona
+    inner join direccion d on p.IdDireccionEnvio = d.IdDireccion
+    inner join distrito dis on d.IdDistrito = dis.IdDistrito
+    inner join documentoIdentidad di on per.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join comprobante comp on p.IdPedido = comp.IdPedido
+    inner join estado e on p.IdEstado = e.IdEstado
+    and di.IdTipoDocIdentidad between idtipoDocIdentidad_ini and idtipoDocIdentidad_fin
+    and di.numero between numero_ini and numero_fin
+    where p.IdEstado = 2 -- listo para entrega
+    and p.IdPedido not in (select de.IdPedido from detalleenvio de); 
 
 END ;;
 DELIMITER ;

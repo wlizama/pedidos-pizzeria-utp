@@ -23,6 +23,10 @@ public class Envio {
         
     }
 
+    public Envio(int IdEnvio) {
+        this.IdEnvio = IdEnvio;
+    }
+    
     public Envio(int IdEnvio, int numero, Timestamp horaInicio, Timestamp horaFin, Repartidor repartidor, Estado estado) {
         this.IdEnvio = IdEnvio;
         this.numero = numero;

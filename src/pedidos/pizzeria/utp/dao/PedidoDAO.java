@@ -76,6 +76,59 @@ public class PedidoDAO {
         return lstResult;
     }
     
+    public List<Pedido> getListaPedidoXClienteListoEntrega(int idtipoDocIdentidad, String numero) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<Pedido> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_PedidoListaXClienteListoEntrega ( ?, ? )}");
+        cs.setInt("idtipoDocIdentidad", idtipoDocIdentidad);
+        cs.setString("numero", numero);
+
+        cs.execute();
+
+        ResultSet rs = cs.getResultSet();
+
+        while(rs.next()) {
+            Cliente cliente = new Cliente(
+                rs.getInt("IdCliente")
+            );
+            cliente.setNombres(rs.getString("cliente"));
+            
+            lstResult.add(new Pedido(
+                rs.getInt("IdPedido"),
+                rs.getInt("numero"),
+                rs.getInt("numerocomprobante"),
+                rs.getDate("fechacreacion"),
+                rs.getTime("horacreacion"),
+                new Direccion(
+                    rs.getInt("IdDireccionEnvio"),
+                    rs.getString("direccionEnvio"),
+                    null,
+                    null,
+                    new Distrito(
+                        rs.getInt("IdDistritoEnvio"),
+                        rs.getString("distritoEnvio"),
+                        rs.getInt("coberturaEnvio") == 1
+                    ),
+                    null
+                ),
+                rs.getString("observaciones"),
+                cliente,
+                new Estado(
+                    rs.getInt("IdEstado"),
+                    rs.getString("estado")
+                )
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
+    
     public Pedido getPedido(int idPedido) throws Exception {
         Connection con = null;
         CallableStatement cs = null;

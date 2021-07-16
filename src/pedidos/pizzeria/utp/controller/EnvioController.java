@@ -8,18 +8,24 @@ package pedidos.pizzeria.utp.controller;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utils.Constants;
 import pedidos.pizzeria.utils.Helpers;
 import pedidos.pizzeria.utp.dao.EnvioDAO;
+import pedidos.pizzeria.utp.dao.EnvioDetalleDAO;
 import pedidos.pizzeria.utp.dao.EstadoDAO;
 import pedidos.pizzeria.utp.dao.PersonaDAO;
+import pedidos.pizzeria.utp.model.DetalleEnvio;
 import pedidos.pizzeria.utp.model.Envio;
 import pedidos.pizzeria.utp.model.Estado;
+import pedidos.pizzeria.utp.model.Pedido;
 import pedidos.pizzeria.utp.model.Persona;
 import pedidos.pizzeria.utp.model.Repartidor;
+import pedidos.pizzeria.utp.view.EnvioBusquedaPedidoView;
 import pedidos.pizzeria.utp.view.EnvioListaView;
 import pedidos.pizzeria.utp.view.EnvioView;
 
@@ -33,7 +39,7 @@ public class EnvioController implements BaseControllerInterface {
     String op_detalle;
     int IdEnvio_edit;
     int IdDetalleEnvio_edit;
-//    Pizza pizzaDetalle;
+    Pedido pedidoDetalle;
     
 
     EnvioView envioView;
@@ -41,14 +47,14 @@ public class EnvioController implements BaseControllerInterface {
     EnvioListaController envioListaController;
     
     EnvioDAO envioDAO;
-//    EnvioDetalleDAO envioDetalleDAO;
+    EnvioDetalleDAO envioDetalleDAO;
     
     JDesktopPane mainContainer;
 
     public EnvioController(EnvioListaController envioListaController, JDesktopPane mainContainer) {
         this.envioListaController = envioListaController;
         this.envioDAO = new EnvioDAO();
-//        this.pedidoDetalleDAO = new PedidoDetalleDAO();
+        this.envioDetalleDAO = new EnvioDetalleDAO();
         
         this.mainContainer = mainContainer;
         
@@ -63,12 +69,88 @@ public class EnvioController implements BaseControllerInterface {
             regresar();
         });
         
+        // detalle
+        envioView.btnModificarDetalle.addActionListener((ae) -> {
+            obtenerDetalle();
+        });
+        
+        envioView.btnAgregarDetalle.addActionListener((ae) -> {
+            nuevoDetalle();
+        });
+        
+        envioView.btnEliminarDetalle.addActionListener((ae) -> {
+            eliminarDetalle();
+        });
+        
+        envioView.btnBuscarPedido.addActionListener((ae) -> {
+            mostrarBuscarPedido();
+        });
+        
+        envioView.btnGuardarDetalle.addActionListener((ae) -> {
+            guardarDetalle();
+        });
         
         initCombos();
     }
 
+    public void setPedidoDetalle(Pedido pedidoDetalle) {
+        this.pedidoDetalle = pedidoDetalle;
+    }
+    
+    
+    
+    public void mostrarBuscarPedido() {
+        try {
+            
+            if(isEnvioGenerado()) {
+                EnvioBusquedaPedidoView enviobusqView = new EnvioBusquedaPedidoView(null, true);
+                EnvioBusquedaPedidoController enviobusqController = new EnvioBusquedaPedidoController(
+                    enviobusqView,
+                    this
+                );
+                Helpers.centerForm(envioView, enviobusqView);
+                enviobusqController.mostrar();
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "El Envio no se encuentra en estado generado.",
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error nuevo detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
     public void setIdEnvio_edit(int IdEnvio_edit) {
         this.IdEnvio_edit = IdEnvio_edit;
+    }
+    
+    private boolean isEnvioGenerado() {
+        try {
+            Envio envio = envioDAO.getEnvio(IdEnvio_edit);
+            
+            return envio.getEstado().getIdEstado() == Constants.ID_ESTADO_GENERADO;
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Error isPedidoGenerado: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+            
+            return false;
+        }
     }
     
     private void initCombos() {
@@ -113,12 +195,50 @@ public class EnvioController implements BaseControllerInterface {
     @Override
     public void limpiarForm() {
         envioView.txtNroEnvio.setText("");
-        
+    }
+    
+    public void limpiarFormDetalle() {
+        envioView.txtNroPedido.setText("");
+        envioView.txtCliente.setText("");
+        envioView.txtDireccion.setText("");
+        envioView.txaObservaciones.setText("");
+        envioView.txtNroPedido.setText("");
+        envioView.lblOpEnvioDetalle.setText("");
     }
 
     @Override
     public void buscar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void buscarDetalle() {
+        try {
+            
+            List<DetalleEnvio> lstDetalleEnvio = envioDetalleDAO.getListaDetalleEnvio(IdEnvio_edit);
+            
+            DefaultTableModel pedidodetalleviewTblModel = (DefaultTableModel) envioView.tblDetalleEnvio.getModel();
+            // limpiar tabla antes de agregar
+            Helpers.clearTable(pedidodetalleviewTblModel);
+
+            if (lstDetalleEnvio.size() > 0) {
+                for (DetalleEnvio detallenvio : lstDetalleEnvio) {
+                    pedidodetalleviewTblModel.addRow(new Object[] {
+                        detallenvio.getIdDetalleEnvio(),
+                        detallenvio.getPedido().getNumero(),
+                        detallenvio.getPedido().getCliente().getNombres(),
+                        detallenvio.getPedido().getDireccionEnvio().getDireccion(),
+                        detallenvio.getHoraFin()
+                    });
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Error buscar: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
@@ -143,7 +263,7 @@ public class EnvioController implements BaseControllerInterface {
             envioView.cboEstadoenvio.setEnabled(true);
             envioView.lblOpEnvio.setText("( EDITAR )");
             
-//            buscarDetalle();
+            buscarDetalle();
             
             envioView.pack();
             mainContainer.add(envioView);
@@ -160,6 +280,62 @@ public class EnvioController implements BaseControllerInterface {
         }
     }
 
+    public void obtenerPedidoDetalle() {
+        try {
+            envioView.txtNroPedido.setText(String.valueOf(pedidoDetalle.getNumero()));
+            envioView.txtCliente.setText(pedidoDetalle.getCliente().getNombres());
+            envioView.txtDireccion.setText(pedidoDetalle.getDireccionEnvio().getDireccion());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error obtener pedido Detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void obtenerDetalle() {
+        try {
+            int selectedRow = envioView.tblDetalleEnvio.getSelectedRow();
+            if (selectedRow != -1) {
+                int IdDetalleEnvio = (int) envioView.tblDetalleEnvio.getValueAt(selectedRow, 0);
+                
+                DetalleEnvio detalleenvio = envioDetalleDAO.getDetalleEnvio(IdDetalleEnvio);
+                Pedido pedido = detalleenvio.getPedido();
+                setPedidoDetalle(pedido);
+                envioView.txtNroPedido.setText(String.valueOf(pedido.getNumero()));
+                envioView.txtCliente.setText(pedido.getCliente().getNombres());
+                envioView.txtDireccion.setText(pedido.getDireccionEnvio().getDireccion());
+                envioView.dtHoraFinPedido.setDate(detalleenvio.getHoraFin());
+                envioView.txaObservaciones.setText(detalleenvio.getObservaciones());
+                
+                IdDetalleEnvio_edit = IdDetalleEnvio;
+                op_detalle = Constants.OP_EDIT;
+                envioView.lblOpEnvioDetalle.setText("( EDITAR )");
+                envioView.btnBuscarPedido.setEnabled(true);
+                envioView.btnGuardarDetalle.setEnabled(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Debe seleccionar un item",
+                    "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error obtener: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     @Override
     public void nuevo() {
         try {
@@ -191,6 +367,38 @@ public class EnvioController implements BaseControllerInterface {
             );
         }
     }
+    
+    public void nuevoDetalle() {
+        try {
+            
+            if(isEnvioGenerado()) {
+                limpiarFormDetalle();
+                IdDetalleEnvio_edit = 0;
+                this.op_detalle = Constants.OP_NEW;
+                envioView.lblOpEnvioDetalle.setText("( NUEVO )");
+                envioView.btnBuscarPedido.setEnabled(true);
+                envioView.btnGuardarDetalle.setEnabled(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "El Envio no se encuentra en estado generado.",
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error nuevo detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     @Override
     public void insertar() {
@@ -217,6 +425,28 @@ public class EnvioController implements BaseControllerInterface {
             );
         }
     }
+    
+    public void insertarDetalle() {
+        try {
+            
+            DetalleEnvio detalleenvio = new DetalleEnvio();
+            detalleenvio.setHoraFin(new Timestamp(envioView.dtHoraFinPedido.getDate().getTime()));
+            detalleenvio.setObservaciones(envioView.txaObservaciones.getText());
+            detalleenvio.setEnvio(new Envio(IdEnvio_edit));
+            detalleenvio.setPedido(new Pedido(pedidoDetalle.getIdPedido()));
+            
+            int IdDetalleEnvio = envioDetalleDAO.insertarDetalleEnvio(detalleenvio);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error insertar detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     @Override
     public void modificar() {
@@ -235,6 +465,65 @@ public class EnvioController implements BaseControllerInterface {
             JOptionPane.showMessageDialog(
                 null,
                 "Error modificar: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void modificarDetalle() {
+        try {
+            DetalleEnvio detalleenvio = new DetalleEnvio();
+            detalleenvio.setIdDetalleEnvio(IdDetalleEnvio_edit);
+            detalleenvio.setHoraFin(new Timestamp(envioView.dtHoraFinPedido.getDate().getTime()));
+            detalleenvio.setObservaciones(envioView.txaObservaciones.getText());
+            detalleenvio.setPedido(new Pedido(pedidoDetalle.getIdPedido()));
+            
+            envioDetalleDAO.modificarDetalleEnvio(detalleenvio);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error modificar detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public void eliminarDetalle() {
+        try {
+            int selectedRow = envioView.tblDetalleEnvio.getSelectedRow();
+            if (selectedRow != -1) {
+                int optSelected = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Realmente desea eliminar este item del detalle?",
+                    "Confirmación",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (optSelected == JOptionPane.OK_OPTION) {
+                    int iddetalleenvio = (int) envioView.tblDetalleEnvio.getValueAt(selectedRow, 0);
+
+                    envioDetalleDAO.eliminarDetalleEnvio(iddetalleenvio);
+                    buscarDetalle();
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Debe seleccionar un item",
+                    "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error eliminar detalle: " + e.getMessage(),
                 "Excepción",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -273,7 +562,52 @@ public class EnvioController implements BaseControllerInterface {
         envioView.cboEstadoenvio.setEnabled(true);
         
         envioView.lblOpEnvio.setText("( EDITAR )");
-//        limpiarFormDetalle();
+        limpiarFormDetalle();
+    }
+    
+    public void guardarDetalle() {
+        
+        // validaciones
+        if(isEnvioGenerado()) {
+            String msgValidacion = "";
+            if (Objects.isNull(pedidoDetalle)) {
+                msgValidacion += "- Debe seleccionar el pedido.\n";
+            }
+            
+
+            if (!msgValidacion.equals("")) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Corregir los siguiente:\n" + msgValidacion,
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(
+                null,
+                "El Envio no se encuentra en estado generado.",
+                "Mensaje",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        
+        if (this.op_detalle.equals(Constants.OP_NEW))
+            insertarDetalle();
+        else if (this.op_detalle.equals(Constants.OP_EDIT))
+            modificarDetalle();
+        
+        this.op_detalle = Constants.OP_EDIT;
+        
+        envioView.btnBuscarPedido.setEnabled(false);
+        envioView.btnGuardarDetalle.setEnabled(false);
+        
+        limpiarFormDetalle();
+        buscarDetalle();
     }
     
 }
