@@ -48,6 +48,9 @@ public class TamanhoPizza {
         this.cantidadPorciones = cantidadPorciones;
     }
     
-   
+   @Override
+    public String toString() {
+        return this.getNombre();
+    }
     
 }

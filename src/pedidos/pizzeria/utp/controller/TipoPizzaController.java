@@ -75,9 +75,10 @@ public class TipoPizzaController implements BaseControllerInterface {
                 }
             }
         } catch (Exception e) {
+             e.getStackTrace();
             JOptionPane.showMessageDialog(
                 null,
-                "Error buscar: " + e.getMessage(),
+                "Error buscar xxxx: " + e.getMessage(),
                 "Excepción",
                 JOptionPane.ERROR_MESSAGE
             );

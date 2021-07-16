@@ -37,9 +37,9 @@ public class ClienteController implements BaseControllerInterface {
 
     public ClienteController(ListaClientesView clienteView) {
         this.clienteView = clienteView;
-        this.direccionClienteView = new DireccionClienteView(null, true);
         
-        this.direccionClienteController = new DireccionClienteController(direccionClienteView, this);
+        /*this.direccionClienteView = new DireccionClienteView(null, true);      
+        this.direccionClienteController = new DireccionClienteController(direccionClienteView, this);*/
         
         this.clienteDAO = new ClienteDAO();
         

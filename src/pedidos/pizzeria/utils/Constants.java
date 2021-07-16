@@ -13,4 +13,5 @@ public class Constants {
     
     public static final String OP_NEW = "new";
     public static final String OP_EDIT = "edit";
+    public static final int ID_TESTADO_PIZZA = 4;
 }
