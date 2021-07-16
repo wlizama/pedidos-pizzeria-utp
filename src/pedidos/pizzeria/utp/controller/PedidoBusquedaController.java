@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utils.Helpers;
 import pedidos.pizzeria.utp.dao.PizzaDAO;
+import pedidos.pizzeria.utp.model.Estado;
 import pedidos.pizzeria.utp.model.Pizza;
 import pedidos.pizzeria.utp.model.TamanhoPizza;
 import pedidos.pizzeria.utp.model.TipoPizza;
@@ -103,7 +104,8 @@ public class PedidoBusquedaController {
                         0,
                         pedidobusqpizzaView.tblListaPizza.getValueAt(selectedRow, 2).toString(),
                         ""
-                    )
+                    ),
+                    new Estado()
                 );
                 
                 pedidoController.setPizzaDetalle(pizza);

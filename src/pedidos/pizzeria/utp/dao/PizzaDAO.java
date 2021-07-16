@@ -177,6 +177,10 @@ public class PizzaDAO {
                     rs.getInt("IdTipoPizza"),
                     rs.getString("tipoPizza"),
                     null
+                ),
+                new Estado(
+                    rs.getInt("IdEstado"),
+                    rs.getString("tipoPizza")
                 )
             ));
         }
