@@ -10,30 +10,29 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import pedidos.pizzeria.utp.model.Estado;
+import pedidos.pizzeria.utp.model.TipoComprobante;
 /**
  *
  * @author wilderlizama
  */
-public class EstadoDAO {
+public class TipoComprobanteDAO {
     
-    public List<Estado> getListaEstado(int IdTipoEstado) throws Exception {
+    public List<TipoComprobante> getListaTipoComprobante() throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
-        List<Estado> lstResult = new ArrayList<>(); 
+        List<TipoComprobante> lstResult = new ArrayList<>(); 
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_EstadoLista (?)}");
-        cs.setInt("IdTipoEstado", IdTipoEstado);
+        cs = con.prepareCall("{call SP_TipoComprobanteLista ()}");
 
         cs.execute();
 
         ResultSet rs = cs.getResultSet();
 
         while(rs.next()) {
-            lstResult.add(new Estado(
-                rs.getInt("IdEstado"),
+            lstResult.add(new TipoComprobante(
+                rs.getInt("IdTipoComprobante"),
                 rs.getString("nombre")
             ));
         }
@@ -43,29 +42,28 @@ public class EstadoDAO {
         return lstResult;
     }
     
-    public Estado getEstado(int IdEstado) throws Exception {
+    public TipoComprobante getTipoComprobante(int IdTipoComprobante) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_Estado (?)}");
-        cs.setInt("IdEstado", IdEstado);
+        cs = con.prepareCall("{call SP_TipoComprobante (?)}");
+        cs.setInt("IdTipoComprobante", IdTipoComprobante);
         
         cs.execute();
         
         ResultSet rs = cs.getResultSet();
         
-        Estado estado = null;
+        TipoComprobante tipocomprobante = null;
         if (rs.next()) {
-            estado = new Estado(
-                rs.getInt("IdEstado"),
+            tipocomprobante = new TipoComprobante(
+                rs.getInt("IdTipoComprobante"),
                 rs.getString("nombre")
             );
         }
         
         MySqlConexion.close(con);
         
-        return estado;
+        return tipocomprobante;
     }
-    
 }

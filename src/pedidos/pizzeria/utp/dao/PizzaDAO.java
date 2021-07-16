@@ -147,5 +147,45 @@ public class PizzaDAO {
         
         MySqlConexion.close(con);
     }
+   
+    public List<Pizza> getListaPizzasXNombre(String nombrepizza) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<Pizza> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_PizzaListaxNombre ( ? )}");
+        cs.setString("nombrepizza", nombrepizza);
+
+        cs.execute();
+
+        ResultSet rs = cs.getResultSet();
+
+        while(rs.next()) {
+            
+            lstResult.add(new Pizza(
+                rs.getInt("IdPizza"),
+                rs.getString("nombre"),
+                rs.getDouble("precio"),
+                new TamanhoPizza(
+                    rs.getInt("IdTamanho"),
+                    rs.getString("tamanho"),
+                    rs.getInt("cantidadPorciones")
+                ),
+                new TipoPizza(
+                    rs.getInt("IdTipoPizza"),
+                    rs.getString("tipoPizza"),
+                    null
+                )
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
     
 }
+
+    
