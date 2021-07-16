@@ -33,9 +33,10 @@ public class Repartidor extends Persona{
         this.IdRepartidor = IdRepartidor;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return this.getNombres() + " " + this.getApellidos();
+    }
     
 }
 

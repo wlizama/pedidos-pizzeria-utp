@@ -105,6 +105,48 @@ public class ClienteDAO {
         return cliente;
     }
     
+    public Cliente getClienteXTipoDocNumero(int idtipoDocIdentidad, String numero) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_ClientexTipoDocNumero (?, ?)}");
+        cs.setInt("idtipoDocIdentidad", idtipoDocIdentidad);
+        cs.setString("numero", numero);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        Cliente cliente = null;
+        if (rs.next()) {
+            cliente = new Cliente(
+                rs.getInt("IdCliente"),
+                rs.getInt("IdPersona"),
+                rs.getString("nombres"),
+                rs.getString("apellidos"),
+                rs.getString("telefono"),
+                new TipoPersona(
+                    rs.getInt("IdCliente"),
+                    rs.getString("tipoPersona")
+                ),
+                new DocumentoIdentidad(
+                    rs.getInt("IdDocumentoIdentidad"),
+                    rs.getString("documentoIdentidad"),
+                    new TipoDocumentoIdentidadDAO().getTipoDocumentoIdentidad(rs.getInt("IdTipoDocIdentidad"))
+                ),
+                new Estado(
+                    rs.getInt("IdEstado"),
+                    rs.getString("estado")
+                )
+            );
+        }
+        
+        MySqlConexion.close(con);
+        
+        return cliente;
+    }
+    
     public int insertarCliente(Cliente cliente) throws Exception {
         Connection con = null;
         CallableStatement cs = null;

@@ -177,7 +177,7 @@ DROP PROCEDURE IF EXISTS `SP_ClienteLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteLista`(
     In idtipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     declare idtipoDocIdentidad_ini int default 0;
     declare idtipoDocIdentidad_fin int default 999999;
@@ -225,7 +225,7 @@ CREATE PROCEDURE `SP_ClienteModifica`(
     In apellidos varchar(100),
     In telefono varchar(10),
     In IdTipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     update cliente cli
         inner join persona per on cli.IdPersona = per.IdPersona
@@ -242,16 +242,29 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_ClientexTipoDocNumero`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClientexTipoDocNumero`(
-In idtipodocidentidad int,
-In numero varchar(15))
+    In idtipoDocIdentidad int,
+    In numero varchar(15)
+)
 BEGIN
-    select di.IdTipoDocIdentidad as TipoDocumento, di.numero, p.IdDireccionEnvio,
-    com.IdComprobante, p.IdEstado, per.nombres, per.telefono, p.observaciones
-    from pedido p inner join cliente cli on p.IdCliente = cli.IdCliente
-    inner join persona per on cli.IdPersona = per.IdPersona
-    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad 
-    inner join comprobante com on p.IdPedido = com.IdPedido
-    where di.IdTipoDocIdentidad = idtipodocidentidad and di.numero = numero ;
+    select
+        c.IdCliente,
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.telefono,
+        p.IdTipoPersona,
+        tp.nombre as tipoPersona,
+        p.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        di.IdTipoDocIdentidad,
+        p.IdEstado,
+        e.nombre as estado
+    from cliente c inner join persona p on c.IdPersona = p.IdPersona
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona
+    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join estado e on p.IdEstado = e.IdEstado
+    where di.IdTipoDocIdentidad = idtipoDocIdentidad
+    and di.numero = numero;
 
 END ;;
 DELIMITER ;
@@ -372,6 +385,50 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_comprobanteActualizaMonto`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_comprobanteActualizaMonto`(
+    In idpedido int
+)
+BEGIN
+    -- actualiza monto de comprobante
+    update comprobante c
+    inner join (
+        select dp.IdPedido, sum(dp.cantidad * pz.precio) as 'sumt'
+        from detallepedido dp 
+        join pizza pz on dp.IdPizza = pz.IdPizza
+        GROUP by dp.IdPedido
+    ) x on c.IdPedido = x.IdPedido
+    set c.monto = x.sumt;
+    
+END ;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SP_ComprobanteXPedido`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_ComprobanteXPedido`(
+    IN IdPedido int
+)
+BEGIN
+    select 
+        c.IdComprobante,
+        c.numero,
+        c.fechaEmision,
+        c.horaEmision,
+        c.IdTipoComprobante,
+        tc.nombre as tipoComprobante,
+        c.monto,
+        c.IdPedido,
+        c.IdEstado,
+        e.nombre as estado
+    from comprobante c
+    join tipocomprobante tc on c.IdTipoComprobante = tc.IdTipoComprobante
+    join estado e on c.IdEstado = e.IdEstado
+    where c.IdPedido = IdPedido;
+    
+END ;;
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `SP_Distrito`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Distrito`(
@@ -438,12 +495,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_Envio`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Envio`(
-In idEnvio int)
+    In idEnvio int
+)
 BEGIN
-select e.IdEnvio, e.hora_inicio, e.hora_fin, e.IdEstado, est.nombre as estado, p.nombres + " " + p.apellidos as repatidor
-from envio e inner join estado est on e.IdEstado = est.IdEstado
-inner join persona p on e.IdPersona = p.IdPersona
-where e.IdEnvio = idenvio;
+    select
+        e.IdEnvio,
+        e.numero,
+        e.hora_inicio,
+        e.hora_fin,
+        e.IdPersona,
+        p.nombres as personanombres,
+        p.apellidos as personaapellidos,
+        p.telefono as personatelefono,
+        e.IdEstado,
+        est.nombre as estado
+    from envio e 
+    inner join persona p on e.IdPersona = p.IdPersona
+    inner join estado est on e.IdEstado = est.IdEstado
+    where e.IdEnvio = idEnvio;
 
 END ;;
 DELIMITER ;
@@ -510,26 +579,54 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_EnvioInsertar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioInsertar`(
-In horainicio time, 
-In horafin time, 
-In IdPersona int,
-In IdEstado int)
+    OUT IdEnvio int,
+    Out numeroenvio int,
+    In horainicio time, 
+    In horafin time, 
+    In IdPersona int
+)
 BEGIN
-    insert into envio (hora_inicio, hora_fin, IdPersona, IdEstado)
-    values (horainicio, horafin, IdPersona, IdEstado);
+    declare IdEstadoenvio int;
+    declare IdEstadocomprobante int;
+    set IdEstadoenvio = 1; -- generado para tipo estado envio
     
-    SELECT LAST_INSERT_ID();
+    select ifnull(max(numero), 0) +1 into numeroenvio from envio;    
+
+    insert into envio (hora_inicio, hora_fin, IdPersona, IdEstado)
+    values (horainicio, horafin, IdPersona, IdEstadoenvio);
+    
+    set IdEnvio = LAST_INSERT_ID();
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_EnvioLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioLista`(
-In estado int)
+    In estado int
+)
 BEGIN
-select e.IdEnvio, e.horainicio, e.horafin, e.IdEstado, est.nombre as estado
-from envio e inner join estado est on e.IdEstado = est.IdEstado
-where IdEstado = estado;
+    declare estado_ini int default 0;
+    declare estado_fin int default 999999;
+    if estado <> 0 then
+        set estado_ini = estado;
+        set estado_fin = estado;
+    end if;
+    
+    select
+        e.IdEnvio,
+        e.numero,
+        e.hora_inicio,
+        e.hora_fin,
+        e.IdPersona,
+        p.nombres as personanombres,
+        p.apellidos as personaapellidos,
+        p.telefono as personatelefono,
+        e.IdEstado,
+        est.nombre as estado
+    from envio e 
+    inner join persona p on e.IdPersona = p.IdPersona
+    inner join estado est on e.IdEstado = est.IdEstado
+    where e.IdEstado between estado_ini and estado_fin;
 
 END ;;
 DELIMITER ;
@@ -537,14 +634,19 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_EnvioModificar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioModificar`(
-In idenvio int,
-In horainicio time, 
-In horafin time, 
-In IdPersona int,
-In IdEstado int)
+    In idenvio int,
+    In horainicio time, 
+    In horafin time, 
+    In IdPersona int,
+    In IdEstado int
+    )
 BEGIN
-    update envio set hora_inicio = horainicio, hora_fin = horafin, IdPersona = IdPersona, IdEstado = IdEstado
-    where IdEnvio = idenvio;
+    update envio e
+        set e.hora_inicio = horainicio,
+        e.hora_fin = horafin,
+        e.IdPersona = IdPersona,
+        e.IdEstado = IdEstado
+    where e.IdEnvio = idenvio;
         
 END ;;
 DELIMITER ;
@@ -564,17 +666,47 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_Estado`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_Estado`(
+    IdEstado int
+)
+BEGIN
+    select 
+        e.IdEstado,
+        e.nombre,
+        e.IdTipoEstado
+    from estado e
+    where e.IdEstado = IdEstado;
+END ;;
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `SP_Pedido`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Pedido`(
-In idpedido int)
+    In idpedido int
+)
 BEGIN
-    select di.IdTipoDocIdentidad as TipoDocumento, di.numero, p.IdDireccionEnvio,
-    com.IdComprobante, p.IdEstado, per.nombres, per.telefono, p.observaciones
-    from pedido p inner join cliente cli on p.IdCliente = cli.IdCliente
-    inner join persona per on cli.IdPersona = per.IdPersona
-    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad 
-    inner join comprobante com on p.IdPedido = com.IdPedido
+    select 
+        p.IdPedido,
+        p.numero,
+        comp.numero as numerocomprobante,
+        p.fechacreacion,
+        p.horacreacion,
+        p.IdDireccionEnvio,
+        d.direccion as direccionEnvio,
+        p.IdCliente,
+        per.nombres as cliente,
+        p.observaciones,
+        p.IdEstado,
+        e.nombre as estado
+    FROM pedido p 
+    inner join cliente c on p.IdCliente = c.IdCliente
+    inner join persona per on c.IdPersona = per.IdPersona
+    inner join direccion d on p.IdDireccionEnvio = d.IdDireccion
+    inner join documentoIdentidad di on per.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join comprobante comp on p.IdPedido = comp.IdPedido
+    inner join estado e on p.IdEstado = e.IdEstado
     where p.IdPedido = idpedido;
 END ;;
 DELIMITER ;
@@ -582,11 +714,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalle`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalle`(
-In iddetallepedido int
+    In iddetallepedido int
 )
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, dp.cantidad, piz.precio
-    from detallepedido dp inner join pizza piz on dp.IdPizza = piz.IdPizza
+    select 
+        dp.IdDetallePedido,
+        dp.IdPedido,
+        piz.IdPizza,
+        piz.nombre,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        dp.cantidad,
+        piz.precio
+    from detallepedido dp 
+    inner join pizza piz on dp.IdPizza = piz.IdPizza
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
     inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
     where dp.IdDetallePedido = iddetallepedido;
 
@@ -596,24 +741,34 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleElimina`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleElimina`(
-In iddetallepedido int)
+    In iddetallepedido int,
+    In idpedido int,
+    out total decimal(19,4)
+)
 BEGIN
-    delete from detallepedido where IdDetallePedido = iddetallepedido;
+    delete from detallepedido dp where dp.IdDetallePedido = iddetallepedido;
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido);
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleInserta`(
-In cantidad int,
-In idpedido int,
-In idpizza int ,
-Out iddetallepedido int)
+    Out iddetallepedido int,
+    In cantidad int,
+    In idpedido int,
+    In idpizza int
+)
 BEGIN
     insert into detallepedido (cantidad, IdPizza, IdPedido)
-    values (cantidad, idpedido, idpizza);
+    values (cantidad, idpizza, idpedido );
     
     SET iddetallepedido = LAST_INSERT_ID();
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido);
     
 END ;;
 DELIMITER ;
@@ -621,10 +776,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleLista`(
-In idpedido int)
+    In idpedido int
+)
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, dp.cantidad, piz.precio
-    from detallepedido dp inner join pizza piz on dp.IdPizza = piz.IdPizza
+    select 
+        dp.IdDetallePedido,
+        dp.IdPedido,
+        piz.IdPizza,
+        piz.nombre,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        dp.cantidad,
+        piz.precio
+    from detallepedido dp 
+    inner join pizza piz on dp.IdPizza = piz.IdPizza
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
     inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
     where dp.IdPedido = idpedido;
 
@@ -634,11 +803,20 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoDetalleModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoDetalleModifica`(
-In cantidad int,
-In iddetallepedido int)
+    In iddetallepedido int,
+    In cantidad int,
+    In idpedido int,
+    In idpizza int,
+    out total decimal(19,4)
+)
 BEGIN
-    update detallepedido set cantidad = cantidad 
-    where IdDetallePedido = iddetallepedido; 
+    update detallepedido dp
+        set dp.cantidad = cantidad,
+        dp.IdPizza = idpizza
+    where dp.IdDetallePedido = iddetallepedido; 
+    
+    -- actualiza monto de comprobante
+    call SP_comprobanteActualizaMonto(idpedido);
 
 END ;;
 DELIMITER ;
@@ -646,45 +824,82 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoInsertar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoInsertar`(
-In fechacreacion date,
-In horacreacion time,
-In iddireccionenvio int,
-In idestado int,
-In idcliente int,
-In observaciones varchar(50),
-Out idpedido int,
-Out numero int
+    Out idpedido int,
+    Out numeropedido int,
+    Out numerocomprobante int,
+    In fechacreacion date,
+    In horacreacion time,
+    In iddireccionenvio int,
+    In idcliente int,
+    In idtipocomprobante int,
+    In observaciones varchar(50)
 )
 BEGIN
-    declare cod_pedido int;
-    declare cod_numero int;
+    declare IdEstadopedido int;
+    declare IdEstadocomprobante int;
+    set IdEstadopedido = 1; -- generado para tipo estado pedido
+    set IdEstadocomprobante = 8; -- pendiente para tipo estado comprobante
     
-    insert into pedido (fechaCreacion, horaCreacion, IdDireccionEnvio, IdEstado, IdCliente, observaciones)
-    values (fechacreacion, horacreacion, iddireccionenvio, idestado, idcliente, observaciones);
+    select ifnull(max(numero), 0) +1 into numeropedido from pedido;    
+    
+    insert into pedido (numero, fechaCreacion, horaCreacion, IdDireccionEnvio, IdEstado, IdCliente, observaciones)
+    values (numeropedido, fechacreacion, horacreacion, iddireccionenvio, IdEstadopedido, idcliente, observaciones);
     
     SET idpedido = LAST_INSERT_ID();
     
-    select numero into numero from pedido where IdPedido = idpedido;    
-
+    -- ingresamos comprobante
+    select ifnull(max(numero), 0) +1 into numerocomprobante from comprobante;    
+    
+    insert into comprobante(numero, fechaEmision, horaEmision, IdTipoComprobante, monto, IdPedido, IdEstado)
+    values(numerocomprobante, fechacreacion, horacreacion, idtipocomprobante, 0, idpedido, IdEstadocomprobante);    
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_PedidoLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoLista`(
-IN IdTipoDocIdentidad int,
-In numero int
+    In idtipoDocIdentidad int,
+    In numero varchar(15)
 )
 BEGIN
-select p.idpedido, pi.nombre, p.horacreacion, d.Direccion, e.estadopedido
-FROM pedido p inner join detallepedido dp on p.IdPedido = dp.IdPedido
-inner join pizza pi on dp.idpizza = pi.idpizza
-inner join direccion d on p.IdDireccionEnvio = d.IdDireccion
-inner join estado e on p.IdEstado = e.IdEstado
-inner join cliente c on p.IdCliente = c.IdCliente
-inner join persona per on c.IdPersona = per.IdPersona
-inner join documentoIdentidad di on per.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-where di.IdTipoDocIdentidad = IdTipoDocIdentidad and di.numero = numero;
+
+    declare idtipoDocIdentidad_ini int default 0;
+    declare idtipoDocIdentidad_fin int default 999999;
+    declare numero_ini varchar(15) default '';
+    declare numero_fin varchar(15) default 'ZZZZZZZZZZ';
+    
+    if idtipoDocIdentidad <> 0 then
+        set idtipoDocIdentidad_ini = idtipoDocIdentidad;
+        set idtipoDocIdentidad_fin = idtipoDocIdentidad;
+    end if;
+
+    if numero <> '' then
+        set numero_ini = numero;
+        set numero_fin = numero;
+    end if;
+
+    select 
+        p.IdPedido,
+        p.numero,
+        comp.numero as numerocomprobante,
+        p.fechacreacion,
+        p.horacreacion,
+        p.IdDireccionEnvio,
+        d.direccion as direccionEnvio,
+        p.IdCliente,
+        per.nombres as cliente,
+        p.observaciones,
+        p.IdEstado,
+        e.nombre as estado
+    FROM pedido p 
+    inner join cliente c on p.IdCliente = c.IdCliente
+    inner join persona per on c.IdPersona = per.IdPersona
+    inner join direccion d on p.IdDireccionEnvio = d.IdDireccion
+    inner join documentoIdentidad di on per.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join comprobante comp on p.IdPedido = comp.IdPedido
+    inner join estado e on p.IdEstado = e.IdEstado
+    and di.IdTipoDocIdentidad between idtipoDocIdentidad_ini and idtipoDocIdentidad_fin
+    and di.numero between numero_ini and numero_fin;
 
 END ;;
 DELIMITER ;
@@ -708,35 +923,22 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PedidoModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PedidoModifica`(
-In idpedido int,
-In iddireccionenvio int,
-In idestado int,
-In idcliente int,
-In idtipocomprobante int,
-In observaciones varchar(50),
-In telefono varchar(10)
-)
+    In idpedido int,
+    In iddireccionenvio int,
+    In idcliente int,
+    In idtipocomprobante int,
+    In observaciones varchar(50),
+    In idestado int
 BEGIN
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
+    update pedido p
+    set p.IdDireccionEnvio = iddireccionenvio,
+        p.IdEstado = idestado, 
+        p.observaciones = observaciones
+    where p.IdPedido = idpedido;
     
-    START TRANSACTION;
-        update pedido set IdDireccionEnvio = iddireccionenvio, IdEstado = idestado, 
-        observaciones = observaciones
-        where IdPedido = idpedido;
-        
-        update comprobante set IdTipoComprobante = idtipocomprobante
-        where IdPedido = idpedido;
-        
-        update persona per
-            inner join cliente cli on per.IdPersona = cli.IdPersona
-            inner join pedido ped on cli.IdCliente = ped.IdCliente
-                set per.telefono = telefono             
-                where ped.IdPedido = idpedido;
-            
-    COMMIT; 
+    update comprobante c
+        set c.IdTipoComprobante = idtipocomprobante
+    where c.IdPedido = idpedido;
 END ;;
 DELIMITER ;
 
@@ -900,6 +1102,36 @@ BEGIN
 END ;;
 DELIMITER ;
 
+
+DROP PROCEDURE IF EXISTS `SP_PersonaListaXTipo`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_PersonaListaXTipo`(
+    IN IdTipoPersona INT
+)
+BEGIN
+    select 
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.IdTipoPersona,
+        p.telefono,
+        tp.nombre as tipoPersona,  
+        p.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        pdi.IdTipoDocIdentidad,
+        pdi.nombre as tipoDocumentoIdentidad,
+        p.IdEstado,
+        e.nombre as estado
+    from persona p 
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
+    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join tipodocumentoidentidad pdi on di.IdTipoDocIdentidad = pdi.IdTipoDocIdentidad
+    inner join estado e on p.IdEstado = e.IdEstado
+    where p.IdTipoPersona = IdTipoPersona;
+END ;;
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS `SP_Pizza`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Pizza`(
@@ -919,7 +1151,7 @@ BEGIN
     from pizza p
     join tipopizza tp on p.IdTipoPizza = tp.IdTipoPizza
     join tamanho t on p.IdTamanho = t.IdTamanho
-    join estado e on p.IdEstado = e.nombre
+    join estado e on p.IdEstado = e.IdEstado
     where p.IdPizza = IdPizza;
 END ;;
 DELIMITER ;
@@ -979,7 +1211,7 @@ BEGIN
     from pizza p
     join tipopizza tp on p.IdTipoPizza = tp.IdTipoPizza
     join tamanho t on p.IdTamanho = t.IdTamanho
-    join estado e on p.IdEstado = e.nombre
+    join estado e on p.IdEstado = e.IdEstado
     where p.IdTipoPizza between IdTipoPizza_ini and IdTipoPizza_fin;
 END ;;
 DELIMITER ;
@@ -987,12 +1219,25 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PizzaListaxNombre`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PizzaListaxNombre`(
-In nombrepizza varchar(50)
+    In nombrepizza varchar(50)
 )
 BEGIN
-    select piz.IdPizza, piz.nombre, tam.nombre as tamanho, tam.cantidadPorciones as porciones, piz.precio
-    from pizza piz inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
-    where piz.nombre = nombrepizza;
+    select 
+        piz.IdPizza,
+        piz.nombre,
+        piz.precio,
+        piz.IdTipoPizza,
+        tp.nombre as tipoPizza,
+        piz.IdTamanho,
+        tam.nombre as tamanho,
+        tam.cantidadPorciones,
+        piz.IdEstado,
+        e.nombre as estado
+    from pizza piz
+    inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
+    inner join tipopizza tp on piz.IdTipoPizza = tp.IdTipoPizza
+    inner join estado e on piz.IdEstado = e.IdEstado
+    where piz.nombre like concat('%', nombrepizza, '%');
 
 END ;;
 DELIMITER ;
@@ -1185,6 +1430,19 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_TipoDocumento`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_TipoDocumento`()
+BEGIN
+    select
+        tdi.IdTipoDocIdentidad,
+        tdi.nombre,
+        tdi.cantidadCaracteres
+    from tipodocumentoidentidad tdi
+    where tdi.IdTipoDocIdentidad = IdTipoDocIdentidad;
+END ;;
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `SP_TipoPersona`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_TipoPersona`(
@@ -1359,3 +1617,31 @@ BEGIN
 END ;;
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `SP_TipoComprobanteLista`;
+CREATE PROCEDURE `SP_TipoComprobanteLista`()
+BEGIN
+    select
+        tc.IdTipoComprobante,
+        tc.nombre,
+        tc.IdEstado,
+        e.nombre as estado
+    from tipocomprobante tc
+    join estado e on tc.IdEstado = e.IdEstado;
+END ;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SP_TipoComprobante`;
+CREATE PROCEDURE `SP_TipoComprobante`(
+    IdTipoComprobante int
+)
+BEGIN
+    select
+        tc.IdTipoComprobante,
+        tc.nombre,
+        tc.IdEstado,
+        e.nombre as estado
+    from tipocomprobante tc
+    join estado e on tc.IdEstado = e.IdEstado
+    where tc.IdTipoComprobante = IdTipoComprobante;
+END ;;
+DELIMITER ;
