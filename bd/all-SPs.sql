@@ -177,7 +177,7 @@ DROP PROCEDURE IF EXISTS `SP_ClienteLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteLista`(
     In idtipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     declare idtipoDocIdentidad_ini int default 0;
     declare idtipoDocIdentidad_fin int default 999999;
@@ -225,7 +225,7 @@ CREATE PROCEDURE `SP_ClienteModifica`(
     In apellidos varchar(100),
     In telefono varchar(10),
     In IdTipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     update cliente cli
         inner join persona per on cli.IdPersona = per.IdPersona
@@ -1294,35 +1294,6 @@ BEGIN
 END ;;
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `SP_RolAccesoEliminaInserta`;
-DELIMITER ;;
-CREATE PROCEDURE `SP_RolAccesoEliminaInserta`(
-    IdRol int,
-    idsformulario varchar(50)
-)
-BEGIN
-    
-    declare idx,prev_idx int;
-    declare v_id varchar(10);
-
-    delete from acceso a 
-    where a.IdRol = IdRol;
-
-    set idx := locate(',', idsformulario,1);
-    set prev_idx := 1;
-
-    WHILE idx > 0 DO
-        set v_id := substr(idsformulario, prev_idx, idx - prev_idx);
-        insert into acceso (IdRol,IdFormulario) values (IdRol,v_id);
-        set prev_idx := idx+1;
-        set idx := locate(',', idsformulario, prev_idx);
-    END WHILE;
-
-    set v_id := substr(idsformulario, prev_idx);
-    insert into acceso (IdRol,IdFormulario) values (IdRol,v_id);
-    
-END ;;
-DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_RolAccesoLista`;
 DELIMITER ;;
@@ -1498,7 +1469,7 @@ BEGIN
     );
     SET IdTipoPersona = LAST_INSERT_ID();
 END
-END ;;
+END ;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_TipoPersonaLista`;

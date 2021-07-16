@@ -10,67 +10,68 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utils.Constants;
 import pedidos.pizzeria.utils.Helpers;
-import pedidos.pizzeria.utp.dao.TipoPizzaDAO;
-import pedidos.pizzeria.utp.model.TipoPizza;
+import pedidos.pizzeria.utp.model.TamanhoPizza;
 import pedidos.pizzeria.utp.view.ListaPizzasView;
+import pedidos.pizzeria.utp.dao.TamanhoPizzaDAO;
 
 /**
  *
- * @author wilderlizama
+ * @author Percy
  */
-public class TipoPizzaController implements BaseControllerInterface {
+public class TamanhoPizzaController implements BaseControllerInterface {
     
     String op;
-    int IdTipoPizza_edit;
+    int IdTamanhoPizza_edit;
     
     ListaPizzasView pizzasView;
-    TipoPizzaDAO tipopizzasDAO;
+    TamanhoPizzaDAO tamanhopizzaDAO;
     
-    public TipoPizzaController(ListaPizzasView pizzasView) {
+    public TamanhoPizzaController(ListaPizzasView pizzasView) {
         this.pizzasView = pizzasView;
-        this.tipopizzasDAO = new TipoPizzaDAO();
+        //this.tipopizzasDAO = new TipoPizzaDAO();
+        this.tamanhopizzaDAO = new TamanhoPizzaDAO();
         
         // eventos de form
-        pizzasView.btnEditarTipo.addActionListener((ae) -> {
+        pizzasView.btnEditarTamano.addActionListener((ae) -> {
             obtener();
         });
         
-        pizzasView.btnNuevoTipo.addActionListener((ae) -> {
+        pizzasView.btnNuevoTamano.addActionListener((ae) -> {
             nuevo();
         });
         
-        pizzasView.btnGuardarTipoPizza.addActionListener((ae) -> {
+        pizzasView.btnGuardarTamPizza.addActionListener((ae) -> {
             guardar();
         });
         
         limpiarForm();
         buscar();
         this.op = Constants.OP_NEW;
-        pizzasView.lblOpTipoPizza.setText("( NUEVO )");
+        pizzasView.lblOpTamanoPizza.setText("( NUEVO )");
     }
 
     @Override
     public void limpiarForm() {
-        pizzasView.txtNombresTipoPizza.setText("");
-        pizzasView.txaDescripcion.setText("");
+        pizzasView.txtNombresTamPizza.setText("");
+        pizzasView.txtCanPorciones.setText("");
     }
 
     @Override
     public void buscar() {
         try {
             
-            List<TipoPizza> lstTipoPizza = tipopizzasDAO.getListaTipoPizza();
+            List<TamanhoPizza> lstTamanhoPizza = tamanhopizzaDAO.getListaTamanhoPizza();
             
-            DefaultTableModel pizzasViewTblModel = (DefaultTableModel) pizzasView.tblListaTipo.getModel();
+            DefaultTableModel pizzasViewTblModel = (DefaultTableModel) pizzasView.tblListaTamanos.getModel();
             // limpiar tabla antes de agregar
             Helpers.clearTable(pizzasViewTblModel);
             
-
-            if (lstTipoPizza.size() > 0) {
-                for (TipoPizza tipoPizza : lstTipoPizza) {
+            if (lstTamanhoPizza.size() > 0) {
+                for (TamanhoPizza tamanhoPizza : lstTamanhoPizza) {
                     pizzasViewTblModel.addRow(new Object[] {
-                        tipoPizza.getIdTipoPizza(),
-                        tipoPizza.getNombre()
+                        tamanhoPizza.getIdTamanhoPizza(),
+                        tamanhoPizza.getNombre(),
+                        tamanhoPizza.getCantidadPorciones()                            
                     });
                 }
             }
@@ -88,34 +89,28 @@ public class TipoPizzaController implements BaseControllerInterface {
     @Override
     public void obtener() {
         try {
-            int selectedRow = pizzasView.tblListaTipo.getSelectedRow();
+            int selectedRow = pizzasView.tblListaTamanos.getSelectedRow();
             if (selectedRow != -1) {
-                int IdTipoPizza = (int) pizzasView.tblListaTipo.getValueAt(selectedRow, 0);
-                TipoPizza tipopizza = tipopizzasDAO.getTipoPizza(IdTipoPizza);
+                int IdTamanhoPizza = (int) pizzasView.tblListaTamanos.getValueAt(selectedRow, 0);
+                TamanhoPizza tamanhopizza = tamanhopizzaDAO.getTamanhoPizza(IdTamanhoPizza);             
                 
-                IdTipoPizza_edit = tipopizza.getIdTipoPizza();
-                pizzasView.txtNombresTipoPizza.setText(tipopizza.getNombre());
-                pizzasView.txaDescripcion.setText(tipopizza.getDescripcion());
+                IdTamanhoPizza_edit = tamanhopizza.getIdTamanhoPizza();
+                pizzasView.txtNombresTamPizza.setText(tamanhopizza.getNombre());
+                pizzasView.txtCanPorciones.setText(Integer.toString(tamanhopizza.getCantidadPorciones()));
                 
                 this.op = Constants.OP_EDIT;
-                pizzasView.lblOpTipoPizza.setText("( EDITAR )");
+                pizzasView.lblOpTamanoPizza.setText("( EDITAR )");
             }
             else {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Debe seleccionar un item",
-                    "Mensaje",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
+                    null, "Debe seleccionar un item", "Mensaje",
+                    JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(
-                null,
-                "Error obtener: " + e.getMessage(),
-                "Excepción",
-                JOptionPane.ERROR_MESSAGE
-            );
+                null, "Error obtener: " + e.getMessage(), "Excepción",
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -124,7 +119,7 @@ public class TipoPizzaController implements BaseControllerInterface {
         try {
             limpiarForm();
             this.op = Constants.OP_NEW;
-            pizzasView.lblOpTipoPizza.setText("( NUEVO )");
+            pizzasView.lblOpTamanoPizza.setText("( NUEVO )");
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(
@@ -139,14 +134,14 @@ public class TipoPizzaController implements BaseControllerInterface {
     @Override
     public void insertar() {
         try {
-            TipoPizza tipopizza = new TipoPizza(
+            TamanhoPizza tamanhopizza = new TamanhoPizza(
                 0,
-                pizzasView.txtNombresTipoPizza.getText(),
-                pizzasView.txaDescripcion.getText()
+                pizzasView.txtNombresTamPizza.getText(),
+                Integer.parseInt(pizzasView.txtCanPorciones.getText())
             );
             
-            int IdTipoPizza = tipopizzasDAO.insertarTipoPizza(tipopizza);
-            tipopizza.setIdTipoPizza(IdTipoPizza);
+            int IdTamanhoPizza = tamanhopizzaDAO.insertarTamanhoPizza(tamanhopizza);
+            tamanhopizza.setIdTamanhoPizza(IdTamanhoPizza);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,13 +157,13 @@ public class TipoPizzaController implements BaseControllerInterface {
     @Override
     public void modificar() {
         try {
-            TipoPizza tipopizza = new TipoPizza(
-                IdTipoPizza_edit,
-                pizzasView.txtNombresTipoPizza.getText(),
-                pizzasView.txaDescripcion.getText()
+            TamanhoPizza tamanhopizza = new TamanhoPizza(
+                IdTamanhoPizza_edit,
+                pizzasView.txtNombresTamPizza.getText(),
+                Integer.parseInt(pizzasView.txtCanPorciones.getText())
             );
             
-            tipopizzasDAO.modificarTipoPizza(tipopizza);
+            tamanhopizzaDAO.modificarTamanhoPizza(tamanhopizza);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,10 +181,10 @@ public class TipoPizzaController implements BaseControllerInterface {
          
         // validaciones
         String msgValidacion = "";
-        if (pizzasView.txtNombresTipoPizza.getText().trim().equals(""))
-            msgValidacion += "- Ingresar nombre de Tipo Pizza.\n";
-        if (pizzasView.txaDescripcion.getText().trim().equals(""))
-            msgValidacion += "- Ingresar descripción de Tipo Pizza.\n";
+        if (pizzasView.txtNombresTamPizza.getText().trim().equals(""))
+            msgValidacion += "- Ingresar nombre de Tamaño Pizza.\n";
+        if (pizzasView.txtCanPorciones.getText().trim().equals(""))
+            msgValidacion += "- Ingresar cantidad de Porciones Pizza.\n";
         
         if (!msgValidacion.equals("")) {
             JOptionPane.showMessageDialog(
@@ -208,8 +203,9 @@ public class TipoPizzaController implements BaseControllerInterface {
         
         limpiarForm();
         this.op = Constants.OP_NEW;
-        pizzasView.lblOpTipoPizza.setText("( NUEVO )");
+        pizzasView.lblOpTamanoPizza.setText("( NUEVO )");
         
         buscar();
     }
+    
 }

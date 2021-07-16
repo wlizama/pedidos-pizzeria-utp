@@ -15,7 +15,7 @@ public class TamanhoPizza {
     private int cantidadPorciones;
 
     public TamanhoPizza(){
-        
+
     }
 
     public TamanhoPizza(int IdTamanhoPizza, String nombre, int cantidadPorciones) {
@@ -48,6 +48,9 @@ public class TamanhoPizza {
         this.cantidadPorciones = cantidadPorciones;
     }
     
-   
+   @Override
+    public String toString() {
+        return this.getNombre();
+    }
     
 }
