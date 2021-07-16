@@ -77,6 +77,11 @@ public class MainFormView extends javax.swing.JFrame {
         smEnvios.setMnemonic('e');
         smEnvios.setText("Envios");
         smEnvios.setToolTipText("");
+        smEnvios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smEnviosActionPerformed(evt);
+            }
+        });
         mDelivery.add(smEnvios);
 
         menuBar.add(mDelivery);
@@ -208,6 +213,14 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, pedidolistaView);
         pedidolistaView.setVisible(true);
     }//GEN-LAST:event_smLPedidosActionPerformed
+
+    private void smEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEnviosActionPerformed
+        EnvioListaView listaEnviosView = new EnvioListaView();
+        listaEnviosView.pack();
+        dpPrincipal.add(listaEnviosView);
+        Helpers.centerForm(dpPrincipal, listaEnviosView);
+        listaEnviosView.setVisible(true);
+    }//GEN-LAST:event_smEnviosActionPerformed
 
     /**
      * @param args the command line arguments

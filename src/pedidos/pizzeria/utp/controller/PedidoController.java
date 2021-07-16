@@ -339,6 +339,7 @@ public class PedidoController implements BaseControllerInterface {
                 pedidoView.cboDireccion.addItem(direccion);
             }
             pedidoView.cboDireccion.getModel().setSelectedItem(pedido.getDireccionEnvio());
+            pedidoView.cboEstado.getModel().setSelectedItem(pedido.getEstado());
             
             pedidoView.btnModificarDetalle.setEnabled(true);
             pedidoView.btnAgregarDetalle.setEnabled(true);

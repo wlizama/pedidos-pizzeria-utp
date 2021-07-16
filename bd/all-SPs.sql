@@ -495,12 +495,24 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_Envio`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Envio`(
-In idEnvio int)
+    In idEnvio int
+)
 BEGIN
-select e.IdEnvio, e.hora_inicio, e.hora_fin, e.IdEstado, est.nombre as estado, p.nombres + " " + p.apellidos as repatidor
-from envio e inner join estado est on e.IdEstado = est.IdEstado
-inner join persona p on e.IdPersona = p.IdPersona
-where e.IdEnvio = idenvio;
+    select
+        e.IdEnvio,
+        e.numero,
+        e.hora_inicio,
+        e.hora_fin,
+        e.IdPersona,
+        p.nombres as personanombres,
+        p.apellidos as personaapellidos,
+        p.telefono as personatelefono,
+        e.IdEstado,
+        est.nombre as estado
+    from envio e 
+    inner join persona p on e.IdPersona = p.IdPersona
+    inner join estado est on e.IdEstado = est.IdEstado
+    where e.IdEnvio = idEnvio;
 
 END ;;
 DELIMITER ;
@@ -567,26 +579,54 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_EnvioInsertar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioInsertar`(
-In horainicio time, 
-In horafin time, 
-In IdPersona int,
-In IdEstado int)
+    OUT IdEnvio int,
+    Out numeroenvio int,
+    In horainicio time, 
+    In horafin time, 
+    In IdPersona int
+)
 BEGIN
-    insert into envio (hora_inicio, hora_fin, IdPersona, IdEstado)
-    values (horainicio, horafin, IdPersona, IdEstado);
+    declare IdEstadoenvio int;
+    declare IdEstadocomprobante int;
+    set IdEstadoenvio = 1; -- generado para tipo estado envio
     
-    SELECT LAST_INSERT_ID();
+    select ifnull(max(numero), 0) +1 into numeroenvio from envio;    
+
+    insert into envio (hora_inicio, hora_fin, IdPersona, IdEstado)
+    values (horainicio, horafin, IdPersona, IdEstadoenvio);
+    
+    set IdEnvio = LAST_INSERT_ID();
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_EnvioLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioLista`(
-In estado int)
+    In estado int
+)
 BEGIN
-select e.IdEnvio, e.horainicio, e.horafin, e.IdEstado, est.nombre as estado
-from envio e inner join estado est on e.IdEstado = est.IdEstado
-where IdEstado = estado;
+    declare estado_ini int default 0;
+    declare estado_fin int default 999999;
+    if estado <> 0 then
+        set estado_ini = estado;
+        set estado_fin = estado;
+    end if;
+    
+    select
+        e.IdEnvio,
+        e.numero,
+        e.hora_inicio,
+        e.hora_fin,
+        e.IdPersona,
+        p.nombres as personanombres,
+        p.apellidos as personaapellidos,
+        p.telefono as personatelefono,
+        e.IdEstado,
+        est.nombre as estado
+    from envio e 
+    inner join persona p on e.IdPersona = p.IdPersona
+    inner join estado est on e.IdEstado = est.IdEstado
+    where e.IdEstado between estado_ini and estado_fin;
 
 END ;;
 DELIMITER ;
@@ -594,14 +634,19 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_EnvioModificar`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_EnvioModificar`(
-In idenvio int,
-In horainicio time, 
-In horafin time, 
-In IdPersona int,
-In IdEstado int)
+    In idenvio int,
+    In horainicio time, 
+    In horafin time, 
+    In IdPersona int,
+    In IdEstado int
+    )
 BEGIN
-    update envio set hora_inicio = horainicio, hora_fin = horafin, IdPersona = IdPersona, IdEstado = IdEstado
-    where IdEnvio = idenvio;
+    update envio e
+        set e.hora_inicio = horainicio,
+        e.hora_fin = horafin,
+        e.IdPersona = IdPersona,
+        e.IdEstado = IdEstado
+    where e.IdEnvio = idenvio;
         
 END ;;
 DELIMITER ;
@@ -1056,6 +1101,36 @@ BEGIN
     COMMIT;
 END ;;
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `SP_PersonaListaXTipo`;
+DELIMITER ;;
+CREATE PROCEDURE `SP_PersonaListaXTipo`(
+    IN IdTipoPersona INT
+)
+BEGIN
+    select 
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.IdTipoPersona,
+        p.telefono,
+        tp.nombre as tipoPersona,  
+        p.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        pdi.IdTipoDocIdentidad,
+        pdi.nombre as tipoDocumentoIdentidad,
+        p.IdEstado,
+        e.nombre as estado
+    from persona p 
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
+    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join tipodocumentoidentidad pdi on di.IdTipoDocIdentidad = pdi.IdTipoDocIdentidad
+    inner join estado e on p.IdEstado = e.IdEstado
+    where p.IdTipoPersona = IdTipoPersona;
+END ;;
+DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS `SP_Pizza`;
 DELIMITER ;;

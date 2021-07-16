@@ -16,6 +16,7 @@ public class Constants {
     
     public static final int ID_TESTADO_PEDIDO = 1;
     public static final int ID_TESTADO_ENVIO = 1;
+    public static final int ID_TPERSONA_DELIVERY = 3;
     
     public static final int ID_ESTADO_GENERADO = 1;
 }
