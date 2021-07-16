@@ -46,4 +46,48 @@ public class PersonaDAO {
         return lstResult;
     }
     
+    public List<Persona> getListaPersonaXTipo(int IdTipoPersona) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<Persona> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_PersonaListaXTipo ( ? )}");
+        cs.setInt("IdTipoPersona", IdTipoPersona);
+
+        cs.execute();
+
+        ResultSet rs = cs.getResultSet();
+
+        while(rs.next()) {
+            lstResult.add(new Persona(
+                rs.getInt("IdPersona"),
+                rs.getString("nombres"),
+                rs.getString("apellidos"),
+                rs.getString("telefono"),
+                new TipoPersona(
+                    rs.getInt("IdTipoPersona"),
+                    rs.getString("tipoPersona")
+                ),
+                new DocumentoIdentidad(
+                    rs.getInt("IdDocumentoIdentidad"),
+                    rs.getString("documentoIdentidad"),
+                    new TipoDocumentoIdentidad(
+                        rs.getInt("IdTipoDocIdentidad"),
+                        rs.getString("tipoDocumentoIdentidad"),
+                        0
+                    )
+                ),
+                new Estado(
+                    rs.getInt("IdEstado"),
+                    rs.getString("estado")
+                )
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
 }
