@@ -10,6 +10,7 @@ package pedidos.pizzeria.utp.model;
  * @author Percy
  */
 public class Pizza {
+    
     private int IdPizza;
     private String nombre;
     private Double precio;
@@ -19,6 +20,10 @@ public class Pizza {
 
     public Pizza(){
         
+    }
+    
+     public Pizza(int idpizza){
+        this.IdPizza = idpizza;
     }
 
     public Pizza(int IdPizza, String nombre, Double precio, TamanhoPizza tamanhoPizza, TipoPizza tipoPizza, Estado estado) {

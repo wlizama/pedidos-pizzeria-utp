@@ -177,7 +177,7 @@ DROP PROCEDURE IF EXISTS `SP_ClienteLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_ClienteLista`(
     In idtipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     declare idtipoDocIdentidad_ini int default 0;
     declare idtipoDocIdentidad_fin int default 999999;
@@ -225,7 +225,7 @@ CREATE PROCEDURE `SP_ClienteModifica`(
     In apellidos varchar(100),
     In telefono varchar(10),
     In IdTipoDocIdentidad int,
-    In numero varchar(15)
+    In numero varchar(15))
 BEGIN
     update cliente cli
         inner join persona per on cli.IdPersona = per.IdPersona
