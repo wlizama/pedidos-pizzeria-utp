@@ -746,7 +746,8 @@ CREATE PROCEDURE `SP_PedidoDetalleElimina`(
     out total decimal(19,4)
 )
 BEGIN
-    delete from detallepedido dp where dp.IdDetallePedido = iddetallepedido;
+    delete from detallepedido  
+    where detallepedido.IdDetallePedido = iddetallepedido;
     
     -- actualiza monto de comprobante
     call SP_comprobanteActualizaMonto(idpedido);
@@ -929,6 +930,7 @@ CREATE PROCEDURE `SP_PedidoModifica`(
     In idtipocomprobante int,
     In observaciones varchar(50),
     In idestado int
+)
 BEGIN
     update pedido p
     set p.IdDireccionEnvio = iddireccionenvio,
