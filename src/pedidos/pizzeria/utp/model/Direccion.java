@@ -77,6 +77,11 @@ public class Direccion {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @Override
+    public String toString() {
+        return this.getDireccion() + " / " + this.getDistrito().getNombre();
+    }
     
     
 }

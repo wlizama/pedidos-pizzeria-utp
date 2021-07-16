@@ -17,19 +17,17 @@ public class Comprobante {
     private int numero;
     private Date fechaEmision;
     private double monto;
-    private String observaciones;
     private TipoComprobante tipoComprobante;
     private Pedido pedido;
 
     public Comprobante() {
     }
 
-    public Comprobante(int idComprobante, int numero, Date fechaEmision, double monto, String observaciones, TipoComprobante tipoComprobante, Pedido pedido) {
+    public Comprobante(int idComprobante, int numero, Date fechaEmision, double monto, TipoComprobante tipoComprobante, Pedido pedido) {
         this.idComprobante = idComprobante;
         this.numero = numero;
         this.fechaEmision = fechaEmision;
         this.monto = monto;
-        this.observaciones = observaciones;
         this.tipoComprobante = tipoComprobante;
         this.pedido = pedido;
     }
@@ -64,14 +62,6 @@ public class Comprobante {
 
     public void setMonto(double monto) {
         this.monto = monto;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
     }
 
     public TipoComprobante getTipoComprobante() {

@@ -87,5 +87,9 @@ public class Persona {
         this.estado = estado;
     }
     
+    @Override
+    public String toString() {
+        return this.getNombres() + " " + this.getApellidos();
+    }
     
 }
