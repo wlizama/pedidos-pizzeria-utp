@@ -634,36 +634,51 @@ public class PedidoController implements BaseControllerInterface {
     public void guardar() {
         
         // validaciones
-        String msgValidacion = "";
-        if (IdCliente == 0)
-            msgValidacion += "- Ingresar cliente.\n";
+        Estado estadoPedido = (Estado) pedidoView.cboEstado.getModel().getSelectedItem();
+        if (estadoPedido.getIdEstado() == Constants.ID_ESTADO_GENERADO ||
+            estadoPedido.getIdEstado() == Constants.ID_ESTADO_LISTOENTREGA
+            ) {
+        
+        
+            String msgValidacion = "";
+            if (IdCliente == 0)
+                msgValidacion += "- Ingresar cliente.\n";
 
-        if (!msgValidacion.equals("")) {
+            if (!msgValidacion.equals("")) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Corregir los siguiente:\n" + msgValidacion,
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            if (this.op.equals(Constants.OP_NEW))
+                insertar();
+            else if (this.op.equals(Constants.OP_EDIT))
+                modificar();
+
+            this.op = Constants.OP_EDIT;
+            this.op_detalle = null;
+            pedidoView.btnModificarDetalle.setEnabled(true);
+            pedidoView.btnAgregarDetalle.setEnabled(true);
+            pedidoView.btnEliminarDetalle.setEnabled(true);
+            pedidoView.btnBuscarPizza.setEnabled(false);
+            pedidoView.btnGuardarDetalle.setEnabled(false);
+            pedidoView.cboEstado.setEnabled(true);
+
+            pedidoView.lblOpPedido.setText("( EDITAR )");
+            limpiarFormDetalle();
+        }
+        else {
             JOptionPane.showMessageDialog(
                 null,
-                "Corregir los siguiente:\n" + msgValidacion,
+                "Los pedidos solo se pueden generar o alistar para envio",
                 "Mensaje",
                 JOptionPane.WARNING_MESSAGE
             );
-            return;
         }
-        
-        if (this.op.equals(Constants.OP_NEW))
-            insertar();
-        else if (this.op.equals(Constants.OP_EDIT))
-            modificar();
-        
-        this.op = Constants.OP_EDIT;
-        this.op_detalle = null;
-        pedidoView.btnModificarDetalle.setEnabled(true);
-        pedidoView.btnAgregarDetalle.setEnabled(true);
-        pedidoView.btnEliminarDetalle.setEnabled(true);
-        pedidoView.btnBuscarPizza.setEnabled(false);
-        pedidoView.btnGuardarDetalle.setEnabled(false);
-        pedidoView.cboEstado.setEnabled(true);
-        
-        pedidoView.lblOpPedido.setText("( EDITAR )");
-        limpiarFormDetalle();
     }
     
     public void guardarDetalle() {

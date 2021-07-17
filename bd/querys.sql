@@ -15,6 +15,7 @@ select * from tipopizza;
 select * from pizza;
 select * from pedido;
 select * from envio;
+select * from detalleenvio;
 select * from persona;
 select ifnull(max(numero), 0) +1 from pedido;
 /*

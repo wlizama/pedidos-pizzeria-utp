@@ -5,7 +5,9 @@
  */
 package pedidos.pizzeria.utils;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.net.URI;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
@@ -34,4 +36,15 @@ public class Helpers {
     public static void centerForm(JInternalFrame jif, JDialog jd) {
         jd.setLocation(jif.getLocation().x*2, jif.getLocation().y*2);
     }
+    
+    
+    public static boolean openWebpage(URI uri) throws Exception {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            desktop.browse(uri);
+            return true;
+        }
+        return false;
+    }
+    
 }

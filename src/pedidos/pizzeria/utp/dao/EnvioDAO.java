@@ -37,7 +37,7 @@ public class EnvioDAO {
 
         while(rs.next()) {
             Repartidor repartidor = new Repartidor();
-            repartidor.setIdRepartidor(rs.getInt("IdPersona"));
+            repartidor.setIdPersona(rs.getInt("IdPersona"));
             repartidor.setNombres(rs.getString("personanombres"));
             repartidor.setApellidos(rs.getString("personaapellidos"));
             repartidor.setTelefono(rs.getString("personatelefono"));
@@ -75,7 +75,7 @@ public class EnvioDAO {
         Envio envio = null;
         if (rs.next()) {
             Repartidor repartidor = new Repartidor();
-            repartidor.setIdRepartidor(rs.getInt("IdPersona"));
+            repartidor.setIdPersona(rs.getInt("IdPersona"));
             repartidor.setNombres(rs.getString("personanombres"));
             repartidor.setApellidos(rs.getString("personaapellidos"));
             repartidor.setTelefono(rs.getString("personatelefono"));

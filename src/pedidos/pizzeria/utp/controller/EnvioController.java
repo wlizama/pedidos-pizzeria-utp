@@ -5,7 +5,9 @@
  */
 package pedidos.pizzeria.utp.controller;
 
-import java.sql.Time;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -69,6 +71,10 @@ public class EnvioController implements BaseControllerInterface {
             regresar();
         });
         
+        envioView.btnEnvdatos.addActionListener((ae) -> {
+            enviarDatos();
+        });
+        
         // detalle
         envioView.btnModificarDetalle.addActionListener((ae) -> {
             obtenerDetalle();
@@ -92,12 +98,44 @@ public class EnvioController implements BaseControllerInterface {
         
         initCombos();
     }
+    
+    private void enviarDatos() {
+        try {
+            List<DetalleEnvio> lstDetalleEnvio = envioDetalleDAO.getListaDetalleEnvio(IdEnvio_edit);
+            if (lstDetalleEnvio.size() > 0) {
+                String nroTelefono = ((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getTelefono();
+                String msgText = "";
+                for (DetalleEnvio detalleEnvio : lstDetalleEnvio) {
+                    msgText += "*Nro. Pedido*: " + detalleEnvio.getPedido().getNumero() + "," +
+                            "*Cliente*: " + detalleEnvio.getPedido().getCliente().getNombres() + "," 
+                            + "*Dirección*: " + detalleEnvio.getPedido().getDireccionEnvio().getDireccion() + "|";
+                }
+
+                Helpers.openWebpage(new URI("https://wa.me/" + nroTelefono + "/?text="+ URLEncoder.encode(msgText, StandardCharsets.UTF_8.toString())));
+            }
+            else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "No existen datos en el detalle del Envio",
+                    "Excepción",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error enviar Datos: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     public void setPedidoDetalle(Pedido pedidoDetalle) {
         this.pedidoDetalle = pedidoDetalle;
     }
-    
-    
     
     public void mostrarBuscarPedido() {
         try {
@@ -153,6 +191,24 @@ public class EnvioController implements BaseControllerInterface {
         }
     }
     
+    private boolean isEnvioEnCamino() {
+        try {
+            Envio envio = envioDAO.getEnvio(IdEnvio_edit);
+            
+            return envio.getEstado().getIdEstado() == Constants.ID_ESTADO_ENCAMINO;
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Error isEnvioEnCamino: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+            
+            return false;
+        }
+    }
+    
     private void initCombos() {
         try {
             List<Persona> lstRepartidor = new PersonaDAO().getListaPersonaXTipo(Constants.ID_TPERSONA_DELIVERY);
@@ -166,7 +222,8 @@ public class EnvioController implements BaseControllerInterface {
             }
             
             for (Estado estado : lstEstado) {
-                envioView.cboEstadoenvio.addItem(estado); // para lista filtro
+                if (estado.getIdEstado() != Constants.ID_ESTADO_LISTOENTREGA) // excluir estado listo para entrega
+                    envioView.cboEstadoenvio.addItem(estado); // para lista filtro
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
@@ -252,8 +309,8 @@ public class EnvioController implements BaseControllerInterface {
             envioView.txtNroEnvio.setText(String.valueOf(envio.getNumero()));
             envioView.dtHoraInicio.setDate(envio.getHoraInicio());
             envioView.dtHoraFin.setDate(envio.getHoraFin());
-            envioView.cboRepartidor.setSelectedItem(envio.getRepartidor());
-            envioView.cboEstadoenvio.setSelectedItem(envio.getEstado());
+            envioView.cboRepartidor.getModel().setSelectedItem(envio.getRepartidor());
+            envioView.cboEstadoenvio.getModel().setSelectedItem(envio.getEstado());
             
             envioView.btnModificarDetalle.setEnabled(true);
             envioView.btnAgregarDetalle.setEnabled(true);
@@ -456,7 +513,8 @@ public class EnvioController implements BaseControllerInterface {
             envio.setHoraInicio(new Timestamp(envioView.dtHoraInicio.getDate().getTime()));
             envio.setHoraFin(new Timestamp(envioView.dtHoraFin.getDate().getTime()));
             Repartidor repartidor = new Repartidor();
-            repartidor.setIdPersona(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
+            System.out.println("a>" + ((Repartidor) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
+            repartidor.setIdPersona(((Repartidor) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
             envio.setRepartidor(repartidor);
             envio.setEstado((Estado) envioView.cboEstadoenvio.getModel().getSelectedItem());
             envioDAO.modificarEnvio(envio);
@@ -493,6 +551,16 @@ public class EnvioController implements BaseControllerInterface {
     
     public void eliminarDetalle() {
         try {
+            if(!isEnvioGenerado()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "El Envio no se encuentra en estado generado.",
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            
             int selectedRow = envioView.tblDetalleEnvio.getSelectedRow();
             if (selectedRow != -1) {
                 int optSelected = JOptionPane.showConfirmDialog(
@@ -586,13 +654,15 @@ public class EnvioController implements BaseControllerInterface {
             }
         }
         else {
-            JOptionPane.showMessageDialog(
-                null,
-                "El Envio no se encuentra en estado generado.",
-                "Mensaje",
-                JOptionPane.WARNING_MESSAGE
-            );
-            return;
+            if(!isEnvioEnCamino()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "No puede modificar el detalle de Envio si el pedido esta finalizado.",
+                    "Mensaje",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
         }
         
         
