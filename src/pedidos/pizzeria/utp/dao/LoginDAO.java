@@ -8,6 +8,8 @@ package pedidos.pizzeria.utp.dao;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import pedidos.pizzeria.utp.model.Roles;
+import pedidos.pizzeria.utp.model.Usuario;
 
 /**
  *
@@ -15,7 +17,7 @@ import java.sql.ResultSet;
  */
 public class LoginDAO {
     
-    public int verificaUsuario(String nombreUsuario, String contrasenha) throws Exception {
+    public Usuario verificaUsuario(String nombreUsuario, String contrasenha) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
@@ -28,12 +30,22 @@ public class LoginDAO {
         
         ResultSet rs = cs.getResultSet();
         
-        int IdUsuario = -1;
-        if (rs.next())
-            IdUsuario = rs.getInt("IdUsuario");
+        Usuario usuario = null;
+        if (rs.next()) {
+            usuario = new Usuario(
+                rs.getInt("IdUsuario"),
+                rs.getString("nombreUsuario"),
+                "***",
+                new Roles(
+                    rs.getInt("IdRol"),
+                    rs.getString("rol")
+                )
+            );
+            
+        }
         
         MySqlConexion.close(con);
         
-        return IdUsuario;
+        return usuario;
     }
 }

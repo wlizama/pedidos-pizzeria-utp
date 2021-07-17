@@ -7,8 +7,10 @@ package pedidos.pizzeria.utp.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 import pedidos.pizzeria.utp.dao.LoginDAO;
+import pedidos.pizzeria.utp.model.Usuario;
 import pedidos.pizzeria.utp.view.LoginView;
 import pedidos.pizzeria.utp.view.MainFormView;
 
@@ -47,9 +49,9 @@ public class LoginController {
             String contrasenha = loginView.txtContrasenha.getText().trim();
             
             if (!nombreUsuario.equals("") && !contrasenha.equals("")) {
-                int IdUsuario = loginDAO.verificaUsuario(nombreUsuario, contrasenha);
-                if (IdUsuario > 0) {
-                    MainFormController mainFormController = new MainFormController(new MainFormView(), IdUsuario);
+                Usuario usuario = loginDAO.verificaUsuario(nombreUsuario, contrasenha);
+                if (!Objects.isNull(usuario)) {
+                    MainFormController mainFormController = new MainFormController(new MainFormView(), usuario);
                     loginView.dispose();
                     mainFormController.mostrar();
                 }

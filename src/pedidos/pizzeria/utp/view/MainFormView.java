@@ -151,6 +151,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smLogout.setMnemonic('l');
         smLogout.setText("Logout");
+        smLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smLogoutActionPerformed(evt);
+            }
+        });
         mSession.add(smLogout);
 
         menuBar.add(mSession);
@@ -221,6 +226,10 @@ public class MainFormView extends javax.swing.JFrame {
         listaEnviosView.setVisible(true);
     }//GEN-LAST:event_smEnviosActionPerformed
 
+    private void smLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLogoutActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_smLogoutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane dpPrincipal;
@@ -230,14 +239,14 @@ public class MainFormView extends javax.swing.JFrame {
     public javax.swing.JMenu mReportes;
     public javax.swing.JMenu mSession;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem smClientes;
-    private javax.swing.JMenuItem smCobertura;
+    public javax.swing.JMenuItem smClientes;
+    public javax.swing.JMenuItem smCobertura;
     private javax.swing.JMenuItem smComprobantes;
     private javax.swing.JMenuItem smEnvios;
     private javax.swing.JMenuItem smLPedidos;
     private javax.swing.JMenuItem smLogout;
-    private javax.swing.JMenuItem smPersonal;
-    private javax.swing.JMenuItem smPizzas;
+    public javax.swing.JMenuItem smPersonal;
+    public javax.swing.JMenuItem smPizzas;
     private javax.swing.JMenuItem smRepCobertura;
     private javax.swing.JMenuItem smRepPizzas;
     private javax.swing.JMenuItem smRepVentas;
