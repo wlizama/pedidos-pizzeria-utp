@@ -18,7 +18,6 @@ public class MainFormView extends javax.swing.JFrame {
      */
     public MainFormView() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -152,6 +151,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smLogout.setMnemonic('l');
         smLogout.setText("Logout");
+        smLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smLogoutActionPerformed(evt);
+            }
+        });
         mSession.add(smLogout);
 
         menuBar.add(mSession);
@@ -222,57 +226,27 @@ public class MainFormView extends javax.swing.JFrame {
         listaEnviosView.setVisible(true);
     }//GEN-LAST:event_smEnviosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFormView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFormView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFormView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFormView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void smLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLogoutActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_smLogoutActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainFormView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane dpPrincipal;
-    private javax.swing.JMenu mDelivery;
-    private javax.swing.JMenu mMantenimiento;
-    private javax.swing.JMenu mPedidos;
-    private javax.swing.JMenu mReportes;
-    private javax.swing.JMenu mSession;
+    public javax.swing.JMenu mDelivery;
+    public javax.swing.JMenu mMantenimiento;
+    public javax.swing.JMenu mPedidos;
+    public javax.swing.JMenu mReportes;
+    public javax.swing.JMenu mSession;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem smClientes;
-    private javax.swing.JMenuItem smCobertura;
+    public javax.swing.JMenuItem smClientes;
+    public javax.swing.JMenuItem smCobertura;
     private javax.swing.JMenuItem smComprobantes;
     private javax.swing.JMenuItem smEnvios;
     private javax.swing.JMenuItem smLPedidos;
     private javax.swing.JMenuItem smLogout;
-    private javax.swing.JMenuItem smPersonal;
-    private javax.swing.JMenuItem smPizzas;
+    public javax.swing.JMenuItem smPersonal;
+    public javax.swing.JMenuItem smPizzas;
     private javax.swing.JMenuItem smRepCobertura;
     private javax.swing.JMenuItem smRepPizzas;
     private javax.swing.JMenuItem smRepVentas;

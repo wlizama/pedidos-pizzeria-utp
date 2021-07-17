@@ -1648,10 +1648,13 @@ CREATE PROCEDURE `SP_Usuario`(
 )
 BEGIN
     select 
-        IdUsuario
+        u.IdUsuario,
+        u.nombreUsuario,
+        u.IdRol,
+        r.nombre as rol
     from usuario u
-    join persona p
-    on u.IdPersona = p.IdPersona
+    join persona p on u.IdPersona = p.IdPersona
+    join roles r on u.IdRol = r.IdRol
     where u.nombreUsuario = nombreUsuario
     and u.contrasenha = contrasenha
     and p.IdEstado = 6; -- activo

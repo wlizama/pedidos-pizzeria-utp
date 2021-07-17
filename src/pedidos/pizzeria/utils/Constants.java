@@ -20,4 +20,12 @@ public class Constants {
     public static final int ID_ESTADO_GENERADO = 1;
     public static final int ID_ESTADO_LISTOENTREGA = 2;
     public static final int ID_ESTADO_ENCAMINO = 3;
+    
+    public static final int ID_MENU_PEDIDOS = 1;
+    public static final int ID_MENU_DELIVERY = 2;
+    public static final int ID_MENU_MANTENIMIENTO = 3;
+    public static final int ID_MENU_REPORTES = 4;
+    public static final int ID_MENU_MISESSION = 5;
+    
+    public static final int ID_ROL_CAJERO = 2;
 }
