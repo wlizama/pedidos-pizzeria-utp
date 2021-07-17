@@ -123,6 +123,7 @@ public class PedidoListaController implements BaseControllerInterface {
                 
                 JDesktopPane mainContainer = (JDesktopPane) pedidoListaView.getParent();
                 pedidoController = new PedidoController(this, mainContainer);
+                
                 mainContainer.remove(pedidoListaView);
                 mainContainer.updateUI();
                 pedidoController.setIdPedido_edit(IdPedido);

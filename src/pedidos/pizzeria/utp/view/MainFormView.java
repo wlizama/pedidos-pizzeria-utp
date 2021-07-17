@@ -66,6 +66,11 @@ public class MainFormView extends javax.swing.JFrame {
 
         smComprobantes.setMnemonic('c');
         smComprobantes.setText("Comprobantes");
+        smComprobantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smComprobantesActionPerformed(evt);
+            }
+        });
         mPedidos.add(smComprobantes);
 
         menuBar.add(mPedidos);
@@ -221,6 +226,16 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, listaEnviosView);
         listaEnviosView.setVisible(true);
     }//GEN-LAST:event_smEnviosActionPerformed
+
+    private void smComprobantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprobantesActionPerformed
+        // TODO add your handling code here:
+        ListaComprobanteView comprobantelistaView = new ListaComprobanteView();
+        comprobantelistaView.pack();
+        dpPrincipal.add(comprobantelistaView);
+        Helpers.centerForm(dpPrincipal, comprobantelistaView);
+        comprobantelistaView.setVisible(true);
+        
+    }//GEN-LAST:event_smComprobantesActionPerformed
 
     /**
      * @param args the command line arguments

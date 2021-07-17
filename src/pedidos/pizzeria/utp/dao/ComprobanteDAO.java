@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import pedidos.pizzeria.utp.model.Comprobante;
+import pedidos.pizzeria.utp.model.ListaComprobante;
 import pedidos.pizzeria.utp.model.Pedido;
+import pedidos.pizzeria.utp.model.Pizza;
 import pedidos.pizzeria.utp.model.TipoComprobante;
 /**
  *
@@ -50,4 +52,37 @@ public class ComprobanteDAO {
         
         return comprobante;
     }
+    
+    public List<ListaComprobante> getListaComprobante(int numero) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<ListaComprobante> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_ComprobanteLista (?)}");
+        cs.setInt("numero", numero);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        //ListaComprobante listacomprobante = null;
+        while (rs.next()) {
+            lstResult.add(new ListaComprobante(
+                rs.getInt("IdComprobante"),
+                rs.getInt("numero"),
+                rs.getDouble("monto"),
+                rs.getString("Nombres") + " " + rs.getString("Apellidos")
+                //rs.getString("Apellidos")                
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
+     
+     
+     
 }

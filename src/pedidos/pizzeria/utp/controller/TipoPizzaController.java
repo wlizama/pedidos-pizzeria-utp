@@ -65,7 +65,6 @@ public class TipoPizzaController implements BaseControllerInterface {
             // limpiar tabla antes de agregar
             Helpers.clearTable(pizzasViewTblModel);
             
-
             if (lstTipoPizza.size() > 0) {
                 for (TipoPizza tipoPizza : lstTipoPizza) {
                     pizzasViewTblModel.addRow(new Object[] {
