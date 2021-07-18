@@ -53,9 +53,13 @@ public class MainFormView extends javax.swing.JFrame {
         mPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/notes-24.png"))); // NOI18N
         mPedidos.setMnemonic('p');
         mPedidos.setText("Pedidos");
+        mPedidos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mPedidos.setPreferredSize(new java.awt.Dimension(150, 50));
 
+        smLPedidos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smLPedidos.setMnemonic('l');
         smLPedidos.setText("Lista Pedidos");
+        smLPedidos.setPreferredSize(new java.awt.Dimension(150, 30));
         smLPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smLPedidosActionPerformed(evt);
@@ -63,8 +67,10 @@ public class MainFormView extends javax.swing.JFrame {
         });
         mPedidos.add(smLPedidos);
 
+        smComprobantes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smComprobantes.setMnemonic('c');
         smComprobantes.setText("Comprobantes");
+        smComprobantes.setPreferredSize(new java.awt.Dimension(150, 30));
         smComprobantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smComprobantesActionPerformed(evt);
@@ -77,10 +83,14 @@ public class MainFormView extends javax.swing.JFrame {
         mDelivery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/delivery-man-24.png"))); // NOI18N
         mDelivery.setMnemonic('d');
         mDelivery.setText("Delivery");
+        mDelivery.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mDelivery.setPreferredSize(new java.awt.Dimension(150, 50));
 
+        smEnvios.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smEnvios.setMnemonic('e');
         smEnvios.setText("Envios");
         smEnvios.setToolTipText("");
+        smEnvios.setPreferredSize(new java.awt.Dimension(150, 30));
         smEnvios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smEnviosActionPerformed(evt);
@@ -93,9 +103,13 @@ public class MainFormView extends javax.swing.JFrame {
         mMantenimiento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/settings-24.png"))); // NOI18N
         mMantenimiento.setMnemonic('m');
         mMantenimiento.setText("Mantenimiento");
+        mMantenimiento.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mMantenimiento.setPreferredSize(new java.awt.Dimension(190, 50));
 
+        smClientes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smClientes.setMnemonic('c');
         smClientes.setText("Clientes");
+        smClientes.setPreferredSize(new java.awt.Dimension(150, 30));
         smClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smClientesActionPerformed(evt);
@@ -103,8 +117,10 @@ public class MainFormView extends javax.swing.JFrame {
         });
         mMantenimiento.add(smClientes);
 
+        smPersonal.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smPersonal.setMnemonic('p');
         smPersonal.setText("Personal");
+        smPersonal.setPreferredSize(new java.awt.Dimension(150, 30));
         smPersonal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smPersonalActionPerformed(evt);
@@ -112,8 +128,10 @@ public class MainFormView extends javax.swing.JFrame {
         });
         mMantenimiento.add(smPersonal);
 
+        smCobertura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smCobertura.setMnemonic('b');
         smCobertura.setText("Cobertura");
+        smCobertura.setPreferredSize(new java.awt.Dimension(150, 30));
         smCobertura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smCoberturaActionPerformed(evt);
@@ -121,8 +139,10 @@ public class MainFormView extends javax.swing.JFrame {
         });
         mMantenimiento.add(smCobertura);
 
+        smPizzas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smPizzas.setMnemonic('z');
         smPizzas.setText("Pizzas");
+        smPizzas.setPreferredSize(new java.awt.Dimension(150, 30));
         smPizzas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smPizzasActionPerformed(evt);
@@ -135,17 +155,25 @@ public class MainFormView extends javax.swing.JFrame {
         mReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/trend-24.png"))); // NOI18N
         mReportes.setMnemonic('r');
         mReportes.setText("Reportes");
+        mReportes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mReportes.setPreferredSize(new java.awt.Dimension(150, 50));
 
+        smRepVentas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smRepVentas.setMnemonic('v');
         smRepVentas.setText("Reporte de Ventas");
+        smRepVentas.setPreferredSize(new java.awt.Dimension(150, 30));
         mReportes.add(smRepVentas);
 
+        smRepPizzas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smRepPizzas.setMnemonic('p');
         smRepPizzas.setText("Reporte de Pizzas");
+        smRepPizzas.setPreferredSize(new java.awt.Dimension(150, 30));
         mReportes.add(smRepPizzas);
 
+        smRepCobertura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smRepCobertura.setMnemonic('c');
         smRepCobertura.setText("Reporte de Cobertura");
+        smRepCobertura.setPreferredSize(new java.awt.Dimension(150, 30));
         mReportes.add(smRepCobertura);
 
         menuBar.add(mReportes);
@@ -153,9 +181,13 @@ public class MainFormView extends javax.swing.JFrame {
         mSession.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/user-24.png"))); // NOI18N
         mSession.setMnemonic('s');
         mSession.setText("Mi session");
+        mSession.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mSession.setPreferredSize(new java.awt.Dimension(150, 50));
 
+        smLogout.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         smLogout.setMnemonic('l');
         smLogout.setText("Logout");
+        smLogout.setPreferredSize(new java.awt.Dimension(150, 30));
         smLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smLogoutActionPerformed(evt);
@@ -171,11 +203,11 @@ public class MainFormView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+            .addComponent(dpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
         );
 
         pack();
@@ -215,14 +247,6 @@ public class MainFormView extends javax.swing.JFrame {
         coberturaView.setVisible(true);
     }//GEN-LAST:event_smCoberturaActionPerformed
 
-    private void smLPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLPedidosActionPerformed
-        PedidoListaView pedidolistaView = new PedidoListaView();
-        pedidolistaView.pack();
-        dpPrincipal.add(pedidolistaView);
-        Helpers.centerForm(dpPrincipal, pedidolistaView);
-        pedidolistaView.setVisible(true);
-    }//GEN-LAST:event_smLPedidosActionPerformed
-
     private void smEnviosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEnviosActionPerformed
         EnvioListaView listaEnviosView = new EnvioListaView();
         listaEnviosView.pack();
@@ -230,20 +254,10 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, listaEnviosView);
         listaEnviosView.setVisible(true);
     }//GEN-LAST:event_smEnviosActionPerformed
-
-    private void smComprobantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprobantesActionPerformed
-        // TODO add your handling code here:
-        ListaComprobanteView comprobantelistaView = new ListaComprobanteView();
-        comprobantelistaView.pack();
-        dpPrincipal.add(comprobantelistaView);
-        Helpers.centerForm(dpPrincipal, comprobantelistaView);
-        comprobantelistaView.setVisible(true);
-        
-    }//GEN-LAST:event_smComprobantesActionPerformed
     
     private void smLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLogoutActionPerformed
         this.dispose();
-    }//GEN-LAST:event_smLogoutActionPerformed
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -271,7 +285,26 @@ public class MainFormView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainFormView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-    //GEN-LAST:event_smLogoutActionPerformed
+    }
+//GEN-LAST:event_smLogoutActionPerformed
+
+    private void smComprobantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprobantesActionPerformed
+        // TODO add your handling code here:
+        ListaComprobanteView comprobantelistaView = new ListaComprobanteView();
+        comprobantelistaView.pack();
+        dpPrincipal.add(comprobantelistaView);
+        Helpers.centerForm(dpPrincipal, comprobantelistaView);
+        comprobantelistaView.setVisible(true);
+
+    }//GEN-LAST:event_smComprobantesActionPerformed
+
+    private void smLPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smLPedidosActionPerformed
+        PedidoListaView pedidolistaView = new PedidoListaView();
+        pedidolistaView.pack();
+        dpPrincipal.add(pedidolistaView);
+        Helpers.centerForm(dpPrincipal, pedidolistaView);
+        pedidolistaView.setVisible(true);
+    }//GEN-LAST:event_smLPedidosActionPerformed
     
 
 
