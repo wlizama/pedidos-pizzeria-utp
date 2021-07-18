@@ -1659,9 +1659,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ComprobantePedidoDetalle_lista`(
 In idcomprobante int)
 BEGIN
 select 
-        c.IdComprobante, c.IdPedido, dp.IdDetallePedido, piz.IdPizza, piz.nombre,
-        piz.IdTamanho, tam.nombre as tamanho, /*tam.cantidadPorciones,*/        
-        piz.precio
+        c.IdComprobante, c.IdPedido, dp.IdDetallePedido, piz.IdPizza, piz.nombre as pizza,
+        piz.IdTamanho, tam.nombre as tamanho, dp.cantidad, piz.precio
         
     from comprobante c inner join detallepedido dp on c.IdPedido = dp.IdPedido
     inner join pizza piz on dp.IdPizza = piz.IdPizza
