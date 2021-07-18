@@ -146,7 +146,8 @@ values
 insert into tipocomprobante (nombre, IdEstado)
 values ('Boleta', 6);
 
--- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO
+-- AGREGAR VALOR POR DEFECTO A COMPROBANTE Y PEDIDO y envio
+-- cambiar tipo de dato de time a datetime a envio
 -- valores para prueba busqueda pizza
 insert into tamanho (nombre, cantidadPorciones)
 values
@@ -175,3 +176,29 @@ values
 ('All The Meats', 15.60, 5, 1, 11),
 ('All The Meats', 28.80, 5, 2, 11),
 ('All The Meats', 36.80, 5, 4, 11);
+
+
+-- Cajero 01
+insert into documentoIdentidad(numero, IdTipoDocIdentidad) values ('74854126', 1);
+select * from documentoIdentidad;
+call `pedidos-pizzeria`.SP_PersonaInserta('Cajero 01', '', 2, 13, 6, '124152368');
+insert into usuario(nombreUsuario, contrasenha, IdPersona, IdRol)
+values('cajero01', 'supercaja', 12, 2);
+
+-- Administrador 01
+insert into documentoIdentidad(numero, IdTipoDocIdentidad) values ('03852498', 1);
+select * from documentoIdentidad;
+call `pedidos-pizzeria`.SP_PersonaInserta('Alan', 'Walker', 1, 14, 6, '98563214');
+insert into usuario(nombreUsuario, contrasenha, IdPersona, IdRol)
+values('admin', 'admin', 13, 3);
+
+
+-- acceso a roles
+
+insert into acceso (IdFormulario, IdRol)
+values 
+(1, 2),(2, 2),(3, 2),(5, 2), -- cajero
+(3, 3),(4, 3),(5, 3) -- administrador
+;
+select * from acceso;
+

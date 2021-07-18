@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import pedidos.pizzeria.utp.model.Envio;
@@ -36,7 +37,7 @@ public class EnvioDAO {
 
         while(rs.next()) {
             Repartidor repartidor = new Repartidor();
-            repartidor.setIdRepartidor(rs.getInt("IdPersona"));
+            repartidor.setIdPersona(rs.getInt("IdPersona"));
             repartidor.setNombres(rs.getString("personanombres"));
             repartidor.setApellidos(rs.getString("personaapellidos"));
             repartidor.setTelefono(rs.getString("personatelefono"));
@@ -44,8 +45,8 @@ public class EnvioDAO {
             lstResult.add(new Envio(
                 rs.getInt("IdEnvio"),
                 rs.getInt("numero"),
-                rs.getTime("hora_inicio"),
-                rs.getTime("hora_fin"),
+                rs.getTimestamp("hora_inicio"),
+                rs.getTimestamp("hora_fin"),
                 repartidor,
                 new Estado(
                     rs.getInt("IdEstado"),
@@ -74,7 +75,7 @@ public class EnvioDAO {
         Envio envio = null;
         if (rs.next()) {
             Repartidor repartidor = new Repartidor();
-            repartidor.setIdRepartidor(rs.getInt("IdPersona"));
+            repartidor.setIdPersona(rs.getInt("IdPersona"));
             repartidor.setNombres(rs.getString("personanombres"));
             repartidor.setApellidos(rs.getString("personaapellidos"));
             repartidor.setTelefono(rs.getString("personatelefono"));
@@ -82,8 +83,8 @@ public class EnvioDAO {
             envio = new Envio(
                 rs.getInt("IdEnvio"),
                 rs.getInt("numero"),
-                rs.getTime("hora_inicio"),
-                rs.getTime("hora_fin"),
+                rs.getTimestamp("hora_inicio"),
+                rs.getTimestamp("hora_fin"),
                 repartidor,
                 new Estado(
                     rs.getInt("IdEstado"),
@@ -105,8 +106,8 @@ public class EnvioDAO {
         
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_EnvioInsertar ( ?, ?, ?, ?, ? )}");
-        cs.setTime("horainicio", (Time) envio.getHoraInicio());
-        cs.setTime("horafin", (Time) envio.getHoraFin());
+        cs.setTimestamp("horainicio", (Timestamp) envio.getHoraInicio());
+        cs.setTimestamp("horafin", (Timestamp) envio.getHoraFin());
         cs.setInt("IdPersona", envio.getRepartidor().getIdPersona());
         
         cs.execute();
@@ -124,10 +125,10 @@ public class EnvioDAO {
         CallableStatement cs = null;
         
         con = MySqlConexion.getConexion();
-        cs = con.prepareCall("{call SP_EnvioModifica ( ?, ?, ?, ?, ? )}");
+        cs = con.prepareCall("{call SP_EnvioModificar ( ?, ?, ?, ?, ? )}");
         cs.setInt("idenvio", envio.getIdEnvio());
-        cs.setTime("horainicio", envio.getHoraInicio());
-        cs.setTime("horafin", envio.getHoraFin());
+        cs.setTimestamp("horainicio", (Timestamp) envio.getHoraInicio());
+        cs.setTimestamp("horafin", (Timestamp) envio.getHoraFin());
         cs.setInt("IdPersona", envio.getRepartidor().getIdPersona());
         cs.setInt("IdEstado", envio.getEstado().getIdEstado());
         cs.execute();
