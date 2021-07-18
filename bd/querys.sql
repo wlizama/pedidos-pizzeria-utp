@@ -11,7 +11,7 @@ select * from persona;
 select * from roles;
 select * from formulario;
 select * from documentoIdentidad;
-select * from detallepedido;
+select * from tipodocumentoidentidad;
 select * from tamanho;
 select * from tipopizza;
 select * from pizza;
@@ -27,8 +27,8 @@ delete from pedido;
 select * from usuario;
 update usuario set contrasenha = '1234';
 
-
-call SP_RolAccesoLista(1);
+call SP_ComprobanteLista(0);
+call SP_ComprobanteCabecera(6);
 call SP_VentasRpt('2021-06-15', '2021-06-30'); # yyyy-mm-dd
 call SP_CoberturaRpt('2021-06-15', '2021-06-30');
 call SP_AccesoUsuario(1);

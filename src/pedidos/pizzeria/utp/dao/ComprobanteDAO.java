@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import pedidos.pizzeria.utp.model.Comprobante;
+import pedidos.pizzeria.utp.model.ComprobanteCabecera;
+import pedidos.pizzeria.utp.model.ListaComprobante;
 import pedidos.pizzeria.utp.model.Pedido;
 import pedidos.pizzeria.utp.model.TipoComprobante;
 /**
@@ -25,12 +27,9 @@ public class ComprobanteDAO {
         
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_ComprobanteXPedido (?)}");
-        cs.setInt("IdPedido", IdPedido);
-        
-        cs.execute();
-        
-        ResultSet rs = cs.getResultSet();
-        
+        cs.setInt("IdPedido", IdPedido);        
+        cs.execute();        
+        ResultSet rs = cs.getResultSet();        
         Comprobante comprobante = null;
         if (rs.next()) {
             comprobante = new Comprobante(
@@ -44,10 +43,70 @@ public class ComprobanteDAO {
                 ),
                 new Pedido(IdPedido)
             );
-        }
-        
+        }        
         MySqlConexion.close(con);
         
         return comprobante;
     }
+    
+    public List<ListaComprobante> getListaComprobante(int numero) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;        
+        List<ListaComprobante> lstResult = new ArrayList<>();         
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_ComprobanteLista (?)}");
+        cs.setInt("numero", numero);
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        //ListaComprobante listacomprobante = null;
+        while (rs.next()) {
+            lstResult.add(new ListaComprobante(
+                rs.getInt("IdComprobante"),
+                rs.getInt("numero"),
+                rs.getDouble("monto"),
+                rs.getString("Nombres") + " " + rs.getString("Apellidos")
+                //rs.getString("Apellidos")                
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
+    
+    public ComprobanteCabecera getComprobanteCabecera(int idcomprobante) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_ComprobanteCabecera (?)}");
+        cs.setInt("idcomprobante", idcomprobante);        
+        cs.execute();        
+        ResultSet rs = cs.getResultSet();
+        ComprobanteCabecera comprobantecabecera = null;
+        if (rs.next()) {
+            comprobantecabecera = new ComprobanteCabecera(
+                rs.getInt("IdComprobante"),
+                rs.getInt("numero"),
+                rs.getDouble("monto"),
+                rs.getInt("IdPedido"),
+                rs.getDate("fechacreacion"),
+                rs.getInt("IdCliente"),
+                rs.getString("cliente"),
+                rs.getString("clienteapellidos"),
+                rs.getString("clientedocIdentidad"),
+                rs.getString("clientetipodocidentidad"),
+                rs.getInt("IdDireccionEnvio"),
+                rs.getString("direccionenvio")
+            ) ;
+        }
+        
+        MySqlConexion.close(con);
+        
+        return comprobantecabecera;
+    }
+     
 }
