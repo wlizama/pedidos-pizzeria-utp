@@ -92,11 +92,26 @@ public class RolesDAO {
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_RolModifica ( ?, ? )}");
         cs.setInt("IdRol", roles.getIdRol());
-        cs.setString("nombre", roles.getNombre());;
+        cs.setString("nombre", roles.getNombre());
         
         cs.execute();
         
         MySqlConexion.close(con);
+    }
+    
+    public void eliminaInsertarAccesosRoles(int IdRol, String idsformulario) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_RolAccesoEliminaInserta ( ?, ? )}");
+        cs.setInt("IdRol", IdRol);
+        cs.setString("idsformulario", idsformulario);
+        
+        cs.execute();
+        
+        MySqlConexion.close(con);
+        
     }
     
 }

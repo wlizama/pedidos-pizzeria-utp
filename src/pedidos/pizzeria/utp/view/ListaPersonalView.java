@@ -56,13 +56,9 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtNombreRol = new javax.swing.JTextField();
-        chkPedidos = new javax.swing.JCheckBox();
-        chkDelivery = new javax.swing.JCheckBox();
-        chkMantenimiento = new javax.swing.JCheckBox();
-        chkReportes = new javax.swing.JCheckBox();
-        chkMiSesion = new javax.swing.JCheckBox();
         btnGuardarRol = new javax.swing.JButton();
         lblOpRolPersona = new javax.swing.JLabel();
+        pnFormularios = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -103,16 +99,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         tblTipoPersonal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Id", "Nombre"
@@ -223,16 +210,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         tblListaRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Id", "Nombre"
@@ -277,19 +255,11 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Formularios");
 
-        chkPedidos.setText("Pedidos");
-
-        chkDelivery.setText("Delivery");
-
-        chkMantenimiento.setText("Mantenimiento");
-
-        chkReportes.setText("Reportes");
-
-        chkMiSesion.setText("Mi Sesion");
-
         btnGuardarRol.setText("Guardar");
 
         lblOpRolPersona.setText("OP");
+
+        pnFormularios.setLayout(new javax.swing.BoxLayout(pnFormularios, javax.swing.BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -299,19 +269,18 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblOpRolPersona)
-                        .addGroup(jPanel9Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addGap(40, 40, 40)
-                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(chkPedidos)
-                                .addComponent(chkDelivery)
-                                .addComponent(chkMantenimiento)
-                                .addComponent(chkReportes)
-                                .addComponent(chkMiSesion)))))
+                    .addComponent(lblOpRolPersona, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(40, 40, 40))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(24, 24, 24)))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnFormularios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -323,20 +292,12 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chkPedidos)
-                .addGap(18, 18, 18)
-                .addComponent(chkDelivery)
-                .addGap(18, 18, 18)
-                .addComponent(chkMantenimiento)
-                .addGap(18, 18, 18)
-                .addComponent(chkReportes)
-                .addGap(18, 18, 18)
-                .addComponent(chkMiSesion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(pnFormularios, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardarRol)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel11.getAccessibleContext().setAccessibleName("Nombre");
@@ -357,9 +318,9 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Roles", jPanel3);
@@ -603,11 +564,6 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     public javax.swing.JComboBox<String> cboDocumento;
     public javax.swing.JComboBox<String> cboTipoDcoumentoIdentidad;
     public javax.swing.JComboBox<String> cbx_tipo;
-    public javax.swing.JCheckBox chkDelivery;
-    public javax.swing.JCheckBox chkMantenimiento;
-    public javax.swing.JCheckBox chkMiSesion;
-    public javax.swing.JCheckBox chkPedidos;
-    public javax.swing.JCheckBox chkReportes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -636,6 +592,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     public javax.swing.JLabel lblOpPersona;
     public javax.swing.JLabel lblOpRolPersona;
     public javax.swing.JLabel lblOpTipoPersona;
+    public javax.swing.JPanel pnFormularios;
     public javax.swing.JTable tblListaPersonal;
     public javax.swing.JTable tblListaRoles;
     public javax.swing.JTable tblTipoPersonal;

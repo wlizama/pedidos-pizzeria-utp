@@ -12,25 +12,18 @@ package pedidos.pizzeria.utp.model;
 public class Acceso {
     
     private int IdAcceso;
-    private boolean estado;
-    private Roles rol;
     private Formulario formulario;
+    private Roles rol;
+    
 
     public Acceso() {
     }
 
-    public Acceso(int IdAcceso, boolean estado, Roles rol, Formulario formulario) {
+    public Acceso(int IdAcceso, Formulario formulario, Roles rol) {
         this.IdAcceso = IdAcceso;
-        this.estado = estado;
-        this.rol = rol;
         this.formulario = formulario;
+        this.rol = rol;
     }
-
-    public Acceso(int IdAcceso, Roles rol, Formulario formulario) {
-        this.IdAcceso = IdAcceso;
-        this.rol = rol;
-        this.formulario = formulario;
-    }       
 
     public int getIdAcceso() {
         return IdAcceso;
@@ -40,12 +33,12 @@ public class Acceso {
         this.IdAcceso = IdAcceso;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public Formulario getFormulario() {
+        return formulario;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setFormulario(Formulario formulario) {
+        this.formulario = formulario;
     }
 
     public Roles getRol() {
@@ -54,14 +47,6 @@ public class Acceso {
 
     public void setRol(Roles rol) {
         this.rol = rol;
-    }
-
-    public Formulario getFormulario() {
-        return formulario;
-    }
-
-    public void setFormulario(Formulario formulario) {
-        this.formulario = formulario;
     }
 
     

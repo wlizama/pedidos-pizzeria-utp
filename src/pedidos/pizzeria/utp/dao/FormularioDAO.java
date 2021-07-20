@@ -18,6 +18,31 @@ import pedidos.pizzeria.utp.model.*;
  */
 public class FormularioDAO {
     
+    public List<Formulario> getListaFormulario() throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<Formulario> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_FormularioLista ()}");
+        
+        cs.execute();
+        
+        ResultSet rs = cs.getResultSet();
+        
+        while (rs.next()) {
+            lstResult.add(new Formulario(
+                rs.getInt("IdFormulario"),
+                rs.getString("nombre")
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
+    
     
     public Formulario getFormulario(int IdFormulario) throws Exception {
         Connection con = null;
