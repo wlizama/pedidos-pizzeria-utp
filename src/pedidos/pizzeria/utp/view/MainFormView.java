@@ -5,6 +5,9 @@
  */
 package pedidos.pizzeria.utp.view;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import pedidos.pizzeria.utils.Helpers;
 
 /**
@@ -29,7 +32,13 @@ public class MainFormView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dpPrincipal = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/images/bg-01.jpg"));
+        Image image = icon.getImage();
+        dpPrincipal = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         menuBar = new javax.swing.JMenuBar();
         mPedidos = new javax.swing.JMenu();
         smLPedidos = new javax.swing.JMenuItem();
@@ -50,6 +59,10 @@ public class MainFormView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        menuBar.setBackground(new java.awt.Color(51, 51, 51));
+        menuBar.setForeground(new java.awt.Color(255, 255, 255));
+
+        mPedidos.setForeground(new java.awt.Color(255, 255, 255));
         mPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/notes-24.png"))); // NOI18N
         mPedidos.setMnemonic('p');
         mPedidos.setText("Pedidos");
@@ -80,6 +93,7 @@ public class MainFormView extends javax.swing.JFrame {
 
         menuBar.add(mPedidos);
 
+        mDelivery.setForeground(new java.awt.Color(255, 255, 255));
         mDelivery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/delivery-man-24.png"))); // NOI18N
         mDelivery.setMnemonic('d');
         mDelivery.setText("Delivery");
@@ -100,6 +114,7 @@ public class MainFormView extends javax.swing.JFrame {
 
         menuBar.add(mDelivery);
 
+        mMantenimiento.setForeground(new java.awt.Color(255, 255, 255));
         mMantenimiento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/settings-24.png"))); // NOI18N
         mMantenimiento.setMnemonic('m');
         mMantenimiento.setText("Mantenimiento");
@@ -152,6 +167,7 @@ public class MainFormView extends javax.swing.JFrame {
 
         menuBar.add(mMantenimiento);
 
+        mReportes.setForeground(new java.awt.Color(255, 255, 255));
         mReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/trend-24.png"))); // NOI18N
         mReportes.setMnemonic('r');
         mReportes.setText("Reportes");
@@ -178,6 +194,7 @@ public class MainFormView extends javax.swing.JFrame {
 
         menuBar.add(mReportes);
 
+        mSession.setForeground(new java.awt.Color(255, 255, 255));
         mSession.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/user-24.png"))); // NOI18N
         mSession.setMnemonic('s');
         mSession.setText("Mi session");

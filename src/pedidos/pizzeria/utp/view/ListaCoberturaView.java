@@ -56,8 +56,25 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
             new String [] {
                 "#", "Nombre", "Cobertura"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListaCobertura.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblListaCobertura);
+        if (tblListaCobertura.getColumnModel().getColumnCount() > 0) {
+            tblListaCobertura.getColumnModel().getColumn(0).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblListaCobertura.getColumnModel().getColumn(1).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblListaCobertura.getColumnModel().getColumn(2).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
 
         btnEditar.setText("Editar");
 

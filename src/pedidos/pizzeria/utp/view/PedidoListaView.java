@@ -67,13 +67,23 @@ public class PedidoListaView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblListaPedido.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblListaPedido);
         if (tblListaPedido.getColumnModel().getColumnCount() > 0) {
+            tblListaPedido.getColumnModel().getColumn(0).setResizable(false);
             tblListaPedido.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tblListaPedido.getColumnModel().getColumn(1).setPreferredWidth(110);
-            tblListaPedido.getColumnModel().getColumn(2).setPreferredWidth(10);
-            tblListaPedido.getColumnModel().getColumn(3).setPreferredWidth(110);
-            tblListaPedido.getColumnModel().getColumn(4).setPreferredWidth(10);
+            tblListaPedido.getColumnModel().getColumn(1).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tblListaPedido.getColumnModel().getColumn(2).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(2).setPreferredWidth(40);
+            tblListaPedido.getColumnModel().getColumn(3).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(3).setPreferredWidth(200);
+            tblListaPedido.getColumnModel().getColumn(4).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tblListaPedido.getColumnModel().getColumn(5).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(5).setPreferredWidth(150);
+            tblListaPedido.getColumnModel().getColumn(6).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(6).setPreferredWidth(100);
         }
 
         btnVerPedido.setText("Ver Pedido");

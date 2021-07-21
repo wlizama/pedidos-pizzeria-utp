@@ -85,6 +85,17 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblClientes);
+        if (tblClientes.getColumnModel().getColumnCount() > 0) {
+            tblClientes.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblClientes.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblClientes.getColumnModel().getColumn(3).setResizable(false);
+            tblClientes.getColumnModel().getColumn(3).setPreferredWidth(200);
+            tblClientes.getColumnModel().getColumn(4).setResizable(false);
+            tblClientes.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblClientes.getColumnModel().getColumn(5).setResizable(false);
+            tblClientes.getColumnModel().getColumn(5).setPreferredWidth(100);
+        }
 
         btnEditar.setText("Editar");
 
@@ -100,12 +111,12 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
                     .addGroup(pnlListaClientesLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxTDocClienteFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDocumentoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxTDocClienteFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDocumentoFiltro)
                         .addGap(28, 28, 28)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlListaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar)
@@ -165,6 +176,16 @@ public class ListaClientesView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tblClientesDirecciones);
+        if (tblClientesDirecciones.getColumnModel().getColumnCount() > 0) {
+            tblClientesDirecciones.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblClientesDirecciones.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblClientesDirecciones.getColumnModel().getColumn(2).setResizable(false);
+            tblClientesDirecciones.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblClientesDirecciones.getColumnModel().getColumn(3).setResizable(false);
+            tblClientesDirecciones.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblClientesDirecciones.getColumnModel().getColumn(4).setResizable(false);
+            tblClientesDirecciones.getColumnModel().getColumn(4).setPreferredWidth(80);
+        }
 
         btnEditarDireccion.setText("Editar");
 

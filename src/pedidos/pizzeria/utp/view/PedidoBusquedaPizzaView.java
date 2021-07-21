@@ -56,8 +56,31 @@ public class PedidoBusquedaPizzaView extends javax.swing.JDialog {
             new String [] {
                 "#", "Pizza", "Tipo", "Tamaño", "Porciones", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListaPizza.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblListaPizza);
+        if (tblListaPizza.getColumnModel().getColumnCount() > 0) {
+            tblListaPizza.getColumnModel().getColumn(0).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblListaPizza.getColumnModel().getColumn(1).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblListaPizza.getColumnModel().getColumn(2).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblListaPizza.getColumnModel().getColumn(3).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblListaPizza.getColumnModel().getColumn(4).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblListaPizza.getColumnModel().getColumn(5).setResizable(false);
+            tblListaPizza.getColumnModel().getColumn(5).setPreferredWidth(70);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
