@@ -17,6 +17,7 @@ public class Constants {
     public static final int ID_TESTADO_PEDIDO = 1;
     public static final int ID_TESTADO_ENVIO = 1;
     public static final int ID_TPERSONA_DELIVERY = 3;
+    public static final int ID_TPERSONA_CLIENTE = 4;
     public static final int ID_ESTADO_GENERADO = 1;
     public static final int ID_ESTADO_LISTOENTREGA = 2;
     public static final int ID_ESTADO_ENCAMINO = 3;
@@ -27,5 +28,6 @@ public class Constants {
     public static final int ID_MENU_REPORTES = 4;
     public static final int ID_MENU_MISESSION = 5;
     
+    public static final int ID_ROL_NINGUNO = 0;
     public static final int ID_ROL_CAJERO = 2;
 }

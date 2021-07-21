@@ -28,7 +28,8 @@ select * from usuario;
 update usuario set contrasenha = '1234';
 
 call SP_ComprobanteLista(0);
-call SP_ComprobanteCabecera(6);
+call SP_RolAccesoLista(3);
+call SP_RolAccesoEliminaInserta(3, '5');
 call SP_VentasRpt('2021-06-15', '2021-06-30'); # yyyy-mm-dd
 call SP_CoberturaRpt('2021-06-15', '2021-06-30');
 call SP_AccesoUsuario(1);
