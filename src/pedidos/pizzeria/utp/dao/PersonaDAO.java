@@ -18,7 +18,7 @@ import pedidos.pizzeria.utp.model.*;
  */
 public class PersonaDAO {
     
-    public List<Persona> getListaPersona(int idtipoDocIdentidad, String Numero) throws Exception {
+    public List<Persona> getListaPersona(int idtipoDocIdentidad, String numero) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
         
@@ -27,7 +27,7 @@ public class PersonaDAO {
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_PersonaLista (?,?)}");
         cs.setInt("idtipoDocIdentidad", idtipoDocIdentidad);
-        cs.setString("Numero", Numero);
+        cs.setString("Numero", numero);
         cs.execute();
 
         ResultSet rs = cs.getResultSet();

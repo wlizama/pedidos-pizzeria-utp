@@ -16,6 +16,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     
     TipoPersonaController tipopersonaController;
     RolesController rolesController;
+    PersonaController personaController;
     /**
      * Creates new form ListaPersonal_View
      */
@@ -23,6 +24,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
         initComponents();
         tipopersonaController = new TipoPersonaController(this);
         rolesController = new RolesController(this);
+        personaController = new PersonaController(this);
     }
 
     /**
@@ -34,6 +36,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        choice1 = new java.awt.Choice();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -368,8 +371,6 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Personal");
 
-        cboTipoDcoumentoIdentidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo Documento", "Item 2", "Item 3", "Item 4" }));
-
         btnBuscar.setText("Buscar");
 
         tblListaPersonal.setModel(new javax.swing.table.DefaultTableModel(
@@ -448,8 +449,6 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Documento");
 
-        cboDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel6.setText("Tipo");
 
         jLabel7.setText("Rol");
@@ -457,8 +456,6 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
         jLabel8.setText("Usuario");
 
         jLabel9.setText("Contraseña");
-
-        cbx_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnGuardar.setText("Guardar");
 
@@ -608,6 +605,7 @@ public class ListaPersonalView extends javax.swing.JInternalFrame {
     public javax.swing.JCheckBox chkMiSesion;
     public javax.swing.JCheckBox chkPedidos;
     public javax.swing.JCheckBox chkReportes;
+    private java.awt.Choice choice1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

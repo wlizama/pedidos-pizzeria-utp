@@ -22,7 +22,7 @@ public class RolesController implements BaseControllerInterface{
     
     String op;
     int IdRol_edit;
-    
+    int IdRol_insert;
     ListaPersonalView personalView;
     RolesDAO rolesDAO;
     AccesoDAO accesoDAO;
@@ -99,7 +99,7 @@ public class RolesController implements BaseControllerInterface{
                 int IdRol = (int) personalView.tblListaRoles.getValueAt(selectedRow, 0);
                 Roles roles = rolesDAO.getRol(IdRol);                
                 Acceso acceso = accesoDAO.getAccesoRol(IdRol);
-                System.out.println(acceso.getIdAcceso());
+                
                 IdRol_edit = roles.getIdRol();
                 personalView.txtNombreRol.setText(roles.getNombre());                
                 
@@ -144,14 +144,13 @@ public class RolesController implements BaseControllerInterface{
 
     @Override
     public void insertar() {
-        try {
+        try {                        
             Roles roles = new Roles(
                 0,
                 personalView.txtNombreRol.getText()
-            );
-            
-            int IdRol = rolesDAO.insertarRoles(roles);
-            roles.setIdRol(IdRol);
+            );                                    
+            IdRol_insert = rolesDAO.insertarRoles(roles);
+            roles.setIdRol(IdRol_insert);                                                    
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -164,6 +163,27 @@ public class RolesController implements BaseControllerInterface{
         }
     }
 
+    public void insertarAcceso() {
+        try {
+            
+            Acceso acceso = new Acceso();
+            
+            acceso.setIdAcceso(IdRol_insert);
+            acceso.setRol(new Roles(IdRol_insert,""));
+            
+            int idAcceso = accesoDAO.insertarAcceso(acceso);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error insertar detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     @Override
     public void modificar() {
         try {

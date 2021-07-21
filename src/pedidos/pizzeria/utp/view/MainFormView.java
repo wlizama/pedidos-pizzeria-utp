@@ -134,14 +134,29 @@ public class MainFormView extends javax.swing.JFrame {
 
         smRepVentas.setMnemonic('v');
         smRepVentas.setText("Reporte de Ventas");
+        smRepVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smRepVentasActionPerformed(evt);
+            }
+        });
         mReportes.add(smRepVentas);
 
         smRepPizzas.setMnemonic('p');
         smRepPizzas.setText("Reporte de Pizzas");
+        smRepPizzas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smRepPizzasActionPerformed(evt);
+            }
+        });
         mReportes.add(smRepPizzas);
 
         smRepCobertura.setMnemonic('c');
         smRepCobertura.setText("Reporte de Cobertura");
+        smRepCobertura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smRepCoberturaActionPerformed(evt);
+            }
+        });
         mReportes.add(smRepCobertura);
 
         menuBar.add(mReportes);
@@ -221,6 +236,30 @@ public class MainFormView extends javax.swing.JFrame {
         Helpers.centerForm(dpPrincipal, listaEnviosView);
         listaEnviosView.setVisible(true);
     }//GEN-LAST:event_smEnviosActionPerformed
+
+    private void smRepVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepVentasActionPerformed
+        ReporteVentasView reporteVentasView = new ReporteVentasView();
+        reporteVentasView.pack();
+        dpPrincipal.add(reporteVentasView);
+        Helpers.centerForm(dpPrincipal, reporteVentasView);
+        reporteVentasView.setVisible(true);
+    }//GEN-LAST:event_smRepVentasActionPerformed
+
+    private void smRepPizzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepPizzasActionPerformed
+        ReportePizzasView reportePizzasView = new ReportePizzasView();
+        reportePizzasView.pack();
+        dpPrincipal.add(reportePizzasView);
+        Helpers.centerForm(dpPrincipal, reportePizzasView);
+        reportePizzasView.setVisible(true);
+    }//GEN-LAST:event_smRepPizzasActionPerformed
+
+    private void smRepCoberturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepCoberturaActionPerformed
+        ReporteCoberturaView reporteCoberturaView = new ReporteCoberturaView();
+        reporteCoberturaView.pack();
+        dpPrincipal.add(reporteCoberturaView);
+        Helpers.centerForm(dpPrincipal, reporteCoberturaView);
+        reporteCoberturaView.setVisible(true);
+    }//GEN-LAST:event_smRepCoberturaActionPerformed
 
     /**
      * @param args the command line arguments
