@@ -276,6 +276,30 @@ public class MainFormView extends javax.swing.JFrame {
         this.dispose();
     }                                        
 
+    private void smRepVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepVentasActionPerformed
+        ReporteVentasView reporteVentasView = new ReporteVentasView();
+        reporteVentasView.pack();
+        dpPrincipal.add(reporteVentasView);
+        Helpers.centerForm(dpPrincipal, reporteVentasView);
+        reporteVentasView.setVisible(true);
+    }//GEN-LAST:event_smRepVentasActionPerformed
+
+    private void smRepPizzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepPizzasActionPerformed
+        ReportePizzasView reportePizzasView = new ReportePizzasView();
+        reportePizzasView.pack();
+        dpPrincipal.add(reportePizzasView);
+        Helpers.centerForm(dpPrincipal, reportePizzasView);
+        reportePizzasView.setVisible(true);
+    }//GEN-LAST:event_smRepPizzasActionPerformed
+
+    private void smRepCoberturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smRepCoberturaActionPerformed
+        ReporteCoberturaView reporteCoberturaView = new ReporteCoberturaView();
+        reporteCoberturaView.pack();
+        dpPrincipal.add(reporteCoberturaView);
+        Helpers.centerForm(dpPrincipal, reporteCoberturaView);
+        reporteCoberturaView.setVisible(true);
+    }//GEN-LAST:event_smRepCoberturaActionPerformed
+
     /**
      * @param args the command line arguments
      */

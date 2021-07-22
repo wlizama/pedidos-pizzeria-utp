@@ -45,7 +45,7 @@ BEGIN
     inner join estado e on p.IdEstado = e.IdEstado
     where c.IdCliente = idcliente;
 
-END ;;
+END ;;SP_Pizza
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_ClienteDireccion`;
@@ -1777,8 +1777,8 @@ BEGIN
         tc.IdEstado,
         e.nombre as estado
     from tipocomprobante tc
-    join estado e on tc.IdEstado = e.IdEstado;
-END ;;
+    inner join estado e on tc.IdEstado = e.IdEstado
+END
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_TipoComprobante`;
@@ -1793,8 +1793,8 @@ BEGIN
         e.nombre as estado
     from tipocomprobante tc
     join estado e on tc.IdEstado = e.IdEstado
-    where tc.IdTipoComprobante = IdTipoComprobante;
-END ;;
+    where tc.IdTipoComprobante = IdTipoComprobante
+END
 DELIMITER ;
 
 

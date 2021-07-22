@@ -72,4 +72,24 @@ public class AccesoDAO {
         
         return lstResult;
     }
+        
+    public int insertarAcceso(Acceso acceso) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_AccesoInserta ( ?, ?, ?)}");
+        cs.setInt("idFormulario", acceso.getFormulario().getIdFormulario());
+        cs.setInt("idRol", acceso.getRol().getIdRol());
+        
+        
+        cs.execute();
+
+        int idAcceso = cs.getInt("IdAcceso");
+        
+        MySqlConexion.close(con);
+        
+        return idAcceso;
+    }            
+    
 }

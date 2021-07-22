@@ -182,11 +182,9 @@ public class RolesController implements BaseControllerInterface{
             Roles rol = new Roles(
                 0,
                 personalView.txtNombreRol.getText()
-            );
-            
-            int IdRol = rolesDAO.insertarRoles(rol);
-            rol.setIdRol(IdRol);
-            rolesDAO.eliminaInsertarAccesosRoles(IdRol, ids_selecteds);
+            );                                    
+            IdRol_insert = rolesDAO.insertarRoles(roles);
+            roles.setIdRol(IdRol_insert);                                                    
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -199,6 +197,29 @@ public class RolesController implements BaseControllerInterface{
         }
     }
 
+    public void insertarAcceso() {
+        try {
+            
+            int IdRol = rolesDAO.insertarRoles(rol);
+            rol.setIdRol(IdRol);
+            rolesDAO.eliminaInsertarAccesosRoles(IdRol, ids_selecteds);
+            
+            acceso.setIdAcceso(IdRol_insert);
+            acceso.setRol(new Roles(IdRol_insert,""));
+            
+            int idAcceso = accesoDAO.insertarAcceso(acceso);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error insertar detalle: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     @Override
     public void modificar() {
         try {
