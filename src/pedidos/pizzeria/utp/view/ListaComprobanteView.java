@@ -43,6 +43,7 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
 
+        btnVerComprobante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/see-16.png"))); // NOI18N
         btnVerComprobante.setText("Ver Comprobante");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Comprobantes"));
@@ -51,25 +52,35 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
 
         txtComprobante.setText("0");
 
+        btnBuscarComprobante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-16.png"))); // NOI18N
         btnBuscarComprobante.setText("Buscar");
 
         tblListaComprobante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "IdComprobante", "Nro", "Cliente", "Total"
+                "#", "Nro", "Cliente", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListaComprobante.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblListaComprobante);
         if (tblListaComprobante.getColumnModel().getColumnCount() > 0) {
-            tblListaComprobante.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblListaComprobante.getColumnModel().getColumn(0).setResizable(false);
+            tblListaComprobante.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblListaComprobante.getColumnModel().getColumn(1).setResizable(false);
             tblListaComprobante.getColumnModel().getColumn(1).setPreferredWidth(20);
-            tblListaComprobante.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblListaComprobante.getColumnModel().getColumn(2).setResizable(false);
+            tblListaComprobante.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tblListaComprobante.getColumnModel().getColumn(3).setResizable(false);
             tblListaComprobante.getColumnModel().getColumn(3).setPreferredWidth(30);
         }
 
@@ -78,16 +89,16 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addGap(46, 46, 46)
-                .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBuscarComprobante)
-                .addGap(46, 46, 46))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -98,9 +109,9 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarComprobante))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -108,9 +119,9 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addContainerGap()
                 .addComponent(btnVerComprobante)
-                .addContainerGap(474, Short.MAX_VALUE))
+                .addContainerGap(488, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -120,14 +131,14 @@ public class ListaComprobanteView extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(374, Short.MAX_VALUE)
+                .addContainerGap(369, Short.MAX_VALUE)
                 .addComponent(btnVerComprobante)
-                .addGap(21, 21, 21))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(21, 21, 21)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(59, Short.MAX_VALUE)))
+                    .addContainerGap(45, Short.MAX_VALUE)))
         );
 
         pack();

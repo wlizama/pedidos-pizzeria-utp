@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pedidos.pizzeria.utp.model.Acceso;
 import pedidos.pizzeria.utp.model.Formulario;
+import pedidos.pizzeria.utp.model.Roles;
 
 
 /**
@@ -46,9 +47,11 @@ public class AccesoDAO {
         return lstResult;
     }
     
-    public Acceso getAccesoRol(int IdRol) throws Exception {
+    public List<Acceso> getListaAccesoRol(int IdRol) throws Exception {
         Connection con = null;
         CallableStatement cs = null;
+        
+        List<Acceso> lstResult = new ArrayList<>(); 
         
         con = MySqlConexion.getConexion();
         cs = con.prepareCall("{call SP_RolAccesoLista (?)}");
@@ -57,18 +60,36 @@ public class AccesoDAO {
         cs.execute();
 
         ResultSet rs = cs.getResultSet();
-        Acceso acceso = null;
         while(rs.next()) {
-            acceso = new Acceso(
+            lstResult.add(new Acceso(
                 rs.getInt("IdAcceso"),
-                new RolesDAO().getRol(rs.getInt("IdFormulario")),
-                new Formulario(0,rs.getString("Formulario"))
-            );
-            
+                new Formulario(rs.getInt("IdFormulario"), rs.getString("Formulario")),
+                new Roles(IdRol)
+            ));
         }        
             
         MySqlConexion.close(con);
         
-        return acceso;
+        return lstResult;
     }
+        
+    public int insertarAcceso(Acceso acceso) throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_AccesoInserta ( ?, ?, ?)}");
+        cs.setInt("idFormulario", acceso.getFormulario().getIdFormulario());
+        cs.setInt("idRol", acceso.getRol().getIdRol());
+        
+        
+        cs.execute();
+
+        int idAcceso = cs.getInt("IdAcceso");
+        
+        MySqlConexion.close(con);
+        
+        return idAcceso;
+    }            
+    
 }

@@ -45,7 +45,7 @@ BEGIN
     inner join estado e on p.IdEstado = e.IdEstado
     where c.IdCliente = idcliente;
 
-END ;;
+END ;;SP_Pizza
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_ClienteDireccion`;
@@ -1016,16 +1016,30 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_Persona`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_Persona`(
-In idpersona int
+    In idpersona int
  )
 BEGIN
-select p.IdPersona, p.nombres, p.apellidos, tp.nombre as TipoPersona,  
-di.numero, tdi.nombre as TipoDocumentoIdentidad, e.nombre as estado
-from persona p inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
-inner join DocumentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-inner join tipoDocumentoIdentidad pdi on di.IdTipoDocIdentidad = tdi.IdTipoDocIdentidad
-inner join estado e on p.IdEstado = e.IdEstado
-where p.IdPersona = idpersona;
+    select
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.telefono,
+        tdi.IdTipoDocIdentidad,
+        tdi.nombre as tipoDocIdentidad,
+        tdi.cantidadCaracteres as tdicantidadCaracteres,
+        di.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        p.IdTipoPersona,
+        tp.nombre as tipoPersona,
+        p.IdEstado,
+        e.nombre as estado
+    from persona p 
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
+    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join tipodocumentoidentidad tdi on di.IdTipoDocIdentidad = tdi.IdTipoDocIdentidad
+    inner join estado e on p.IdEstado = e.IdEstado
+    where p.IdPersona = idpersona
+    and p.IdTipoPersona <> 4; -- no cliente;
 
 END ;;
 DELIMITER ;
@@ -1033,33 +1047,83 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PersonaInserta`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PersonaInserta`(
-In nombres varchar(100),
-In apellidos varchar(100),
-In IdTipoPersona int,
-In IdDocumentoIdentidad int,
-In IdEstado int,
-In telefono varchar(10)
+    OUT IdPersona int,
+    In nombres varchar(100),
+    In apellidos varchar(100),
+    In telefono varchar(10),
+    In IdTipoDocIdentidad int,
+    In numero varchar(15),
+    In IdTipoPersona int,
+    In IdRol int,
+    In nombreUsuario varchar(50),
+    In contrasenha varchar(50)
  )
 BEGIN
-insert into persona (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono)
-values (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono);
-SELECT LAST_INSERT_ID();
+    declare IdDocumentoIdentidad int;
+    
+    set estado = 6; -- estado activo
+    
+    insert into documentoIdentidad (numero, IdTipoDocIdentidad)
+    value (numero, IdTipoDocIdentidad);
+
+    SET IdDocumentoIdentidad = LAST_INSERT_ID();
+    
+    insert into persona (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, IdEstado, telefono)
+    values (nombres, apellidos, IdTipoPersona, IdDocumentoIdentidad, estado, telefono);
+    
+    set IdPersona = LAST_INSERT_ID();
+    
+    if IdRol <> 0 then
+        insert into usuario (nombreUsuario, contrasenha, IdPersona, IdRol)
+        values(nombreUsuario, contrasenha, IdPersona, IdRol);
+    end if;
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_PersonaLista`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PersonaLista`(
-In IdTipoDocIdentidad int,
-In numero int )
+    In idtipoDocIdentidad int,
+    In numero varchar(15)
+)
 BEGIN
-select p.IdPersona, p.nombres, p.apellidos, tp.nombre as TipoPersona, di.numero, 
-tdi.nombre as DocumentoIdentidad, e.nombre as estado
-from persona p inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
-inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-inner join tipoDocumentoIdentidad tdi on di.IdTipoDocIdentidad = tdi.IdTipoDocIdentidad
-inner join estado e on p.IdEstado = e.IdEstado
-where di.IdTipoDocIdentidad = IdTipoDocIdentidad and di.numero = numero;
+    declare idtipoDocIdentidad_ini int default 0;
+    declare idtipoDocIdentidad_fin int default 999999;
+    declare numero_ini varchar(15) default '';
+    declare numero_fin varchar(15) default 'ZZZZZZZZZZ';
+    
+    if idtipoDocIdentidad <> 0 then
+        set idtipoDocIdentidad_ini = idtipoDocIdentidad;
+        set idtipoDocIdentidad_fin = idtipoDocIdentidad;
+    end if;
+
+    if numero <> '' then
+        set numero_ini = numero;
+        set numero_fin = numero;
+    end if;
+
+    select
+        p.IdPersona,
+        p.nombres,
+        p.apellidos,
+        p.telefono,
+        tdi.IdTipoDocIdentidad,
+        tdi.nombre as tipoDocIdentidad,
+        tdi.cantidadCaracteres as tdicantidadCaracteres,
+        di.IdDocumentoIdentidad,
+        di.numero as documentoIdentidad,
+        p.IdTipoPersona,
+        tp.nombre as tipoPersona,
+        p.IdEstado,
+        e.nombre as estado
+    from persona p 
+    inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
+    inner join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+    inner join tipodocumentoidentidad tdi on di.IdTipoDocIdentidad = tdi.IdTipoDocIdentidad
+    inner join estado e on p.IdEstado = e.IdEstado
+    and di.IdTipoDocIdentidad between idtipoDocIdentidad_ini and idtipoDocIdentidad_fin
+    and di.numero between numero_ini and numero_fin
+    where p.IdTipoPersona <> 4; -- no cliente
 
 END ;;
 DELIMITER ;
@@ -1067,37 +1131,50 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `SP_PersonaModifica`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PersonaModifica`(
-In idPersona int,
-In nombres varchar(100),
-In apellidos varchar(100),
-In IdTipoPersona int,
-In IdDocumentoIdentidad int,
-In IdEstado int,
-In telefono varchar(10)
+    In IdPersona int,
+    In nombres varchar(100),
+    In apellidos varchar(100),
+    In telefono varchar(10),
+    In IdTipoDocIdentidad int,
+    In numero varchar(15),
+    In IdTipoPersona int,
+    In IdRol int,
+    In nombreUsuario varchar(50),
+    In contrasenha varchar(50)
  )
 BEGIN
-update persona 
-set nombres = nombres, apellidos = apellidos, IdTipoPersona = IdTipoPersona, 
-IdDocumentoIdentidad = IdDocumentoIdentidad, IdEstado = IdEstado, telefono = telefono
-where idPersona = idPersona;
+    update persona p
+    join documentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
+        set p.nombres = nombres,
+        p.apellidos = apellidos,
+        p.telefono = telefono,
+        p.IdTipoPersona = IdTipoPersona
+    where p.idPersona = IdPersona;
+    
+    if IdRol <> 0 then
+        update usuario u
+        set u.nombreUsuario = nombreUsuario,
+        u.contrasenha = contrasenha
+        where u.IdPersona = IdPersona;
+    end if;
 END ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_PersonaUsuario`;
 DELIMITER ;;
 CREATE PROCEDURE `SP_PersonaUsuario`(
-In idpersona int
+    In IdPersona int
  )
 BEGIN
-select p.IdPersona, p.nombres, p.apellidos, p.telefono, tdi.nombre as TipoDocumentoIdentidad, di.numero,
-p.nombre as TipoPersona,  u.nombreUsuario as usuario, u.contrasenha, r.nombre as Rol
-from persona p inner join tipopersona tp on p.IdTipoPersona = tp.IdTipoPersona 
-inner join DocumentoIdentidad di on p.IdDocumentoIdentidad = di.IdDocumentoIdentidad
-inner join tipoDocumentoIdentidad pdi on di.IdTipoDocIdentidad = tdi.IdTipoDocIdentidad
-inner join estado e on p.IdEstado = e.IdEstado
-inner join usuario u on p.IdPersona = u.IdPersona
-inner join rol r on u.IdRol = r.IdRol
-where p.IdPersona = idpersona;
+    select 
+        u.IdUsuario,
+        u.nombreUsuario,
+        "*********" as contrasenha,
+        u.IdRol,
+        r.nombre as rol
+    from usuario u
+    join roles r on u.IdRol = r.IdRol
+    where u.IdPersona = IdPersona;
 
 END ;;
 DELIMITER ;
@@ -1414,9 +1491,9 @@ BEGIN
 END ;;
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `SP_RolModifca`;
+DROP PROCEDURE IF EXISTS `SP_RolModifica`;
 DELIMITER ;;
-CREATE PROCEDURE `SP_RolModifca`(
+CREATE PROCEDURE `SP_RolModifica`(
     IdRol int,
     nombre varchar(50)
 )
@@ -1700,8 +1777,8 @@ BEGIN
         tc.IdEstado,
         e.nombre as estado
     from tipocomprobante tc
-    join estado e on tc.IdEstado = e.IdEstado;
-END ;;
+    inner join estado e on tc.IdEstado = e.IdEstado
+END
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `SP_TipoComprobante`;
@@ -1716,36 +1793,17 @@ BEGIN
         e.nombre as estado
     from tipocomprobante tc
     join estado e on tc.IdEstado = e.IdEstado
-    where tc.IdTipoComprobante = IdTipoComprobante;
-END ;;
+    where tc.IdTipoComprobante = IdTipoComprobante
+END
 DELIMITER ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ComprobantePedidoDetalle_cabecera`(
-In idcomprobante int)
+
+DROP PROCEDURE IF EXISTS `SP_TipoComprobante`;
+CREATE PROCEDURE `SP_TipoComprobante`()
 BEGIN
-	select 
-        c.IdComprobante, c.IdPedido, dp.IdDetallePedido, p.IdCliente, p.IdDireccionEnvio, 
-        cli.IdPersona, per.nombres, per.apellidos, docide.numero as documentoIdentidad, dir.direccion, p.fechacreacion
-    from comprobante c inner join detallepedido dp on c.IdPedido = dp.IdPedido
-    inner join pedido p on dp.IdPedido = p.IdPedido
-    join cliente cli on p.IdCliente = cli.IdCliente
-    join persona per on cli.IdPersona = per.IdPersona
-    join direccion dir on p.IdDireccionEnvio = dir.IdDireccion
-    join documentoidentidad docide on per.IdDocumentoIdentidad = docide.IdDocumentoIdentidad
-    where c.IdComprobante = idcomprobante;
-END
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ComprobantePedidoDetalle_lista`(
-In idcomprobante int)
-BEGIN
-select 
-        c.IdComprobante, c.IdPedido, dp.IdDetallePedido, piz.IdPizza, piz.nombre as pizza,
-        piz.IdTamanho, tam.nombre as tamanho, dp.cantidad, piz.precio
-        
-    from comprobante c inner join detallepedido dp on c.IdPedido = dp.IdPedido
-    inner join pizza piz on dp.IdPizza = piz.IdPizza
-    inner join tamanho tam on piz.IdTamanho = tam.IdTamanho
-    where c.IdComprobante = idcomprobante;
-END
-
-
+    select
+        IdFormulario,
+        nombre
+    from formulario;
+END;
+DELIMITER ;

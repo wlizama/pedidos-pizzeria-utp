@@ -59,17 +59,32 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblListaEnvios.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblListaEnvios);
+        if (tblListaEnvios.getColumnModel().getColumnCount() > 0) {
+            tblListaEnvios.getColumnModel().getColumn(0).setResizable(false);
+            tblListaEnvios.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tblListaEnvios.getColumnModel().getColumn(1).setResizable(false);
+            tblListaEnvios.getColumnModel().getColumn(1).setPreferredWidth(10);
+            tblListaEnvios.getColumnModel().getColumn(2).setResizable(false);
+            tblListaEnvios.getColumnModel().getColumn(2).setPreferredWidth(70);
+            tblListaEnvios.getColumnModel().getColumn(3).setResizable(false);
+            tblListaEnvios.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tblListaEnvios.getColumnModel().getColumn(4).setResizable(false);
+            tblListaEnvios.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
 
+        btnVerEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/edit-16.png"))); // NOI18N
         btnVerEnvio.setText("Ver Envio");
 
+        btnNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/add-16.png"))); // NOI18N
         btnNuevoEnvio.setText("Nuevo Envio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -80,8 +95,8 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnVerEnvio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnNuevoEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -102,14 +117,14 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(32, 32, 32)
                         .addComponent(btnVerEnvio)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoEnvio)
-                        .addContainerGap(208, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

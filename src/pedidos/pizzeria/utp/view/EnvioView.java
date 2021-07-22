@@ -77,10 +77,13 @@ public class EnvioView extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Envios");
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/save-16.png"))); // NOI18N
         btnGuardar.setText("Guardar");
 
+        btnEnvdatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/whatsapp-16.png"))); // NOI18N
         btnEnvdatos.setText("Enviar datos");
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/undo-16.png"))); // NOI18N
         btnCancelar.setText("Regresar");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Envio"));
@@ -120,9 +123,9 @@ public class EnvioView extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNroEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(dtHoraFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dtHoraInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(47, 47, 47)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4)
@@ -164,8 +167,10 @@ public class EnvioView extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de pedidos"));
 
+        btnAgregarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/add-16.png"))); // NOI18N
         btnAgregarDetalle.setText("Agregar");
 
+        btnEliminarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/delete-16.png"))); // NOI18N
         btnEliminarDetalle.setText("Eliminar");
 
         tblDetalleEnvio.setModel(new javax.swing.table.DefaultTableModel(
@@ -177,15 +182,29 @@ public class EnvioView extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblDetalleEnvio.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblDetalleEnvio);
+        if (tblDetalleEnvio.getColumnModel().getColumnCount() > 0) {
+            tblDetalleEnvio.getColumnModel().getColumn(0).setResizable(false);
+            tblDetalleEnvio.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblDetalleEnvio.getColumnModel().getColumn(1).setResizable(false);
+            tblDetalleEnvio.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblDetalleEnvio.getColumnModel().getColumn(2).setResizable(false);
+            tblDetalleEnvio.getColumnModel().getColumn(2).setPreferredWidth(200);
+            tblDetalleEnvio.getColumnModel().getColumn(3).setResizable(false);
+            tblDetalleEnvio.getColumnModel().getColumn(3).setPreferredWidth(150);
+            tblDetalleEnvio.getColumnModel().getColumn(4).setResizable(false);
+            tblDetalleEnvio.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
 
+        btnModificarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/edit-16.png"))); // NOI18N
         btnModificarDetalle.setText("Modificar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -200,9 +219,9 @@ public class EnvioView extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnModificarDetalle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnEliminarDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -241,9 +260,10 @@ public class EnvioView extends javax.swing.JInternalFrame {
         txaObservaciones.setRows(5);
         jScrollPane2.setViewportView(txaObservaciones);
 
-        btnGuardarDetalle.setText("GuardarPedido");
+        btnGuardarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/save-16.png"))); // NOI18N
+        btnGuardarDetalle.setText("Guardar Pedido");
 
-        btnBuscarPedido.setText("Buscar");
+        btnBuscarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-window-16.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -322,10 +342,9 @@ public class EnvioView extends javax.swing.JInternalFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnvdatos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 40, Short.MAX_VALUE))
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEnvdatos, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

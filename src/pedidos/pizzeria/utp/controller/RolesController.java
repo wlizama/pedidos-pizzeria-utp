@@ -5,7 +5,10 @@
  */
 package pedidos.pizzeria.utp.controller;
 
+import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pedidos.pizzeria.utils.Constants;
@@ -22,6 +25,7 @@ public class RolesController implements BaseControllerInterface{
     
     String op;
     int IdRol_edit;
+    String ids_selecteds = "";
     
     ListaPersonalView personalView;
     RolesDAO rolesDAO;
@@ -30,6 +34,7 @@ public class RolesController implements BaseControllerInterface{
     public RolesController(ListaPersonalView personalView) {
         this.personalView = personalView;
         this.rolesDAO = new RolesDAO();
+        this.accesoDAO = new AccesoDAO();
         
         // eventos de form
         personalView.btnEditarRol.addActionListener((ae) -> {
@@ -44,25 +49,44 @@ public class RolesController implements BaseControllerInterface{
             guardar();
         });
         
+        initChks();
         limpiarForm();
         buscar();
         this.op = Constants.OP_NEW;
         personalView.lblOpRolPersona.setText("( NUEVO )");
     }
+    
+    public void initChks() {
+        try {
+            List<Formulario> lstFormulario = new FormularioDAO().getListaFormulario();
+            for (Formulario formulario : lstFormulario) {
+                JCheckBox chkformulario = new JCheckBox(formulario.toString());
+                chkformulario.setName(String.valueOf(formulario.getIdFormulario()));
+                personalView.pnFormularios.add(chkformulario);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error buscar: " + e.getMessage(),
+                "Excepción",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     @Override
     public void limpiarForm() {
         personalView.txtNombreRol.setText("");
-        personalView.chkDelivery.setSelected(false);
-        personalView.chkMantenimiento.setSelected(false);
-        personalView.chkMiSesion.setSelected(false);
-        personalView.chkPedidos.setSelected(false);
-        personalView.chkReportes.setSelected(false);
+        
+        Component lstFormularios[] = personalView.pnFormularios.getComponents();
+        for (Component lstFormulario : lstFormularios) {
+            ((JCheckBox)lstFormulario).setSelected(false);
+        }
     }
 
     @Override
     public void buscar() {
-        
         try {
             
             List<Roles> lstRoles = rolesDAO.getListaRoles();
@@ -70,7 +94,6 @@ public class RolesController implements BaseControllerInterface{
             DefaultTableModel pizzasViewTblModel = (DefaultTableModel) personalView.tblListaRoles.getModel();
             // limpiar tabla antes de agregar
             Helpers.clearTable(pizzasViewTblModel);
-            
 
             if (lstRoles.size() > 0) {
                 for (Roles roles : lstRoles) {
@@ -96,13 +119,22 @@ public class RolesController implements BaseControllerInterface{
         try {
             int selectedRow = personalView.tblListaRoles.getSelectedRow();            
             if (selectedRow != -1) {
+                
+                limpiarForm();
                 int IdRol = (int) personalView.tblListaRoles.getValueAt(selectedRow, 0);
                 Roles roles = rolesDAO.getRol(IdRol);                
-                Acceso acceso = accesoDAO.getAccesoRol(IdRol);
-                System.out.println(acceso.getIdAcceso());
-                IdRol_edit = roles.getIdRol();
-                personalView.txtNombreRol.setText(roles.getNombre());                
+                List<Acceso> lstaccesos = accesoDAO.getListaAccesoRol(IdRol);
+               
+                personalView.txtNombreRol.setText(roles.getNombre());
+                Component lstFormularios[] = personalView.pnFormularios.getComponents();
+                for (Acceso lstacceso : lstaccesos) {
+                    for (Component lstFormulario : lstFormularios) {
+                        if (String.valueOf(lstacceso.getFormulario().getIdFormulario()).equals(lstFormulario.getName()))
+                            ((JCheckBox)lstFormulario).setSelected(true);
+                    }
+                }
                 
+                IdRol_edit = IdRol;
                 this.op = Constants.OP_EDIT;
                 personalView.lblOpRolPersona.setText("( EDITAR )");
             }
@@ -130,6 +162,8 @@ public class RolesController implements BaseControllerInterface{
         try {
             limpiarForm();
             this.op = Constants.OP_NEW;
+            IdRol_edit = 0;
+            ids_selecteds = "";
             personalView.lblOpRolPersona.setText("( NUEVO )");
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,13 +179,14 @@ public class RolesController implements BaseControllerInterface{
     @Override
     public void insertar() {
         try {
-            Roles roles = new Roles(
+            Roles rol = new Roles(
                 0,
                 personalView.txtNombreRol.getText()
             );
             
-            int IdRol = rolesDAO.insertarRoles(roles);
-            roles.setIdRol(IdRol);
+            int IdRol = rolesDAO.insertarRoles(rol);
+            rol.setIdRol(IdRol);
+            rolesDAO.eliminaInsertarAccesosRoles(IdRol, ids_selecteds);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,6 +208,7 @@ public class RolesController implements BaseControllerInterface{
             );
             
             rolesDAO.modificarRoles(roles);
+            rolesDAO.eliminaInsertarAccesosRoles(IdRol_edit, ids_selecteds);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -191,6 +227,18 @@ public class RolesController implements BaseControllerInterface{
         String msgValidacion = "";
         if (personalView.txtNombreRol.getText().trim().equals(""))
             msgValidacion += "- Ingresar nombre del Rol.\n";
+        
+        Component lstFormularios[] = personalView.pnFormularios.getComponents();
+        List <String> lstids = new ArrayList<String>();
+        for (Component lstFormulario : lstFormularios) {
+            if(((JCheckBox)lstFormulario).isSelected())
+                lstids.add(((JCheckBox)lstFormulario).getName());
+        }
+        ids_selecteds = String.join(",", lstids);
+        
+        if (ids_selecteds.equals(""))
+            msgValidacion += "- Debe seleccionar almenos un formulario.\n";
+        
         
         if (!msgValidacion.equals("")) {
             JOptionPane.showMessageDialog(
@@ -215,3 +263,4 @@ public class RolesController implements BaseControllerInterface{
     }
     
 }
+

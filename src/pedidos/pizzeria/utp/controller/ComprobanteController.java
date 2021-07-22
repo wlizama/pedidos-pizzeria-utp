@@ -54,7 +54,7 @@ public class ComprobanteController {
     public void obtenerCabecera(int idComprobante){
         try {
             ComprobanteCabecera comprobantecabecera = comprobanteDAO.getComprobanteCabecera(idComprobante);
-            comprobanteView.lblNroComprobante.setText(String.valueOf(comprobantecabecera.getNumero()));
+            comprobanteView.lblNroComprobante.setText(String.format("%08d", comprobantecabecera.getNumero()));
             comprobanteView.lblNombreCliente.setText(comprobantecabecera.getCliente());
             comprobanteView.lblDocumento.setText(comprobantecabecera.getClientetipodocidentidad() + ": " + comprobantecabecera.getClientedocIdentidad());
             comprobanteView.lblDireccion.setText(comprobantecabecera.getDireccionenvio());
@@ -81,10 +81,11 @@ public class ComprobanteController {
             if (lstdetallePedido.size() > 0) {
                 for (DetallePedido detallepedido : lstdetallePedido) {
                     detallepedidotblModel.addRow(new Object[] {
-                        detallepedido.getPizza().getNombre(),
-                        detallepedido.getPizza().getTamanhoPizza(),
                         detallepedido.getCantidad(),
+                        detallepedido.getPizza().getNombre() + " / " +
+                        detallepedido.getPizza().getTamanhoPizza(),
                         detallepedido.getPizza().getPrecio(),
+                        detallepedido.getCantidad() * detallepedido.getPizza().getPrecio(),
                     });
                 }
             }

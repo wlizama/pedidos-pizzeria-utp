@@ -56,9 +56,27 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
             new String [] {
                 "#", "Nombre", "Cobertura"
             }
-        ));
-        jScrollPane1.setViewportView(tblListaCobertura);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListaCobertura.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblListaCobertura);
+        if (tblListaCobertura.getColumnModel().getColumnCount() > 0) {
+            tblListaCobertura.getColumnModel().getColumn(0).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblListaCobertura.getColumnModel().getColumn(1).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblListaCobertura.getColumnModel().getColumn(2).setResizable(false);
+            tblListaCobertura.getColumnModel().getColumn(2).setPreferredWidth(20);
+        }
+
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/edit-16.png"))); // NOI18N
         btnEditar.setText("Editar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -69,7 +87,7 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(5, 5, 5))
         );
         jPanel1Layout.setVerticalGroup(
@@ -92,6 +110,7 @@ public class ListaCoberturaView extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Cobertura");
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/save-16.png"))); // NOI18N
         btnGuardar.setText("Guardar");
 
         lblOperacion.setText("OP");

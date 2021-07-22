@@ -49,6 +49,7 @@ public class PedidoListaView extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Cliente");
 
+        btnBucarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-16.png"))); // NOI18N
         btnBucarCliente.setText("Buscar");
 
         tblListaPedido.setModel(new javax.swing.table.DefaultTableModel(
@@ -67,17 +68,29 @@ public class PedidoListaView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblListaPedido.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblListaPedido);
         if (tblListaPedido.getColumnModel().getColumnCount() > 0) {
+            tblListaPedido.getColumnModel().getColumn(0).setResizable(false);
             tblListaPedido.getColumnModel().getColumn(0).setPreferredWidth(5);
-            tblListaPedido.getColumnModel().getColumn(1).setPreferredWidth(110);
-            tblListaPedido.getColumnModel().getColumn(2).setPreferredWidth(10);
-            tblListaPedido.getColumnModel().getColumn(3).setPreferredWidth(110);
-            tblListaPedido.getColumnModel().getColumn(4).setPreferredWidth(10);
+            tblListaPedido.getColumnModel().getColumn(1).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(1).setPreferredWidth(40);
+            tblListaPedido.getColumnModel().getColumn(2).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(2).setPreferredWidth(40);
+            tblListaPedido.getColumnModel().getColumn(3).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(3).setPreferredWidth(200);
+            tblListaPedido.getColumnModel().getColumn(4).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tblListaPedido.getColumnModel().getColumn(5).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(5).setPreferredWidth(150);
+            tblListaPedido.getColumnModel().getColumn(6).setResizable(false);
+            tblListaPedido.getColumnModel().getColumn(6).setPreferredWidth(100);
         }
 
+        btnVerPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/edit-16.png"))); // NOI18N
         btnVerPedido.setText("Ver Pedido");
 
+        btnNuevoPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/add-16.png"))); // NOI18N
         btnNuevoPedido.setText("Nuevo Pedido");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -94,15 +107,14 @@ public class PedidoListaView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBucarCliente)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnBucarCliente))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1058, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnNuevoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVerPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(btnVerPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,15 +124,17 @@ public class PedidoListaView extends javax.swing.JInternalFrame {
                     .addComponent(cboTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBucarCliente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btnVerPedido)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNuevoPedido)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(btnVerPedido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNuevoPedido)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

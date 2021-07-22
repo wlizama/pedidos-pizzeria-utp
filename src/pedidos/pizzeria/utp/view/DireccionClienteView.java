@@ -47,8 +47,10 @@ public class DireccionClienteView extends javax.swing.JDialog {
 
         jLabel4.setText("Referencia");
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/save-16.png"))); // NOI18N
         btnGuardar.setText("Guardar");
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/undo-16.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
 
         jLabel2.setText("Dirección");

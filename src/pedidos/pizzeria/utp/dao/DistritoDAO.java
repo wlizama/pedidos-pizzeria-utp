@@ -17,6 +17,7 @@ import pedidos.pizzeria.utp.model.Distrito;
  * @author wilderlizama
  */
 public class DistritoDAO {
+    
     public List<Distrito> getListaDistrito() throws Exception {
         Connection con = null;
         CallableStatement cs = null;
