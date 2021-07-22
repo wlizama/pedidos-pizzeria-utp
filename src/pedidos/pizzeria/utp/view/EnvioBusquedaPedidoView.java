@@ -41,6 +41,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
 
         jLabel1.setText("Cliente");
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/undo-16.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
 
         tblEnvioBusqPedido.setModel(new javax.swing.table.DefaultTableModel(
@@ -50,11 +51,34 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
             new String [] {
                 "#", "Nro. Pedido", "Nro. Comprobante", "Cliente", "Destino"
             }
-        ));
-        jScrollPane1.setViewportView(tblEnvioBusqPedido);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEnvioBusqPedido.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblEnvioBusqPedido);
+        if (tblEnvioBusqPedido.getColumnModel().getColumnCount() > 0) {
+            tblEnvioBusqPedido.getColumnModel().getColumn(0).setResizable(false);
+            tblEnvioBusqPedido.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(1).setResizable(false);
+            tblEnvioBusqPedido.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(2).setResizable(false);
+            tblEnvioBusqPedido.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(3).setResizable(false);
+            tblEnvioBusqPedido.getColumnModel().getColumn(3).setPreferredWidth(200);
+            tblEnvioBusqPedido.getColumnModel().getColumn(4).setResizable(false);
+            tblEnvioBusqPedido.getColumnModel().getColumn(4).setPreferredWidth(150);
+        }
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-16.png"))); // NOI18N
         btnBuscar.setText("Buscar");
 
+        btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/check-16.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -73,7 +97,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
                         .addComponent(txtNroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar)
-                        .addGap(0, 141, Short.MAX_VALUE))
+                        .addGap(0, 217, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSeleccionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

@@ -81,8 +81,10 @@ public class EnvioListaView extends javax.swing.JInternalFrame {
             tblListaEnvios.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
+        btnVerEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/edit-16.png"))); // NOI18N
         btnVerEnvio.setText("Ver Envio");
 
+        btnNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/add-16.png"))); // NOI18N
         btnNuevoEnvio.setText("Nuevo Envio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

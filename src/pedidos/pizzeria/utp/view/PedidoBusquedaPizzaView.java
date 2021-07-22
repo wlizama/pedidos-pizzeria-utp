@@ -39,14 +39,17 @@ public class PedidoBusquedaPizzaView extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/check-16.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
 
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/undo-16.png"))); // NOI18N
         btnRegresar.setText("Regresar");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Pizza"));
 
         jLabel8.setText("Nombre");
 
+        btnBuscarPizza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-16.png"))); // NOI18N
         btnBuscarPizza.setText("Buscar");
 
         tblListaPizza.setModel(new javax.swing.table.DefaultTableModel(
@@ -93,9 +96,10 @@ public class PedidoBusquedaPizzaView extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombrePizza)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnBuscarPizza)))
+                        .addComponent(txtNombrePizza, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarPizza)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
