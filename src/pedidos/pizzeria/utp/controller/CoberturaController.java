@@ -56,7 +56,7 @@ public class CoberturaController implements BaseControllerInterface {
     public void buscar() {
         try {
             
-            List<Distrito> lstCobertura = coberturaDAO.getListaDistrito();
+            List<Distrito> lstCobertura = coberturaDAO.getListaTodosDistrito();
             
             DefaultTableModel coberturaViewTblModel = (DefaultTableModel) coberturaView.tblListaCobertura.getModel();
             // limpiar tabla antes de agregar

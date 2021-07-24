@@ -44,6 +44,32 @@ public class DistritoDAO {
         return lstResult;
     }
     
+    public List<Distrito> getListaTodosDistrito() throws Exception {
+        Connection con = null;
+        CallableStatement cs = null;
+        
+        List<Distrito> lstResult = new ArrayList<>(); 
+        
+        con = MySqlConexion.getConexion();
+        cs = con.prepareCall("{call SP_DistritoListaTodos ()}");
+
+        cs.execute();
+
+        ResultSet rs = cs.getResultSet();
+
+        while(rs.next()) {
+            lstResult.add(new Distrito(
+                rs.getInt("IdDistrito"),
+                rs.getString("nombre"),
+                rs.getInt("cobertura") == 1
+            ));
+        }
+        
+        MySqlConexion.close(con);
+        
+        return lstResult;
+    }
+    
     public Distrito getDistrito(int idDistrito) throws Exception {
         Connection con = null;
         CallableStatement cs = null;

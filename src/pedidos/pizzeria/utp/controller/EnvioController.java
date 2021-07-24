@@ -111,7 +111,7 @@ public class EnvioController implements BaseControllerInterface {
                             + "*Dirección*: " + detalleEnvio.getPedido().getDireccionEnvio().getDireccion() + "|";
                 }
 
-                Helpers.openWebpage(new URI("https://wa.me/" + nroTelefono + "/?text="+ URLEncoder.encode(msgText, StandardCharsets.UTF_8.toString())));
+                Helpers.openWebpage(new URI("https://wa.me/+51" + nroTelefono + "/?text="+ URLEncoder.encode(msgText, StandardCharsets.UTF_8.toString())));
             }
             else {
                 JOptionPane.showMessageDialog(
@@ -513,8 +513,7 @@ public class EnvioController implements BaseControllerInterface {
             envio.setHoraInicio(new Timestamp(envioView.dtHoraInicio.getDate().getTime()));
             envio.setHoraFin(new Timestamp(envioView.dtHoraFin.getDate().getTime()));
             Repartidor repartidor = new Repartidor();
-            System.out.println("a>" + ((Repartidor) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
-            repartidor.setIdPersona(((Repartidor) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
+            repartidor.setIdPersona(((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getIdPersona());
             envio.setRepartidor(repartidor);
             envio.setEstado((Estado) envioView.cboEstadoenvio.getModel().getSelectedItem());
             envioDAO.modificarEnvio(envio);
