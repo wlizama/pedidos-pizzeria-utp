@@ -95,7 +95,7 @@ public class EnvioBusquedaPedidoController {
                         pedido.getNumero(),
                         pedido.getNumeroComprobante(),
                         pedido.getCliente().getNombres(),
-                        pedido.getDireccionEnvio().getDireccion()
+                        pedido.getDireccionEnvio().getDireccion() + " / " + pedido.getDireccionEnvio().getDistrito().getNombre()
                     });
                 }
             }

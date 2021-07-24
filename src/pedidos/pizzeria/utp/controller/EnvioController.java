@@ -106,12 +106,14 @@ public class EnvioController implements BaseControllerInterface {
                 String nroTelefono = ((Persona) envioView.cboRepartidor.getModel().getSelectedItem()).getTelefono();
                 String msgText = "";
                 for (DetalleEnvio detalleEnvio : lstDetalleEnvio) {
-                    msgText += "*Nro. Pedido*: " + detalleEnvio.getPedido().getNumero() + "," +
-                            "*Cliente*: " + detalleEnvio.getPedido().getCliente().getNombres() + "," 
-                            + "*Dirección*: " + detalleEnvio.getPedido().getDireccionEnvio().getDireccion() + "|";
+                    msgText += URLEncoder.encode("*Nro. Pedido*: " + detalleEnvio.getPedido().getNumero(), StandardCharsets.UTF_8.toString()) + "," +
+                            URLEncoder.encode(" *Cliente*: " + detalleEnvio.getPedido().getCliente().getNombres(), StandardCharsets.UTF_8.toString()) + "," 
+                            + URLEncoder.encode(" *Dirección*: " + detalleEnvio.getPedido().getDireccionEnvio().getDireccion(), StandardCharsets.UTF_8.toString()) + "%0A";
+                    
+//                    msgText += URLEncoder.encode(msgText, StandardCharsets.UTF_8.toString()) + "";
                 }
 
-                Helpers.openWebpage(new URI("https://wa.me/+51" + nroTelefono + "/?text="+ URLEncoder.encode(msgText, StandardCharsets.UTF_8.toString())));
+                Helpers.openWebpage(new URI("https://wa.me/+51" + nroTelefono + "/?text="+ msgText));
             }
             else {
                 JOptionPane.showMessageDialog(

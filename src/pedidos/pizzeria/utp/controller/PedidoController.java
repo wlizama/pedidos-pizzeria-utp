@@ -590,35 +590,45 @@ public class PedidoController implements BaseControllerInterface {
     
     public void eliminarDetalle() {
         try {
-            int selectedRow = pedidoView.tblDetallePedido.getSelectedRow();
-            if (selectedRow != -1) {
-                int optSelected = JOptionPane.showConfirmDialog(
-                    null,
-                    "¿Realmente desea eliminar este item del detalle?",
-                    "Confirmación",
-                    JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE
-                );
+            if(isPedidoGenerado()) {
+                int selectedRow = pedidoView.tblDetallePedido.getSelectedRow();
+                if (selectedRow != -1) {
+                    int optSelected = JOptionPane.showConfirmDialog(
+                        null,
+                        "¿Realmente desea eliminar este item del detalle?",
+                        "Confirmación",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                    );
 
-                if (optSelected == JOptionPane.OK_OPTION) {
-                    int IdDetallePedido = (int) pedidoView.tblDetallePedido.getValueAt(selectedRow, 0);
+                    if (optSelected == JOptionPane.OK_OPTION) {
+                        int IdDetallePedido = (int) pedidoView.tblDetallePedido.getValueAt(selectedRow, 0);
 
-                    DetallePedido detallepedido = new DetallePedido();
-                    detallepedido.setIdDetallePedido(IdDetallePedido);
-                    detallepedido.setPedido(new Pedido(IdPedido_edit));
-                    pedidoDetalleDAO.eliminarDetallePedido(detallepedido);
-                    buscarDetalle();
+                        DetallePedido detallepedido = new DetallePedido();
+                        detallepedido.setIdDetallePedido(IdDetallePedido);
+                        detallepedido.setPedido(new Pedido(IdPedido_edit));
+                        pedidoDetalleDAO.eliminarDetallePedido(detallepedido);
+                        buscarDetalle();
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Debe seleccionar un item",
+                        "Mensaje",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
                 }
             }
             else {
                 JOptionPane.showMessageDialog(
                     null,
-                    "Debe seleccionar un item",
+                    "El Pedido no se encuentra en estado generado.",
                     "Mensaje",
-                    JOptionPane.INFORMATION_MESSAGE
+                    JOptionPane.WARNING_MESSAGE
                 );
+                return;
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(

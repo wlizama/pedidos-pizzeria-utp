@@ -64,15 +64,15 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblEnvioBusqPedido);
         if (tblEnvioBusqPedido.getColumnModel().getColumnCount() > 0) {
             tblEnvioBusqPedido.getColumnModel().getColumn(0).setResizable(false);
-            tblEnvioBusqPedido.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(0).setPreferredWidth(5);
             tblEnvioBusqPedido.getColumnModel().getColumn(1).setResizable(false);
-            tblEnvioBusqPedido.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(1).setPreferredWidth(5);
             tblEnvioBusqPedido.getColumnModel().getColumn(2).setResizable(false);
-            tblEnvioBusqPedido.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblEnvioBusqPedido.getColumnModel().getColumn(2).setPreferredWidth(5);
             tblEnvioBusqPedido.getColumnModel().getColumn(3).setResizable(false);
             tblEnvioBusqPedido.getColumnModel().getColumn(3).setPreferredWidth(200);
             tblEnvioBusqPedido.getColumnModel().getColumn(4).setResizable(false);
-            tblEnvioBusqPedido.getColumnModel().getColumn(4).setPreferredWidth(150);
+            tblEnvioBusqPedido.getColumnModel().getColumn(4).setPreferredWidth(220);
         }
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pedidos/pizzeria/resources/icons/search-16.png"))); // NOI18N
@@ -97,7 +97,7 @@ public class EnvioBusquedaPedidoView extends javax.swing.JDialog {
                         .addComponent(txtNroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar)
-                        .addGap(0, 217, Short.MAX_VALUE))
+                        .addGap(0, 426, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSeleccionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
