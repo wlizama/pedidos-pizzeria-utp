@@ -50,9 +50,9 @@ public class ReporteCoberturaController {
             List<Distrito> distritos = new DistritoDAO().getListaDistrito();
             
             reporteCoberturaView.cboDistrito.setModel(new DefaultComboBoxModel());
-            reporteCoberturaView.cboDistrito.addItem("Seleccionar Distrito");
+            reporteCoberturaView.cboDistrito.addItem( new Distrito(0, "Seleccionar Distrito", true));
             for (Distrito distrito : distritos) {
-                reporteCoberturaView.cboDistrito.addItem(""+distrito);
+                reporteCoberturaView.cboDistrito.addItem(distrito);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
@@ -73,10 +73,9 @@ public class ReporteCoberturaController {
             int cantidad=0;
             Date fechai = reporteCoberturaView.dtFechaInicio.getDate();
             Date fechaf = reporteCoberturaView.dtFechaFin.getDate();
-            int distrito = reporteCoberturaView.cboDistrito.getSelectedIndex();
+            int distrito = ((Distrito) reporteCoberturaView.cboDistrito.getModel().getSelectedItem()).getIdDistrito();
             java.sql.Date fechaini = convertJavaDateToSqlDate(fechai);
             java.sql.Date fechafin = convertJavaDateToSqlDate(fechaf);
-            System.out.println("distrito: "+distrito);
             List<DetallePedido> lstComprobante = reporteCoberturaDAO.getReporteCobertura(fechaini,fechafin,distrito);
             
             DefaultTableModel detalleViewTblModel = (DefaultTableModel) reporteCoberturaView.tblCobertura.getModel();

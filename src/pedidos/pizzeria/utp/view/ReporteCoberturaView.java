@@ -43,7 +43,7 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
         lblPrecioTotal = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cboDistrito = new javax.swing.JComboBox<>();
+        cboDistrito = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         dtFechaInicio = new org.freixas.jcalendar.JCalendarCombo(JCalendarCombo.DISPLAY_DATE | JCalendarCombo.DISPLAY_TIME,
             true);
@@ -56,10 +56,7 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
 
         tblCobertura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Distritos", "Cantidad de Pedidos", "Precio Total"
@@ -101,6 +98,9 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -117,17 +117,12 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
                         .addComponent(btnGenerarReporte))
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(53, 53, 53)
-                                .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addComponent(lblPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(397, 397, 397)))))
+                        .addGap(0, 312, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(53, 53, 53)
+                        .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84)
+                        .addComponent(lblPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -146,14 +141,15 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblPrecioTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCantidad))
-                .addGap(22, 22, 22))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPrecioTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(lblCantidad)))
+                .addGap(10, 10, 10))
         );
 
         pack();
@@ -162,7 +158,7 @@ public class ReporteCoberturaView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnGenerarReporte;
-    public javax.swing.JComboBox<String> cboDistrito;
+    public javax.swing.JComboBox cboDistrito;
     public org.freixas.jcalendar.JCalendarCombo dtFechaFin;
     public org.freixas.jcalendar.JCalendarCombo dtFechaInicio;
     private javax.swing.JLabel jLabel1;
